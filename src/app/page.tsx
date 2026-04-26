@@ -94,6 +94,40 @@ const REQUISITOS = [
   }
 ];
 
+const BannerCarousel = () => {
+  const [current, setCurrent] = useState(0);
+  const images = ["/banners/Banner1.png", "/banners/Banner2.png", "/banners/Banner3.png"];
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrent(prev => (prev + 1) % images.length), 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-[#eae8e7] border border-[#dcd9d9] group">
+      {images.map((src, idx) => (
+        <img 
+          key={src} 
+          src={src} 
+          alt={`Banner ${idx + 1}`} 
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100 scale-105' : 'opacity-0 scale-100'}`} 
+          style={{ transitionProperty: 'opacity, transform' }}
+        />
+      ))}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+        {images.map((_, idx) => (
+          <button 
+            key={idx} 
+            onClick={() => setCurrent(idx)}
+            className={`h-1.5 rounded-full transition-all duration-500 ${idx === current ? 'bg-white w-8 shadow-lg' : 'bg-white/40 w-2 hover:bg-white/60'}`}
+          />
+        ))}
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+    </div>
+  );
+};
+
 const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin: () => void, session: any }) => (
   <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
     <header className="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
@@ -151,9 +185,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </div>
       </div>
       <div className="flex-1 w-full relative">
-        <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-[#eae8e7] border border-[#dcd9d9]">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEuglpxhvA_NcslNleUuSohOG0NXvufwlNOIuQSQXJqEUSH6wrzBHOC3JrO_nDFZRUK09HOIhddRCxyQSwAb9UcCmG1ufANJP31Sol_1YF3rY83_s55ebP-2afEqQXmEd2jVsOAJYQ4iR2Lgvgg4ggapXG3IemBFuv1F1nZZi49z1FRuy1Af_mu6lrvxZT8u-kriOA6-8J92NMPmyqHhXOrqXE79X84lRXI-lj6km4JU6FK5U3YL8bhQNuT9c-B6CLr2lEa1Yh0Io" alt="IFAM" className="w-full h-full object-cover" />
-        </div>
+        <BannerCarousel />
       </div>
     </section>
 
