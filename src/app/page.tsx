@@ -361,6 +361,36 @@ export default function App() {
     return { totalPoints, totalCriteria, hasSpecialRule, isPointsValid, isCriteriaValid, isApproved, rules };
   }, [activities, targetLevel]);
 
+  const handleSubmit = async (isDraft = false) => {
+    if (!session) { setShowLogin(true); return; }
+    if (activities.length === 0 && !isDraft) {
+      alert("Adicione pelo menos um item à sua jornada antes de submeter.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await submitRegistration({
+        targetLevel,
+        pontuacaoTotal: validation.totalPoints,
+        memorial,
+        activities,
+        isDraft
+      });
+
+      if (res.success) {
+        alert(isDraft ? "Rascunho salvo com sucesso!" : `Protocolo ${res.protocolo} enviado com sucesso para a comissão!`);
+        window.location.reload();
+      } else {
+        alert(res.error || "Erro ao submeter protocolo.");
+      }
+    } catch (e) {
+      alert("Erro de conexão ao submeter.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const generateMemorial = () => {
     // Only generate if empty or user specifically wants to reset it
     if (memorial.trim().length > 0 && !window.confirm("Isso irá sobrescrever o memorial atual com a estrutura padrão baseada nos itens. Deseja continuar?")) {
@@ -569,7 +599,7 @@ export default function App() {
                       </select>
                       <select disabled={isReadOnly} className="p-2 border rounded text-sm disabled:bg-slate-50" value={selectedItem} onChange={e=>setSelectedItem(e.target.value)}>
                         <option value="">Selecione...</option>
-                        {REQUISITOS.find(r=>r.id===selectedReq)?.items.map(i => <option key={i.id} value={i.id}>{i.desc}</option>)}
+                        {REQUISITOS.find(r=>r.id===selectedReq)?.items.map(i => <option key={i.id} value={i.id}>{i.desc} ({i.points} pts / {i.unit})</option>)}
                       </select>
                     </div>
                     <div className="flex gap-4">
