@@ -43,8 +43,9 @@ export async function registerUser(formData: FormData) {
     console.log('Usuário cadastrado com sucesso!');
     return { success: true };
   } catch (error: any) {
-    console.error('Erro no Registro:', error);
-    return { success: false, error: `Erro no Banco: ${error.message || "Conexão recusada"}` };
+    console.error('Erro detalhado no Banco:', error);
+    const errorMsg = error.message || JSON.stringify(error);
+    return { success: false, error: `Erro técnico: ${errorMsg}` };
   }
 }
 
