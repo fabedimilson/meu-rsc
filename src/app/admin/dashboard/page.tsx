@@ -37,6 +37,8 @@ export default function DashboardPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [page, setPage] = useState(1);
   const [feedback, setFeedback] = useState('');
+  const [previewDoc, setPreviewDoc] = useState<string | null>(null);
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
   const PAGE_SIZE = 25;
 
   // Admin State
@@ -155,6 +157,7 @@ export default function DashboardPage() {
     summary += `PARECER FINAL: O(A) servidor(a) ${isApproved ? 'ATENDE' : 'NÃO ATENDE'} aos requisitos para o RSC ${selectedApp.app.targetLevel || 'I'}.`;
     
     setFeedback(summary);
+    setShowSummaryModal(true);
   };
 
   const handleAdminSubmit = async (e: React.FormEvent) => {
@@ -477,10 +480,10 @@ export default function DashboardPage() {
                     <p className="text-sm text-[#44474f] mb-4 italic">"{item.userComment || 'Sem relato.'}"</p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {item.comprovanteUrls?.map((url: string, idx: number) => (
-                        <a key={idx} href={url} target="_blank" className="inline-flex items-center gap-2 px-4 py-2 bg-[#d7e3ff] text-[#001b3e] rounded font-bold text-xs hover:bg-[#b4c5ff] transition-colors">
+                        <button key={idx} onClick={() => setPreviewDoc(url)} className="inline-flex items-center gap-2 px-4 py-2 bg-[#d7e3ff] text-[#001b3e] rounded font-bold text-xs hover:bg-[#b4c5ff] transition-colors shadow-sm">
                           <span className="material-symbols-outlined text-[16px]">visibility</span>
-                          Ver Documento {idx + 1}
-                        </a>
+                          Ver Comprovante {item.comprovanteUrls.length > 1 ? idx + 1 : ''}
+                        </button>
                       ))}
                     </div>
 
@@ -558,6 +561,55 @@ export default function DashboardPage() {
               </div>
             </section>
           </div>
+        </div>
+      )}
+
+      {/* POP-UP DO RESUMO DO PARECER */}
+      {showSummaryModal && (
+        <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl flex flex-col h-[85vh] overflow-hidden">
+            <div className="p-6 border-b border-gray-200 bg-[#fbf9f8] flex justify-between items-center">
+              <div>
+                <h2 className="font-black text-2xl text-[#001c40] flex items-center gap-2">
+                  <FileSignature size={28} className="text-[#2757c5]"/> Resumo do Parecer
+                </h2>
+                <p className="text-sm text-slate-500 font-medium">Edite o texto final que será enviado na resolução da comissão.</p>
+              </div>
+              <button onClick={() => setShowSummaryModal(false)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-200 transition-colors text-slate-500 hover:text-red-500">
+                <X size={24}/>
+              </button>
+            </div>
+            <div className="flex-1 p-6 bg-slate-50">
+              <textarea 
+                value={feedback} 
+                onChange={e => setFeedback(e.target.value)} 
+                className="w-full h-full p-6 border border-gray-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-[#2757c5] resize-none shadow-inner leading-relaxed" 
+                placeholder="O parecer gerado aparecerá aqui..."
+              />
+            </div>
+            <div className="p-6 border-t border-gray-200 bg-white flex justify-end gap-3">
+              <button onClick={() => setShowSummaryModal(false)} className="px-6 py-3 font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">Cancelar</button>
+              <button onClick={() => setShowSummaryModal(false)} className="px-8 py-3 bg-[#2757c5] text-white font-black rounded-xl hover:bg-[#001c40] transition-colors shadow-lg">Salvar e Fechar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* LEITOR DE PDF (DOCUMENT VIEWER) */}
+      {previewDoc && (
+        <div className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md flex flex-col animate-in fade-in duration-200">
+           <div className="flex justify-between items-center p-4 bg-black text-white">
+             <div className="font-bold flex items-center gap-2">
+               <span className="material-symbols-outlined">description</span>
+               Visualizador de Comprovante
+             </div>
+             <button onClick={() => setPreviewDoc(null)} className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full font-bold transition-colors">
+               <X size={20}/> Fechar
+             </button>
+           </div>
+           <div className="flex-1 p-4 md:p-8 pt-0">
+             <iframe src={previewDoc} className="w-full h-full bg-white rounded-xl shadow-2xl" />
+           </div>
         </div>
       )}
     </div>
