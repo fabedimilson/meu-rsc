@@ -44,7 +44,7 @@ export async function registerUser(formData: FormData) {
     return { success: true };
   } catch (error: any) {
     console.error('Erro no Registro:', error);
-    return { success: false, error: "Erro ao conectar com o banco de dados. Tente novamente." };
+    return { success: false, error: `Erro no Banco: ${error.message || "Conexão recusada"}` };
   }
 }
 
