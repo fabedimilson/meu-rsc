@@ -837,9 +837,11 @@ export default function App() {
                     : 'Já tem conta? Faça login aqui'}
                 </button>
               </div>
+            </div>
           </div>
         </div>
-      )}
+      </div>
+    )}
     </div>
   );
 }
