@@ -361,35 +361,6 @@ export default function App() {
     return { totalPoints, totalCriteria, hasSpecialRule, isPointsValid, isCriteriaValid, isApproved, rules };
   }, [activities, targetLevel]);
 
-  const handleSubmit = async (isDraft = false) => {
-    if (!session) { setShowLogin(true); return; }
-    if (activities.length === 0 && !isDraft) {
-      alert("Adicione pelo menos um item à sua jornada antes de submeter.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const res = await submitRegistration({
-        targetLevel,
-        pontuacaoTotal: validation.totalPoints,
-        memorial,
-        activities,
-        isDraft
-      });
-
-      if (res.success) {
-        alert(isDraft ? "Rascunho salvo com sucesso!" : `Protocolo ${res.protocolo} enviado com sucesso para a comissão!`);
-        window.location.reload();
-      } else {
-        alert(res.error || "Erro ao submeter protocolo.");
-      }
-    } catch (e) {
-      alert("Erro de conexão ao submeter.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const generateMemorial = () => {
     // Only generate if empty or user specifically wants to reset it
