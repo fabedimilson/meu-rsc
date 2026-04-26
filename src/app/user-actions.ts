@@ -9,83 +9,99 @@ import { cookies } from "next/headers";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "semmas-secret-key-2026");
 
+export async function registerUser(formData: FormData) {
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+  const name = formData.get('name') as string || "Servidor IFAM";
+
+  console.log('Tentativa de Registro:', email);
+
+  if (!email || !password) {
+    return { success: false, error: "Preencha todos os campos." };
+  }
+
+  if (!email.endsWith('@ifam.edu.br')) {
+    return { success: false, error: "Apenas e-mails @ifam.edu.br são permitidos para cadastro." };
+  }
+
+  try {
+    // Check if user already exists
+    const existingResult = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    if (existingResult.length > 0) {
+      return { success: false, error: "Este e-mail já está cadastrado. Tente fazer login." };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user with default role 'servidor'
+    await db.insert(users).values({
+      email,
+      password: hashedPassword,
+      nome: name,
+    });
+
+    console.log('Usuário cadastrado com sucesso!');
+    return { success: true };
+  } catch (error: any) {
+    console.error('Erro no Registro:', error);
+    return { success: false, error: "Erro ao conectar com o banco de dados. Tente novamente." };
+  }
+}
+
 export async function loginUser(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
-  console.log('Iniciando tentativa de login para:', email);
+  console.log('Tentativa de Login:', email);
+
   if (!email || !password) {
     return { success: false, error: "Preencha e-mail e senha." };
   }
 
-  // Find user by email
-  console.log('Consultando banco de dados...');
-  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
-  console.log('Resultado do banco:', result.length > 0 ? 'Usuário encontrado' : 'Usuário NÃO encontrado');
-  const user = result[0];
+  try {
+    console.log('Consultando banco para login...');
+    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    const user = result[0];
 
-  // MOCK LOGIC for demonstration purposes:
-  // Since we don't have LDAP integration yet, we'll allow login if the email ends with @ifam.edu.br
-  // and we'll "auto-create" or "auto-login" if they provide any password for now to allow previewing the flow.
-  
-  let validUser = user;
+    if (!user) {
+      return { success: false, error: "Usuário não encontrado. Cadastre-se primeiro." };
+    }
 
-  if (!user) {
-    if (email.endsWith('@ifam.edu.br') || email.endsWith('@gmail.com')) {
-      // Mock user creation for demo
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      try {
-        const [newUser] = await db.insert(users).values({
-          nome: "Servidor Exemplo",
-          cpf: Math.floor(Math.random() * 100000000000).toString().padStart(11, '0').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
-          dataNascimento: "1980-01-01",
-          telefone: "(92) 90000-0000",
-          email: email,
-          password: hashedPassword,
-          siape: "1234567",
-        }).returning();
-        validUser = newUser;
-      } catch (e: any) {
-        return { success: false, error: "Erro ao simular login: " + e.message };
-      }
-    } else {
-      return { success: false, error: "Utilize seu e-mail institucional (@ifam.edu.br)." };
+    // Check password
+    const isPasswordCorrect = bcrypt.compareSync(password, user.password || "");
+    // Fallback if password was stored as plain text during initial tests
+    const isPlainTextCorrect = user.password === password;
+
+    if (!isPasswordCorrect && !isPlainTextCorrect) {
+      return { success: false, error: "Senha incorreta." };
     }
-  } else {
-    // If user exists, check password
-    // If the user doesn't have a password yet (legacy), we'll let them in and set it.
-    if (user.password && !email.endsWith('@ifam.edu.br') && !bcrypt.compareSync(password, user.password)) {
-      return { success: false, error: "E-mail ou senha incorretos." };
-    }
-    // If institutional, we can optionally update the password if it changed
-    if (email.endsWith('@ifam.edu.br')) {
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      await db.update(users).set({ password: hashedPassword }).where(eq(users.id, user.id));
-    }
+
+    const token = await new SignJWT({ 
+      id: user.id, 
+      email: user.email, 
+      nome: user.nome,
+      cpf: user.cpf,
+      siape: user.siape,
+      dataNascimento: user.dataNascimento
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('24h')
+      .sign(JWT_SECRET);
+
+    (await cookies()).set('user_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24,
+      path: '/',
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error('Erro no Login:', error);
+    return { success: false, error: "Erro de conexão com o servidor." };
   }
-
-  const token = await new SignJWT({ 
-    id: validUser.id, 
-    email: validUser.email, 
-    nome: validUser.nome,
-    cpf: validUser.cpf,
-    siape: validUser.siape,
-    dataNascimento: validUser.dataNascimento
-  })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setIssuedAt()
-    .setExpirationTime('24h')
-    .sign(JWT_SECRET);
-
-  (await cookies()).set('user_token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 60 * 60 * 24,
-    path: '/',
-  });
-
-  return { success: true };
 }
 
 export async function logoutUser() {

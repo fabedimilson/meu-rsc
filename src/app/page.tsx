@@ -715,21 +715,104 @@ export default function App() {
       </div>
 
       {showLogin && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-[#e4e2e1] bg-[#fbf9f8]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#13315c] flex items-center justify-center text-white font-bold">
-                  <span className="material-symbols-outlined text-[20px]">lock</span>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div className="p-8">
+              <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-[#13315c] rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="material-symbols-outlined text-white">lock</span>
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      {authMode === 'login' ? 'Acesso do Servidor' : 'Cadastro do Servidor'}
+                    </h2>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">
+                      Domínio @ifam.edu.br
+                    </p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setShowLogin(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <span className="material-symbols-outlined text-gray-400">close</span>
+                </button>
+              </div>
+
+              <form onSubmit={handleAuth} className="space-y-4">
+                {authMode === 'register' && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Nome Completo</label>
+                    <input 
+                      type="text"
+                      required
+                      value={authName}
+                      onChange={(e) => setAuthName(e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
+                      placeholder="Seu nome completo"
+                    />
+                  </div>
+                )}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail Institucional</label>
+                  <input 
+                    type="email"
+                    required
+                    value={authEmail}
+                    onChange={(e) => setAuthEmail(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
+                    placeholder="exemplo@ifam.edu.br"
+                  />
                 </div>
                 <div>
-                  <h2 className="font-bold text-[#001c40] text-lg leading-tight">Acesso do Servidor</h2>
-                  <p className="text-xs text-[#44474f]">Integração SUAP/SIAPE</p>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
+                  <input 
+                    type="password"
+                    required
+                    value={authPassword}
+                    onChange={(e) => setAuthPassword(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
+                    placeholder="••••••••"
+                  />
                 </div>
+
+                {authError && (
+                  <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm font-medium flex items-center gap-2">
+                    <span className="material-symbols-outlined">error</span>
+                    {authError}
+                  </div>
+                )}
+
+                <button 
+                  type="submit"
+                  disabled={authLoading}
+                  className="w-full bg-[#13315c] text-white py-3.5 rounded-xl font-bold text-lg hover:bg-[#001c40] transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2"
+                >
+                  {authLoading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      {authMode === 'login' ? 'Entrando...' : 'Cadastrando...'}
+                    </>
+                  ) : (
+                    authMode === 'login' ? 'Entrar' : 'Criar Conta'
+                  )}
+                </button>
+              </form>
+
+              <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+                <button 
+                  onClick={() => {
+                    setAuthMode(authMode === 'login' ? 'register' : 'login');
+                    setAuthError(null);
+                  }}
+                  className="text-[#13315c] font-semibold hover:underline"
+                >
+                  {authMode === 'login' 
+                    ? 'Não tem conta? Cadastre-se aqui' 
+                    : 'Já tem conta? Faça login aqui'}
+                </button>
               </div>
-              <button onClick={() => setShowLogin(false)} className="p-2 hover:bg-[#eae8e7] rounded-xl transition-colors">
-                <span className="material-symbols-outlined text-[#747780]">close</span>
-              </button>
             </div>
             
             <form onSubmit={doLogin} className="p-6 flex flex-col gap-4">
