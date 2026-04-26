@@ -14,6 +14,7 @@ export async function registerUser(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   const name = formData.get('name') as string || "Servidor IFAM";
+  const campus = formData.get('campus') as string || "";
 
   console.log('Tentativa de Registro:', email);
 
@@ -39,8 +40,8 @@ export async function registerUser(formData: FormData) {
     // Insert user
     console.log('Inserindo novo usuário...');
     await sql`
-      INSERT INTO users (email, password, nome)
-      VALUES (${email}, ${hashedPassword}, ${name})
+      INSERT INTO users (email, password, nome, campus)
+      VALUES (${email}, ${hashedPassword}, ${name}, ${campus})
     `;
 
     console.log('Usuário cadastrado com sucesso!');
@@ -121,7 +122,7 @@ export async function getUserSession() {
   }
 }
 
-export async function updateUserProfile(data: { nome: string; cpf: string; siape: string; dataNascimento: string }) {
+export async function updateUserProfile(data: { nome: string; cpf: string; siape: string; dataNascimento: string; campus: string }) {
   const session = await getUserSession();
   if (!session) return { success: false, error: "Não autorizado" };
 
@@ -139,6 +140,7 @@ export async function updateUserProfile(data: { nome: string; cpf: string; siape
       cpf: cleanCpf,
       siape: data.siape,
       dataNascimento: birthDateISO,
+      campus: data.campus,
     }).where(eq(users.id, session.id)).returning();
 
     // Update session token
@@ -148,7 +150,8 @@ export async function updateUserProfile(data: { nome: string; cpf: string; siape
       nome: updatedUser.nome,
       cpf: updatedUser.cpf,
       siape: updatedUser.siape,
-      dataNascimento: updatedUser.dataNascimento
+      dataNascimento: updatedUser.dataNascimento,
+      campus: updatedUser.campus
     })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()

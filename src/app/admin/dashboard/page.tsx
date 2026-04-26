@@ -22,6 +22,13 @@ const RSC_LEVELS: any = {
   'VI':  { minPts: 75, minCrit: 7, reqRules: ['VI'], ruleMsg: 'Pelo menos 1 do Req VI' },
 };
 
+const CAMPUS_LIST = [
+  "Reitoria", "Lábrea", "Parintins", "Manaus - Zona Leste", "Manaus - Centro", 
+  "Manaus - Distrito Industrial", "Presidente Figueiredo", "Coari", "Tabatinga", 
+  "Maués", "São Gabriel da Cachoeira", "Humaitá", "Itacoatiara", "Manacapuru", 
+  "Tefé", "Eirunepé", "Avançado de Iranduba", "Boca do Acre", "Polo de Inovação"
+];
+
 export default function DashboardPage() {
   const [session, setSession] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('processos');
@@ -39,13 +46,14 @@ export default function DashboardPage() {
   const [feedback, setFeedback] = useState('');
   const [previewDoc, setPreviewDoc] = useState<string | null>(null);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
+  const [refusalModal, setRefusalModal] = useState<{itemId: number, reason: string, other: string} | null>(null);
   const PAGE_SIZE = 25;
 
   // Admin State
   const [adminsList, setAdminsList] = useState<any[]>([]);
   const [showAdminForm, setShowAdminForm] = useState(false);
   const [editingAdmin, setEditingAdmin] = useState<any>(null);
-  const [adminForm, setAdminForm] = useState({ nome: '', username: '', password: '', role: 'Avaliador', isActive: true });
+  const [adminForm, setAdminForm] = useState({ nome: '', username: '', password: '', role: 'Avaliador', isActive: true, campus: '' });
 
   useEffect(() => {
     async function init() {
@@ -329,7 +337,7 @@ export default function DashboardPage() {
                   <h1 className="text-3xl font-bold text-[#001c40]">Comissão Avaliadora</h1>
                   <p className="text-[#44474f] text-lg">Gerencie os avaliadores que têm acesso aos protocolos RSC.</p>
                 </div>
-                <button onClick={() => { setEditingAdmin(null); setAdminForm({ nome: '', username: '', password: '', role: 'Avaliador', isActive: true }); setShowAdminForm(true); }} className="bg-[#2757c5] hover:bg-[#001c40] text-white px-6 py-3 rounded-lg font-bold text-sm transition-all flex items-center gap-2 shadow-sm">
+                <button onClick={() => { setEditingAdmin(null); setAdminForm({ nome: '', username: '', password: '', role: 'Avaliador', isActive: true, campus: '' }); setShowAdminForm(true); }} className="bg-[#2757c5] hover:bg-[#001c40] text-white px-6 py-3 rounded-lg font-bold text-sm transition-all flex items-center gap-2 shadow-sm">
                   <UserPlus size={18} /> Novo Membro
                 </button>
               </div>
@@ -361,7 +369,7 @@ export default function DashboardPage() {
                           </span>
                         </td>
                         <td className="p-4 text-right">
-                          <button onClick={() => { setEditingAdmin(a); setAdminForm({ nome: a.nome, username: a.username, password: '', role: a.role, isActive: a.isActive }); setShowAdminForm(true); }} className="text-[#2757c5] hover:text-[#001c40] font-bold text-sm underline">
+                          <button onClick={() => { setEditingAdmin(a); setAdminForm({ nome: a.nome, username: a.username, password: '', role: a.role, isActive: a.isActive, campus: a.campus || '' }); setShowAdminForm(true); }} className="text-[#2757c5] hover:text-[#001c40] font-bold text-sm underline">
                             Editar
                           </button>
                         </td>
@@ -402,6 +410,13 @@ export default function DashboardPage() {
               <div>
                 <label className="block text-xs font-bold text-[#44474f] uppercase mb-1">Usuário (SIAPE/CPF)</label>
                 <input type="text" value={adminForm.username} onChange={e=>setAdminForm({...adminForm, username: e.target.value})} className="w-full p-2 border rounded" required disabled={!!editingAdmin} />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-[#44474f] uppercase mb-1">Campus de Lotação</label>
+                <select value={adminForm.campus} onChange={e=>setAdminForm({...adminForm, campus: e.target.value})} className="w-full p-2 border rounded" required>
+                  <option value="">Selecione um campus</option>
+                  {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
               </div>
               <div>
                 <label className="block text-xs font-bold text-[#44474f] uppercase mb-1">Senha {editingAdmin && '(Deixe em branco para não alterar)'}</label>
@@ -477,7 +492,7 @@ export default function DashboardPage() {
                        <h3 className="font-bold text-[#13315c]">{item.descricao}</h3>
                        <span className="text-sm font-bold bg-[#eae8e7] px-2 py-1 rounded">{item.pontosTotais.toFixed(1)} pts</span>
                     </div>
-                    <p className="text-sm text-[#44474f] mb-4 italic">"{item.userComment || 'Sem relato.'}"</p>
+                    
                     <div className="flex flex-wrap gap-2 mb-4">
                       {item.comprovanteUrls?.map((url: string, idx: number) => (
                         <button key={idx} onClick={() => setPreviewDoc(url)} className="inline-flex items-center gap-2 px-4 py-2 bg-[#d7e3ff] text-[#001b3e] rounded font-bold text-xs hover:bg-[#b4c5ff] transition-colors shadow-sm">
@@ -490,10 +505,7 @@ export default function DashboardPage() {
                     <div className="flex gap-2 items-center border-t border-[#e4e2e1] pt-4 mt-2">
                        <span className="text-xs font-bold text-slate-500 uppercase mr-2">Avaliação do Item:</span>
                        <button onClick={() => handleItemAction(item.id, 'Aceito')} className={`px-3 py-1.5 rounded text-xs font-bold transition-all ${item.statusAvaliacao === 'Aceito' ? 'bg-green-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-green-100 hover:text-green-800'}`}>Aceitar Evidência</button>
-                       <button onClick={() => {
-                          const just = window.prompt("Motivo da recusa:", item.adminComment || "");
-                          if (just !== null) handleItemAction(item.id, 'Recusado', just);
-                       }} className={`px-3 py-1.5 rounded text-xs font-bold transition-all ${item.statusAvaliacao === 'Recusado' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-red-100 hover:text-red-800'}`}>Recusar Evidência</button>
+                       <button onClick={() => setRefusalModal({ itemId: item.id, reason: '', other: '' })} className={`px-3 py-1.5 rounded text-xs font-bold transition-all ${item.statusAvaliacao === 'Recusado' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-red-100 hover:text-red-800'}`}>Recusar Evidência</button>
                        {item.statusAvaliacao === 'Pendente' && <span className="text-xs text-amber-600 font-bold ml-auto">Pendente</span>}
                     </div>
                     {item.statusAvaliacao === 'Recusado' && item.adminComment && (
@@ -601,7 +613,7 @@ export default function DashboardPage() {
            <div className="flex justify-between items-center p-4 bg-black text-white">
              <div className="font-bold flex items-center gap-2">
                <span className="material-symbols-outlined">description</span>
-               Visualizador de Comprovante
+               Visualizador de Documento
              </div>
              <button onClick={() => setPreviewDoc(null)} className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full font-bold transition-colors">
                <X size={20}/> Fechar
@@ -610,6 +622,61 @@ export default function DashboardPage() {
            <div className="flex-1 p-4 md:p-8 pt-0">
              <iframe src={previewDoc} className="w-full h-full bg-white rounded-xl shadow-2xl" />
            </div>
+        </div>
+      )}
+
+      {/* POP-UP DE RECUSA DE EVIDÊNCIA */}
+      {refusalModal && (
+        <div className="fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm overflow-hidden">
+            <div className="p-4 border-b bg-red-50 text-red-800 font-bold flex justify-between items-center">
+              <span>Recusar Evidência</span>
+              <button onClick={() => setRefusalModal(null)} className="hover:text-red-500"><X size={20}/></button>
+            </div>
+            <div className="p-4 space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1">Motivo da Recusa:</label>
+                <select 
+                  className="w-full p-2 border rounded"
+                  value={refusalModal.reason}
+                  onChange={(e) => setRefusalModal({...refusalModal, reason: e.target.value})}
+                >
+                  <option value="">Selecione um motivo...</option>
+                  <option value="Documento Ilegível">Documento Ilegível</option>
+                  <option value="Falta de Assinatura">Falta de Assinatura</option>
+                  <option value="Data fora do prazo exigido">Data fora do prazo exigido</option>
+                  <option value="Comprovante incompatível com o item">Comprovante incompatível com o item</option>
+                  <option value="Outro Motivo">Outro Motivo (Especificar)</option>
+                </select>
+              </div>
+              {refusalModal.reason === 'Outro Motivo' && (
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">Especifique o motivo:</label>
+                  <textarea 
+                    className="w-full p-2 border rounded text-sm"
+                    rows={3}
+                    value={refusalModal.other}
+                    onChange={(e) => setRefusalModal({...refusalModal, other: e.target.value})}
+                    placeholder="Digite o motivo detalhado..."
+                  />
+                </div>
+              )}
+            </div>
+            <div className="p-4 border-t bg-slate-50 flex justify-end gap-2">
+              <button onClick={() => setRefusalModal(null)} className="px-4 py-2 font-bold text-slate-600 hover:bg-slate-200 rounded">Cancelar</button>
+              <button 
+                onClick={() => {
+                  const finalReason = refusalModal.reason === 'Outro Motivo' ? refusalModal.other : refusalModal.reason;
+                  if (!finalReason) { alert('Por favor, informe o motivo da recusa.'); return; }
+                  handleItemAction(refusalModal.itemId, 'Recusado', finalReason);
+                  setRefusalModal(null);
+                }} 
+                className="px-4 py-2 font-bold bg-red-600 text-white hover:bg-red-700 rounded"
+              >
+                Confirmar Recusa
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

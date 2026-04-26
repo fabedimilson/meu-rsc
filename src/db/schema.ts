@@ -10,6 +10,7 @@ export const users = pgTable("users", {
   password: text("password"),
   siape: varchar("siape", { length: 20 }), // Added SIAPE for IFAM
   cargo: text("cargo"),
+  campus: text("campus"),
   
   created_at: timestamp("created_at").defaultNow(),
 });
@@ -58,6 +59,7 @@ export const admins = pgTable("admins", {
   password: text("password").notNull(),
   role: text("role").default("editor").notNull(), // "Avaliador", "Admin Master"
   isActive: boolean("is_active").default(true),
+  campus: text("campus"),
   created_at: timestamp("created_at").defaultNow(),
 });
 

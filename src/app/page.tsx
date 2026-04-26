@@ -227,11 +227,19 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
   </div>
 );
 
+const CAMPUS_LIST = [
+  "Reitoria", "Lábrea", "Parintins", "Manaus - Zona Leste", "Manaus - Centro", 
+  "Manaus - Distrito Industrial", "Presidente Figueiredo", "Coari", "Tabatinga", 
+  "Maués", "São Gabriel da Cachoeira", "Humaitá", "Itacoatiara", "Manacapuru", 
+  "Tefé", "Eirunepé", "Avançado de Iranduba", "Boca do Acre", "Polo de Inovação"
+];
+
 export default function App() {
   const [session, setSession] = useState<any>(null);
   const [showLogin, setShowLogin] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [authName, setAuthName] = useState('');
+  const [authCampus, setAuthCampus] = useState('');
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
@@ -239,7 +247,7 @@ export default function App() {
 
   const [view, setView] = useState('home');
   const [activeTab, setActiveTab] = useState('jornada');
-  const [userData, setUserData] = useState({ nome: '', cpf: '', siape: '', cargo: '', email: '', telefone: '', dataNascimento: '' });
+  const [userData, setUserData] = useState({ nome: '', cpf: '', siape: '', cargo: '', campus: '', email: '', telefone: '', dataNascimento: '' });
   const [targetLevel, setTargetLevel] = useState('I');
   const [activities, setActivities] = useState<any[]>([]);
   const [selectedReq, setSelectedReq] = useState('I');
@@ -268,6 +276,7 @@ export default function App() {
         cpf: session.cpf || '', 
         email: session.email || '', 
         siape: session.siape || '',
+        campus: session.campus || '',
         dataNascimento: session.dataNascimento ? session.dataNascimento.split('T')[0] : ''
       }));
       // Load application
@@ -302,6 +311,7 @@ export default function App() {
     formData.append('password', authPassword);
     if (authMode === 'register') {
       formData.append('name', authName);
+      formData.append('campus', authCampus);
     }
 
     try {
@@ -722,9 +732,16 @@ export default function App() {
                         <input type="date" value={userData.dataNascimento} onChange={e=>setUserData({...userData, dataNascimento:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm text-slate-700 disabled:bg-slate-50" />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase">E-mail Institucional</label>
-                        <input type="email" value={userData.email} disabled className="w-full p-3 border rounded text-sm bg-slate-100 text-slate-500" />
+                        <label className="text-xs font-bold text-slate-500 uppercase">Campus de Lotação</label>
+                        <select value={userData.campus} onChange={e=>setUserData({...userData, campus:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50">
+                          <option value="">Selecione...</option>
+                          {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
                       </div>
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold text-slate-500 uppercase">E-mail Institucional</label>
+                      <input type="email" value={userData.email} disabled className="w-full p-3 border rounded text-sm bg-slate-100 text-slate-500" />
                     </div>
                     {!isReadOnly && (
                       <button onClick={handleUpdateProfile} disabled={isSubmitting} className="w-full py-3 bg-[#2757c5] hover:bg-[#001c40] text-white rounded font-bold transition-all">
@@ -767,17 +784,31 @@ export default function App() {
 
               <form onSubmit={handleAuth} className="space-y-4">
                 {authMode === 'register' && (
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Nome Completo</label>
-                    <input 
-                      type="text"
-                      required
-                      value={authName}
-                      onChange={(e) => setAuthName(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
-                      placeholder="Seu nome completo"
-                    />
-                  </div>
+                  <>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Nome Completo</label>
+                      <input 
+                        type="text"
+                        required
+                        value={authName}
+                        onChange={(e) => setAuthName(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
+                        placeholder="Seu nome completo"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Campus de Lotação</label>
+                      <select 
+                        required
+                        value={authCampus}
+                        onChange={(e) => setAuthCampus(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
+                      >
+                        <option value="">Selecione o seu campus...</option>
+                        {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                    </div>
+                  </>
                 )}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail Institucional</label>
