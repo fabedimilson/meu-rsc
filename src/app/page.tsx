@@ -230,7 +230,12 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
 export default function App() {
   const [session, setSession] = useState<any>(null);
   const [showLogin, setShowLogin] = useState(false);
-  const [loginForm, setLoginForm] = useState({ email: '', password: '', error: '', loading: false });
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const [authName, setAuthName] = useState('');
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const [view, setView] = useState('home');
   const [activeTab, setActiveTab] = useState('jornada');
@@ -287,21 +292,40 @@ export default function App() {
     }
   }, [session]);
 
-  const doLogin = async (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoginForm(prev => ({ ...prev, loading: true, error: '' }));
+    setAuthLoading(true);
+    setAuthError(null);
+
     const formData = new FormData();
-    formData.append('email', loginForm.email);
-    formData.append('password', loginForm.password);
-    const res = await loginUser(formData);
-    if (res.success) {
-      const sess = await getUserSession();
-      setSession(sess);
-      setShowLogin(false);
-    } else {
-      setLoginForm(prev => ({ ...prev, error: res.error || 'Erro ao entrar.' }));
+    formData.append('email', authEmail);
+    formData.append('password', authPassword);
+    if (authMode === 'register') {
+      formData.append('name', authName);
     }
-    setLoginForm(prev => ({ ...prev, loading: false }));
+
+    try {
+      const result = authMode === 'login' 
+        ? await loginUser(formData) 
+        : await registerUser(formData);
+
+      if (result.success) {
+        if (authMode === 'register') {
+          alert("Cadastro realizado com sucesso! Agora faça seu login.");
+          setAuthMode('login');
+        } else {
+          const sess = await getUserSession();
+          setSession(sess);
+          setShowLogin(false);
+        }
+      } else {
+        setAuthError(result.error || "Ocorreu um erro inesperado.");
+      }
+    } catch (e) {
+      setAuthError("Erro de conexão com o servidor. Tente novamente.");
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
   const handleLogout = async () => {
