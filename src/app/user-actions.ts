@@ -13,12 +13,15 @@ export async function loginUser(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
+  console.log('Iniciando tentativa de login para:', email);
   if (!email || !password) {
     return { success: false, error: "Preencha e-mail e senha." };
   }
 
   // Find user by email
+  console.log('Consultando banco de dados...');
   const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  console.log('Resultado do banco:', result.length > 0 ? 'Usuário encontrado' : 'Usuário NÃO encontrado');
   const user = result[0];
 
   // MOCK LOGIC for demonstration purposes:
