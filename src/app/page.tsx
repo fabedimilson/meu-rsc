@@ -837,34 +837,6 @@ export default function App() {
                     : 'Já tem conta? Faça login aqui'}
                 </button>
               </div>
-            </div>
-            
-            <form onSubmit={doLogin} className="p-6 flex flex-col gap-4">
-              {loginForm.error && (
-                <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[18px]">error</span>
-                  {loginForm.error}
-                </div>
-              )}
-              
-              <div>
-                <label className="text-xs font-bold text-[#44474f] uppercase tracking-wider mb-1 block">E-mail Institucional</label>
-                <div className="relative">
-                  <input type="email" value={loginForm.email} onChange={e => setLoginForm(prev => ({ ...prev, email: e.target.value }))} placeholder="servidor@ifam.edu.br" className="w-full p-3 rounded border border-[#c4c6d0] bg-white text-sm focus:border-[#2757c5] focus:outline-none focus:ring-1 focus:ring-[#2757c5]" required />
-                </div>
-              </div>
-              
-              <div>
-                <label className="text-xs font-bold text-[#44474f] uppercase tracking-wider mb-1 block">Senha</label>
-                <div className="relative">
-                  <input type="password" value={loginForm.password} onChange={e => setLoginForm(prev => ({ ...prev, password: e.target.value }))} placeholder="Sua senha de acesso" className="w-full p-3 rounded border border-[#c4c6d0] bg-white text-sm focus:border-[#2757c5] focus:outline-none focus:ring-1 focus:ring-[#2757c5]" required />
-                </div>
-              </div>
-              
-              <button type="submit" disabled={loginForm.loading} className="w-full py-3 bg-[#0042B1] text-white rounded-lg font-bold text-sm hover:bg-[#13315C] mt-2 transition-colors">
-                {loginForm.loading ? 'Autenticando...' : 'Entrar no Sistema'}
-              </button>
-            </form>
           </div>
         </div>
       )}
