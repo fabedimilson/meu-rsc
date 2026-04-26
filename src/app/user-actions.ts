@@ -1,4 +1,5 @@
 'use server';
+import { neon } from '@neondatabase/serverless';
 
 import { db } from "@/db";
 import { users } from "@/db/schema";
@@ -25,27 +26,28 @@ export async function registerUser(formData: FormData) {
   }
 
   try {
-    // Check if user already exists
-    const existingResult = await db.select().from(users).where(eq(users.email, email)).limit(1);
-    if (existingResult.length > 0) {
+    console.log('Verificando existência do usuário via SQL Nativo...');
+    const sql = neon(process.env.DATABASE_URL!);
+    const existingUsers = await sql`SELECT * FROM users WHERE email = ${email} LIMIT 1`;
+    
+    if (existingUsers.length > 0) {
       return { success: false, error: "Este e-mail já está cadastrado. Tente fazer login." };
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user with default role 'servidor'
-    await db.insert(users).values({
-      email,
-      password: hashedPassword,
-      nome: name,
-    });
+    // Insert user
+    console.log('Inserindo novo usuário...');
+    await sql`
+      INSERT INTO users (email, password, nome)
+      VALUES (${email}, ${hashedPassword}, ${name})
+    `;
 
     console.log('Usuário cadastrado com sucesso!');
     return { success: true };
   } catch (error: any) {
-    console.error('Erro detalhado no Banco:', error);
-    const errorMsg = error.message || JSON.stringify(error);
-    return { success: false, error: `Erro técnico: ${errorMsg}` };
+    console.error('Erro detalhado no Banco (Nativo):', error);
+    return { success: false, error: `Erro técnico (Nativo): ${error.message || JSON.stringify(error)}` };
   }
 }
 
@@ -53,15 +55,16 @@ export async function loginUser(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
-  console.log('Tentativa de Login:', email);
+  console.log('Tentativa de Login Nativo:', email);
 
   if (!email || !password) {
     return { success: false, error: "Preencha e-mail e senha." };
   }
 
   try {
-    console.log('Consultando banco para login...');
-    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    const sql = neon(process.env.DATABASE_URL!);
+    console.log('Consultando banco nativamente...');
+    const result = await sql`SELECT * FROM users WHERE email = ${email} LIMIT 1`;
     const user = result[0];
 
     if (!user) {
@@ -70,10 +73,7 @@ export async function loginUser(formData: FormData) {
 
     // Check password
     const isPasswordCorrect = bcrypt.compareSync(password, user.password || "");
-    // Fallback if password was stored as plain text during initial tests
-    const isPlainTextCorrect = user.password === password;
-
-    if (!isPasswordCorrect && !isPlainTextCorrect) {
+    if (!isPasswordCorrect && user.password !== password) {
       return { success: false, error: "Senha incorreta." };
     }
 
@@ -83,7 +83,7 @@ export async function loginUser(formData: FormData) {
       nome: user.nome,
       cpf: user.cpf,
       siape: user.siape,
-      dataNascimento: user.dataNascimento
+      dataNascimento: user.data_nascimento // Note: SQL results usually use snake_case
     })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
