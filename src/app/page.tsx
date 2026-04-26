@@ -389,7 +389,6 @@ export default function App() {
         const newBlob = await upload(selectedFile.name, selectedFile, {
           access: 'public',
           handleUploadUrl: '/api/upload',
-          addRandomSuffix: true,
         });
         comprovanteUrls.push(newBlob.url);
       } catch (e: any) {

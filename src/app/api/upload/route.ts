@@ -14,6 +14,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         return {
           allowedContentTypes: ['application/pdf', 'image/jpeg', 'image/png'],
           tokenPayload: JSON.stringify({ timestamp: Date.now() }),
+          addRandomSuffix: true,
         };
       },
       onUploadCompleted: async ({ blob, tokenPayload }) => {
