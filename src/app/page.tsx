@@ -237,9 +237,9 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16 gap-x-10 relative">
           {[
-            { i: 'person_add', t: '1. Cadastro Institucional', d: 'Acesse com seu e-mail @ifam.edu.br e complete seu perfil de lotação.' },
-            { i: 'account_tree', t: '2. Envio de Evidências', d: 'Adicione suas atividades e anexe os comprovantes PDF para pontuação.' },
-            { i: 'history_edu', t: '3. Elaboração do Memorial', d: 'Estruture sua trajetória profissional baseada nas atividades cadastradas.' },
+            { i: 'person_add', t: '1. Cadastro Institucional', d: 'Acesse com seu e-mail @ifam.edu.br, complete seu perfil e leia atentamente o regulamento do RSC.' },
+            { i: 'account_tree', t: '2. Envio de Evidências', d: 'Inicie o levantamento de documentos e anexe as evidências em PDF para validar sua pontuação.' },
+            { i: 'history_edu', t: '3. Elaboração do Memorial', d: 'Utilize nossa ferramenta gratuita para estruturar sua trajetória profissional de forma automática.' },
             { i: 'verified', t: '4. Avaliação pela Comissão', d: 'Membros avaliadores revisam seu protocolo e emitem o parecer técnico.' },
             { i: 'description', t: '5. Emissão de Portaria', d: 'Após a aprovação, o IFAM emite a Portaria oficial do reconhecimento.' },
             { i: 'payments', t: '6. Atualização de Pagamento', d: 'Inclusão automática do benefício em folha e progressão na carreira.' },
