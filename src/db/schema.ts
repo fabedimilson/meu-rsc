@@ -3,9 +3,9 @@ import { pgTable, serial, text, integer, timestamp, varchar, boolean, real } fro
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   nome: text("nome").notNull(),
-  cpf: varchar("cpf", { length: 14 }).notNull().unique(),
-  dataNascimento: varchar("data_nascimento", { length: 10 }).notNull(),
-  telefone: varchar("telefone", { length: 20 }).notNull(),
+  cpf: varchar("cpf", { length: 14 }).unique(),
+  dataNascimento: varchar("data_nascimento", { length: 10 }),
+  telefone: varchar("telefone", { length: 20 }),
   email: text("email").unique(),
   password: text("password"),
   siape: varchar("siape", { length: 20 }), // Added SIAPE for IFAM
