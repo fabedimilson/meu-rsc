@@ -96,7 +96,7 @@ const REQUISITOS = [
 
 const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin: () => void, session: any }) => (
   <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
-    <header className="bg-white sticky top-0 z-50 border-b-4 border-[#13315C]">
+    <header className="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
       <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
         <div className="flex items-center gap-4">
           <div className="flex flex-col leading-none font-black text-[#13315C] text-xl uppercase tracking-tight">
@@ -111,7 +111,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </div>
         <nav className="hidden md:flex items-center gap-8">
           <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-sm cursor-pointer">Início</span>
-          <a href="#niveis" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Níveis RSC</a>
+          <a href="#niveis" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Níveis e Critérios</a>
           <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
         </nav>
         <div className="flex items-center gap-4">
@@ -138,10 +138,10 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </div>
         <h1 className="text-4xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight">
           Sua história construiu a nossa.<br />
-          <span className="text-[#0042B1]">Agora, é hora de reconhecer cada passo.</span>
+          <span className="text-[#0042B1]">Valorize cada etapa da sua carreira.</span>
         </h1>
         <p className="text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2">
-          O RSC é o tributo ao seu conhecimento, à sua dedicação e ao legado que você deixa para a educação federal. Um processo transparente, humano e feito para valorizar você.
+          O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino federal. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
         <div className="flex flex-wrap gap-4 mt-4">
           <button onClick={onStart} className="bg-[#0042B1] text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)]">
@@ -156,71 +156,90 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </div>
       </div>
     </section>
-    <section id="niveis" className="w-full bg-white py-20 border-y border-slate-200">
+
+    <section id="niveis" className="w-full bg-white py-24 border-y border-slate-200">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-[#13315C] mb-4">Níveis de Reconhecimento</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">Cada nível exige um acúmulo diferente de saberes e competências. Confira os requisitos mínimos de pontuação para cada classe.</p>
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-bold text-[#13315C] mb-4">A Escala de Reconhecimento</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto text-lg italic">Cada nível representa um novo patamar de excelência em saberes e competências diferenciadas.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {[
-            { l: 'I', p: 10, c: 1, d: 'Requisitos iniciais de experiência e formação.' },
-            { l: 'II', p: 15, c: 2, d: 'Ampliando a atuação em projetos e comissões.' },
-            { l: 'III', p: 25, c: 2, d: 'Consolidação da trajetória profissional no IFAM.' },
-            { l: 'IV', p: 30, c: 3, d: 'Liderança e produção técnica qualificada.' },
-            { l: 'V', p: 52, c: 5, d: 'Alto impacto institucional e gestão de saberes.' },
-            { l: 'VI', p: 75, c: 7, d: 'Excelência técnica e reconhecimento nacional.' },
-          ].map(level => (
-            <div key={level.l} className="p-8 rounded-2xl border border-slate-100 bg-[#fbf9f8] hover:border-[#0042B1] transition-all hover:shadow-xl group">
-              <div className="text-4xl font-black text-[#13315C] mb-4 group-hover:text-[#0042B1]">RSC {level.l}</div>
-              <div className="flex items-center gap-4 mb-6">
+            { l: 'I', p: 10, c: 1, d: 'Consolidação de atividades de formação e suporte técnico inicial.' },
+            { l: 'II', p: 15, c: 2, d: 'Ampliando a atuação através de projetos setoriais e comissões locais.' },
+            { l: 'III', p: 25, c: 2, d: 'Maturidade profissional com liderança técnica e contribuição institucional.' },
+            { l: 'IV', p: 30, c: 3, d: 'Alto nível de especialização e produção técnica/intelectual qualificada.' },
+            { l: 'V', p: 52, c: 5, d: 'Referência em gestão de saberes, projetos complexos e impacto regional.' },
+            { l: 'VI', p: 75, c: 7, d: 'Excelência máxima com reconhecimento amplo e impacto na educação federal.' },
+          ].map((level, idx) => (
+            <div key={level.l} className="relative p-10 rounded-3xl border border-slate-100 bg-[#fbf9f8] hover:border-[#0042B1] transition-all hover:shadow-2xl group flex flex-col">
+              <div className="absolute -top-4 left-8 bg-[#13315C] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg">Nível 0{idx+1}</div>
+              <div className="text-3xl font-black text-[#13315C] mb-6 group-hover:text-[#0042B1]">RSC {level.l}</div>
+              <div className="flex items-center gap-6 mb-8 bg-white p-4 rounded-2xl shadow-sm border border-slate-50">
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-[#0042B1]">{level.p}</span>
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Pontos Mín.</span>
+                  <span className="text-3xl font-bold text-[#0042B1] leading-none">{level.p}</span>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 mt-1">Pontos</span>
                 </div>
                 <div className="w-px h-8 bg-slate-200"></div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-slate-700">{level.c}</span>
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Critérios</span>
+                  <span className="text-3xl font-bold text-slate-700 leading-none">{level.c}</span>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 mt-1">Critérios</span>
                 </div>
               </div>
-              <p className="text-sm text-slate-500 leading-relaxed">{level.d}</p>
+              <p className="text-sm text-slate-500 leading-relaxed flex-1">{level.d}</p>
+              <div className="mt-8 flex items-center text-[#13315C] font-bold text-xs uppercase tracking-widest gap-2">
+                Ver requisitos
+                <span className="material-symbols-outlined text-[14px]">arrow_right_alt</span>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <section id="como-funciona" className="w-full py-20 bg-[#fbf9f8]">
+    <section id="como-funciona" className="w-full py-24 bg-[#fbf9f8]">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-[#13315C] mb-4">Como funciona o processo</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">Um fluxo digital, ágil e transparente para garantir que seu reconhecimento seja processado com segurança.</p>
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-bold text-[#13315C] mb-4">Fluxo do Processo</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto text-lg italic">Um caminho transparente do protocolo ao benefício financeiro.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16 gap-x-10 relative">
           {[
-            { i: 'person_add', t: 'Cadastro', d: 'Acesse com seu e-mail IFAM e preencha seus dados básicos de servidor.' },
-            { i: 'account_tree', t: 'Evidências', d: 'Adicione suas atividades, cargos e produções anexando os documentos PDF.' },
-            { i: 'history_edu', t: 'Memorial', d: 'O sistema gera uma base para seu memorial, que você pode editar livremente.' },
-            { i: 'verified', t: 'Avaliação', d: 'A comissão analisa seus documentos e emite o parecer final digitalmente.' },
+            { i: 'person_add', t: '1. Cadastro Institucional', d: 'Acesse com seu e-mail @ifam.edu.br e complete seu perfil de lotação.' },
+            { i: 'account_tree', t: '2. Envio de Evidências', d: 'Adicione suas atividades e anexe os comprovantes PDF para pontuação.' },
+            { i: 'history_edu', t: '3. Elaboração do Memorial', d: 'Estruture sua trajetória profissional baseada nas atividades cadastradas.' },
+            { i: 'verified', t: '4. Avaliação pela Comissão', d: 'Membros avaliadores revisam seu protocolo e emitem o parecer técnico.' },
+            { i: 'description', t: '5. Emissão de Portaria', d: 'Após a aprovação, o IFAM emite a Portaria oficial do reconhecimento.' },
+            { i: 'payments', t: '6. Atualização de Pagamento', d: 'Inclusão automática do benefício em folha e progressão na carreira.' },
           ].map((step, idx) => (
-            <div key={idx} className="relative flex flex-col items-center text-center group">
-              <div className="w-16 h-16 rounded-full bg-white shadow-lg border border-slate-100 flex items-center justify-center mb-6 text-[#0042B1] group-hover:bg-[#0042B1] group-hover:text-white transition-all">
-                <span className="material-symbols-outlined text-[28px]">{step.i}</span>
+            <div key={idx} className="relative flex flex-col items-start group">
+              <div className="w-16 h-16 rounded-2xl bg-white shadow-xl border border-slate-100 flex items-center justify-center mb-6 text-[#0042B1] group-hover:bg-[#0042B1] group-hover:text-white transition-all transform group-hover:-translate-y-2">
+                <span className="material-symbols-outlined text-[32px]">{step.i}</span>
               </div>
-              <h3 className="font-bold text-[#13315C] mb-2">{step.t}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">{step.d}</p>
-              {idx < 3 && <div className="hidden md:block absolute top-8 left-[calc(50%+40px)] w-[calc(100%-80px)] h-px bg-slate-200"></div>}
+              <h3 className="font-bold text-lg text-[#13315C] mb-3">{step.t}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">{step.d}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
-    <footer className="bg-[#f0f0f0] border-t border-slate-300 py-12 mt-auto">
-      <div className="flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto space-y-5 text-center px-6">
-        <div className="font-black text-[#13315C] text-base tracking-widest uppercase">MEU RSC</div>
-        <p className="text-slate-500 text-sm">
-          Respeito ao passado, segurança para o futuro. © {new Date().getFullYear()} Governo Federal | Instituto Federal do Amazonas
+
+    <footer className="bg-[#13315C] text-white py-16">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center md:text-left">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-12 mb-12">
+          <div>
+            <div className="font-black text-2xl tracking-widest uppercase mb-2">MEU RSC</div>
+            <p className="text-white/60 text-sm max-w-xs">Plataforma oficial para valorização da carreira técnica e reconhecimento de saberes do IFAM.</p>
+          </div>
+          <div className="flex gap-8">
+             <div className="flex flex-col gap-2">
+               <span className="font-bold text-[10px] uppercase tracking-[0.2em] text-[#C5A059]">Suporte Técnico</span>
+               <span className="text-sm text-white/80">suporte.rsc@ifam.edu.br</span>
+             </div>
+          </div>
+        </div>
+        <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">
+          © {new Date().getFullYear()} Governo Federal | Instituto Federal do Amazonas
         </p>
       </div>
     </footer>
