@@ -7,7 +7,7 @@ import {
   History, Heart, Calculator, BookOpen, Sparkles, MessageSquare, X, ChevronDown, ChevronUp, Loader2, Save, FileUp
 } from 'lucide-react';
 import { submitRegistration, getUserApplication } from './actions';
-import { loginUser, logoutUser, getUserSession, updateUserProfile } from './user-actions';
+import { loginUser, logoutUser, getUserSession, updateUserProfile, registerUser } from './user-actions';
 import { upload } from '@vercel/blob/client';
 
 // --- BASE DE DADOS COMPLETA (Fiel ao PDF Anexos I a VI) ---
