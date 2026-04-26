@@ -12,6 +12,13 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     type: "website",
   },
+  robots: "index, follow",
+  alternates: {
+    canonical: "https://meu-rsc-ifam.vercel.app",
+    languages: {
+      "pt-BR": "pt-BR",
+    },
+  },
 };
 
 export default function RootLayout({
