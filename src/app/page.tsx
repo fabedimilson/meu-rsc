@@ -399,18 +399,25 @@ export default function App() {
     
     setIsSubmitting(true);
     try {
-      // Garantir que esteja visível para o html2canvas, mas fora da tela
-      element.style.display = 'block';
-      element.style.visibility = 'visible';
-      
-      // Pequeno delay para garantir que o QR Code e fontes renderizaram
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Pequeno delay para garantir que o QR Code renderizou no DOM
+      await new Promise(resolve => setTimeout(resolve, 800));
 
       const canvas = await html2canvas(element, { 
-        scale: 3, 
+        scale: 2, // Reduzido de 3 para 2 para evitar estouro de memória no mobile
         useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff'
+        allowTaint: true,
+        logging: true, // Habilitado para depuração se necessário
+        backgroundColor: '#ffffff',
+        onclone: (clonedDoc) => {
+          // Garante que o elemento clonado para a foto esteja visível
+          const clonedElement = clonedDoc.getElementById('pdf-template');
+          if (clonedElement) {
+            clonedElement.style.opacity = '1';
+            clonedElement.style.visibility = 'visible';
+            clonedElement.style.display = 'block';
+            clonedElement.style.left = '0';
+          }
+        }
       });
 
       const imgData = canvas.toDataURL('image/png');
@@ -421,11 +428,9 @@ export default function App() {
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`Protocolo_RSC_${protocolNumber}.pdf`);
       
-      element.style.display = 'none';
-      element.style.visibility = 'hidden';
     } catch (e) {
       console.error("Erro PDF:", e);
-      alert("Erro ao gerar PDF. Por favor, tente novamente.");
+      alert("Erro ao gerar PDF. O sistema tentará novamente em instantes.");
     } finally {
       setIsSubmitting(false);
     }
