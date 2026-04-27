@@ -243,8 +243,8 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
             onClick={(e) => { e.stopPropagation(); onStart(); }} 
             className="w-full md:w-auto bg-[#0042B1] text-white px-10 py-4 rounded-full font-black text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-3 shadow-[0_10px_20px_-5px_rgba(0,66,177,0.4)] cursor-pointer active:scale-95"
           >
-            SIMULAR PROTOCOLO AGORA
-            <span className="material-symbols-outlined text-[20px]">calculate</span>
+            SOLICITAR RSC AGORA
+            <span className="material-symbols-outlined text-[20px]">how_to_reg</span>
           </button>
         </div>
       </div>
@@ -294,9 +294,12 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
     <footer className="bg-[#13315C] text-white py-16">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center md:text-left">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-12 mb-12">
-          <div>
-            <div className="font-black text-2xl tracking-widest uppercase mb-2">MEU RSC</div>
-            <p className="text-white/60 text-sm max-w-xs">Plataforma oficial para valorização da carreira técnica e reconhecimento de saberes do IFAM.</p>
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <div onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-white uppercase py-2 border-y-2 border-white cursor-pointer hover:opacity-80 transition-opacity w-fit">
+              <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+              <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+            </div>
+            <p className="text-white/60 text-sm max-w-xs text-center md:text-left">Plataforma oficial para valorização da carreira técnica e reconhecimento de saberes do IFAM.</p>
           </div>
           <div className="flex gap-8">
              <div className="flex flex-col gap-2">
@@ -351,7 +354,9 @@ export default function App() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
+    setMounted(true);
     getUserSession().then(setSession);
   }, []);
 
@@ -1014,7 +1019,7 @@ export default function App() {
             </div>
             <div className="text-right">
               <p className="text-xs font-bold uppercase text-slate-400">Data de Emissão</p>
-              <p className="font-bold">{new Date().toLocaleDateString('pt-BR')}</p>
+              <p className="font-bold">{mounted ? new Date().toLocaleDateString('pt-BR') : ''}</p>
             </div>
           </div>
 
