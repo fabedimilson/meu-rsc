@@ -152,15 +152,15 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
             <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
-            <div className="hidden md:flex flex-col text-sm text-slate-500 font-medium">
+            <div className="hidden md:flex flex-col text-base text-slate-500 font-medium">
               <span className="font-bold text-[#13315C]">Governo Federal</span>
-              <span>Instituto Federal do Amazonas</span>
+              <span className="text-sm">Instituto Federal do Amazonas</span>
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8">
-            <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-base cursor-pointer">Início</span>
-            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-base">Como Funciona</a>
+          <nav className="hidden md:flex items-center gap-10">
+            <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-lg cursor-pointer">Início</span>
+            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-lg">Como Funciona</a>
           </nav>
 
           {/* Desktop Login Options - RECONSTRUÍDOS */}
