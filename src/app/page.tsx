@@ -137,45 +137,82 @@ const BannerCarousel = () => {
   );
 };
 
-const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin: () => void, session: any }) => (
-  <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
-    <header className="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
-      <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
-        <div className="flex items-center gap-4">
-          <div key="brand-logo" className="flex flex-col items-center leading-[1.2] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
-            <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
-            <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin: () => void, session: any }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
+      <header className="bg-white sticky top-0 z-[100] border-b border-slate-200 shadow-sm">
+        <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
+          <div className="flex items-center gap-4">
+            <div key="brand-logo" className="flex flex-col items-center leading-[1.2] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
+              <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+              <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+            </div>
+            <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
+            <div className="hidden md:flex flex-col text-xs text-slate-500 font-medium">
+              <span className="font-bold text-[#13315C]">Governo Federal</span>
+              <span>Instituto Federal do Amazonas</span>
+            </div>
           </div>
-          <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
-          <div className="hidden md:flex flex-col text-xs text-slate-500 font-medium">
-            <span className="font-bold text-[#13315C]">Governo Federal</span>
-            <span>Instituto Federal do Amazonas</span>
-          </div>
-        </div>
-        <nav className="hidden md:flex items-center gap-8">
-          <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-sm cursor-pointer">Início</span>
-          <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
-        </nav>
-        <div className="flex items-center gap-4 relative z-[100]">
-          <div className="flex items-center gap-3">
-            <a href="/admin" id="link-login-comissao" className="text-slate-500 hover:text-[#13315C] font-bold text-[10px] md:text-xs uppercase tracking-wider transition-colors mr-2">
+
+          <nav className="hidden md:flex items-center gap-8">
+            <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-sm cursor-pointer">Início</span>
+            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
+          </nav>
+
+          {/* Desktop Login Options */}
+          <div className="hidden md:flex items-center gap-3">
+            <a href="/admin" id="link-login-comissao" className="text-slate-500 hover:text-[#13315C] font-bold text-xs uppercase tracking-wider transition-colors mr-2">
               Login Comissão
             </a>
             {session ? (
-              <button id="btn-painel" onClick={() => onStart()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer pointer-events-auto">
+              <button id="btn-painel" onClick={() => onStart()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
                 Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button id="btn-login-servidor" onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer pointer-events-auto">
+              <button id="btn-login-servidor" onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
             )}
           </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden w-10 h-10 flex items-center justify-center text-[#13315C]"
+          >
+            <span className="material-symbols-outlined text-3xl">
+              {menuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
         </div>
-      </div>
-    </header>
+
+        {/* Mobile Dropdown Menu */}
+        {menuOpen && (
+          <div className="md:hidden bg-white border-b border-slate-200 py-4 px-6 animate-in slide-in-from-top duration-300">
+            <div className="flex flex-col gap-4">
+              <a href="/admin" className="flex items-center gap-3 py-2 text-[#13315C] font-bold uppercase text-xs tracking-widest">
+                <span className="material-symbols-outlined">admin_panel_settings</span>
+                Login Comissão
+              </a>
+              {session ? (
+                <button onClick={() => { onStart(); setMenuOpen(false); }} className="w-full bg-[#0042B1] text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+                  Acessar Painel
+                  <span className="material-symbols-outlined">arrow_forward</span>
+                </button>
+              ) : (
+                <button onClick={() => { onLogin(); setMenuOpen(false); }} className="w-full bg-[#0042B1] text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+                  Login Servidor
+                  <span className="material-symbols-outlined">login</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+      </header>
 
     <section className="w-full max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
       <div className="flex-1 flex flex-col items-start gap-5">
