@@ -142,7 +142,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
     <header className="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
       <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
         <div className="flex items-center gap-4">
-          <div className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C]">
+          <div className="flex flex-col items-center leading-none font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
             <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
@@ -158,12 +158,12 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </nav>
         <div className="flex items-center gap-4">
           {session ? (
-            <button onClick={onStart} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)]">
+            <button onClick={onStart} className="relative z-[60] bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
               Ir para o Painel
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </button>
           ) : (
-            <button onClick={onLogin} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)]">
+            <button onClick={onLogin} className="relative z-[60] bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
               Entrar (Servidor)
               <span className="material-symbols-outlined text-[18px]">login</span>
             </button>
@@ -186,7 +186,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino profissional e tecnológico. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
         <div className="flex flex-wrap gap-4 mt-4">
-          <button onClick={onStart} className="bg-[#0042B1] text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)]">
+          <button onClick={() => onStart()} className="bg-[#0042B1] text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
             Simular Protocolo
             <span className="material-symbols-outlined text-[18px]">calculate</span>
           </button>
