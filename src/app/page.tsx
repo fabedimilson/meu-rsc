@@ -161,18 +161,22 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
             <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
           </nav>
 
-          {/* Desktop Login Options */}
-          <div className="hidden md:flex items-center gap-3">
-            <a href="/admin" id="link-login-comissao" className="text-slate-500 hover:text-[#13315C] font-bold text-xs uppercase tracking-wider transition-colors mr-2">
+          {/* Desktop Login Options - RECONSTRUÍDOS */}
+          <div key="desktop-login-group" className="hidden md:flex items-center gap-3 relative z-[200]">
+            <button 
+              id="final-login-comissao"
+              onClick={() => window.location.href = '/admin'}
+              className="bg-[#C5A059] text-white px-5 py-2.5 rounded-full font-black text-xs uppercase tracking-widest shadow-lg hover:bg-[#a6864a] transition-all cursor-pointer"
+            >
               Login Comissão
-            </a>
+            </button>
             {session ? (
-              <button id="btn-painel" onClick={() => onStart()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
-                Painel
+              <button id="final-btn-painel" onClick={() => onStart()} className="bg-[#13315C] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#001c40] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+                Meu Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button id="btn-login-servidor" onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="final-btn-login-servidor" onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-xl cursor-pointer">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
@@ -190,21 +194,25 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           </button>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown Menu - RECONSTRUÍDO */}
         {menuOpen && (
-          <div className="md:hidden bg-white border-b border-slate-200 py-4 px-6 animate-in slide-in-from-top duration-300">
+          <div key="mobile-login-group" className="md:hidden bg-white border-b border-slate-200 py-6 px-6 animate-in slide-in-from-top duration-300 shadow-xl">
             <div className="flex flex-col gap-4">
-              <a href="/admin" className="flex items-center gap-3 py-2 text-[#13315C] font-bold uppercase text-xs tracking-widest">
+              <button 
+                id="mobile-login-comissao"
+                onClick={() => window.location.href = '/admin'}
+                className="w-full bg-[#C5A059] text-white py-3.5 rounded-xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 shadow-md"
+              >
                 <span className="material-symbols-outlined">admin_panel_settings</span>
                 Login Comissão
-              </a>
+              </button>
               {session ? (
-                <button onClick={() => { onStart(); setMenuOpen(false); }} className="w-full bg-[#0042B1] text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
-                  Acessar Painel
+                <button onClick={() => { onStart(); setMenuOpen(false); }} className="w-full bg-[#13315C] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md">
+                  Acessar Meu Painel
                   <span className="material-symbols-outlined">arrow_forward</span>
                 </button>
               ) : (
-                <button onClick={() => { onLogin(); setMenuOpen(false); }} className="w-full bg-[#0042B1] text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+                <button onClick={() => { onLogin(); setMenuOpen(false); }} className="w-full bg-[#0042B1] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md">
                   Login Servidor
                   <span className="material-symbols-outlined">login</span>
                 </button>
@@ -227,10 +235,14 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-justify">
           O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino profissional e tecnológico. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
-        <div className="flex flex-wrap gap-4 mt-4 w-full md:w-auto relative z-10">
-          <button id="btn-simular-hero" onClick={() => onStart()} className="w-full md:w-auto bg-[#0042B1] text-white px-8 py-4 md:py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer pointer-events-auto">
-            Simular Protocolo
-            <span className="material-symbols-outlined text-[18px]">calculate</span>
+        <div className="flex flex-wrap gap-4 mt-6 w-full md:w-auto relative z-[100]">
+          <button 
+            id="recreated-btn-simular-hero" 
+            onClick={() => onStart()} 
+            className="w-full md:w-auto bg-[#0042B1] text-white px-10 py-4 rounded-full font-black text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-3 shadow-[0_10px_20px_-5px_rgba(0,66,177,0.4)] cursor-pointer active:scale-95"
+          >
+            SIMULAR PROTOCOLO AGORA
+            <span className="material-symbols-outlined text-[20px]">calculate</span>
           </button>
         </div>
       </div>
