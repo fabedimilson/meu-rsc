@@ -112,8 +112,8 @@ const BannerCarousel = () => {
             alt={`Banner ${idx + 1}`} 
             className="w-full h-full object-cover" 
           />
-          {/* Camuflagem: Selo de Identidade Institucional Definitivo */}
-          <div className="absolute bottom-10 right-10 backdrop-blur-md bg-black/60 text-white px-4 py-2 rounded-2xl flex items-center gap-3 shadow-2xl animate-in fade-in duration-700">
+          {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
+          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-5 py-2.5 rounded-tl-3xl flex items-center gap-3 shadow-2xl animate-in fade-in duration-700">
              <div className="w-6 h-6 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
                 <span className="material-symbols-outlined text-[14px] text-white icon-fill">workspace_premium</span>
              </div>
