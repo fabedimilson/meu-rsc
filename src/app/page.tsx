@@ -298,6 +298,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
     </footer>
   </div>
 );
+};
 
 const CAMPUS_LIST = [
   "Avançado de Iranduba", "Boca do Acre", "Coari", "Eirunepé", "Humaitá", 
