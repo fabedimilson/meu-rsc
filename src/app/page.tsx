@@ -406,12 +406,22 @@ export default function App() {
 
       if (result.success) {
         if (authMode === 'register') {
-          alert("Cadastro realizado com sucesso! Agora faça seu login.");
-          setAuthMode('login');
+          const res = await getUserSession();
+          if (res.success) {
+            setSession(res.session);
+            setShowLogin(false);
+            setView('simulador');
+          } else {
+            setAuthMode('login');
+            alert("Cadastro realizado! Por favor, faça login.");
+          }
         } else {
-          const sess = await getUserSession();
-          setSession(sess);
-          setShowLogin(false);
+          const res = await getUserSession();
+          if (res.success) {
+            setSession(res.session);
+            setShowLogin(false);
+            setView('simulador');
+          }
         }
       } else {
         setAuthError(result.error || "Ocorreu um erro inesperado.");
