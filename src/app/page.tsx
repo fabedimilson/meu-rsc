@@ -113,7 +113,7 @@ const BannerCarousel = () => {
             className="w-full h-full object-cover" 
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo */}
-          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/60 text-white px-4 py-2 rounded-tl-2xl flex items-center gap-3 shadow-2xl animate-in fade-in duration-700">
+          <div className="absolute bottom-10 right-10 backdrop-blur-md bg-black/60 text-white px-4 py-2 rounded-2xl flex items-center gap-3 shadow-2xl animate-in fade-in duration-700">
              <div className="w-6 h-6 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
                 <span className="material-symbols-outlined text-[14px] text-white icon-fill">workspace_premium</span>
              </div>
@@ -198,46 +198,6 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
       </div>
     </section>
 
-    <section id="niveis" className="w-full bg-white py-24 border-y border-slate-200">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-[#13315C] mb-4">A Escala de Reconhecimento</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto text-lg italic">Cada nível representa um novo patamar de excelência em saberes e competências diferenciadas.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {[
-            { l: 'I', p: 10, c: 1, d: 'Consolidação de atividades de formação e suporte técnico inicial.' },
-            { l: 'II', p: 15, c: 2, d: 'Ampliando a atuação através de projetos setoriais e comissões locais.' },
-            { l: 'III', p: 25, c: 2, d: 'Maturidade profissional com liderança técnica e contribuição institucional.' },
-            { l: 'IV', p: 30, c: 3, d: 'Alto nível de especialização e produção técnica/intelectual qualificada.' },
-            { l: 'V', p: 52, c: 5, d: 'Referência em gestão de saberes, projetos complexos e impacto regional.' },
-            { l: 'VI', p: 75, c: 7, d: 'Excelência máxima com reconhecimento amplo e impacto na educação federal.' },
-          ].map((level, idx) => (
-            <div key={level.l} className="relative p-10 rounded-3xl border border-slate-100 bg-[#fbf9f8] hover:border-[#0042B1] transition-all hover:shadow-2xl group flex flex-col">
-              <div className="absolute -top-4 left-8 bg-[#13315C] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg">Nível 0{idx+1}</div>
-              <div className="text-3xl font-black text-[#13315C] mb-6 group-hover:text-[#0042B1]">RSC {level.l}</div>
-              <div className="flex items-center gap-6 mb-8 bg-white p-4 rounded-2xl shadow-sm border border-slate-50">
-                <div className="flex flex-col">
-                  <span className="text-3xl font-bold text-[#0042B1] leading-none">{level.p}</span>
-                  <span className="text-[10px] uppercase font-bold text-slate-400 mt-1">Pontos</span>
-                </div>
-                <div className="w-px h-8 bg-slate-200"></div>
-                <div className="flex flex-col">
-                  <span className="text-3xl font-bold text-slate-700 leading-none">{level.c}</span>
-                  <span className="text-[10px] uppercase font-bold text-slate-400 mt-1">Critérios</span>
-                </div>
-              </div>
-              <p className="text-sm text-slate-500 leading-relaxed flex-1">{level.d}</p>
-              <div className="mt-8 flex items-center text-[#13315C] font-bold text-xs uppercase tracking-widest gap-2">
-                Ver requisitos
-                <span className="material-symbols-outlined text-[14px]">arrow_right_alt</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
     <section id="como-funciona" className="w-full py-24 bg-[#fbf9f8]">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         <div className="text-center mb-20">
@@ -288,10 +248,10 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
 );
 
 const CAMPUS_LIST = [
-  "Reitoria", "Lábrea", "Parintins", "Manaus - Zona Leste", "Manaus - Centro", 
-  "Manaus - Distrito Industrial", "Presidente Figueiredo", "Coari", "Tabatinga", 
-  "Maués", "São Gabriel da Cachoeira", "Humaitá", "Itacoatiara", "Manacapuru", 
-  "Tefé", "Eirunepé", "Avançado de Iranduba", "Boca do Acre", "Polo de Inovação"
+  "Avançado de Iranduba", "Boca do Acre", "Coari", "Eirunepé", "Humaitá", 
+  "Itacoatiara", "Lábrea", "Manacapuru", "Manaus - Centro", "Manaus - Distrito Industrial", 
+  "Manaus - Zona Leste", "Maués", "Parintins", "Polo de Inovação", "Presidente Figueiredo", 
+  "Reitoria", "São Gabriel da Cachoeira", "Tabatinga", "Tefé"
 ];
 
 export default function App() {
