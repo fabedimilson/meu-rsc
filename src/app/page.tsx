@@ -142,7 +142,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
     <header className="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
       <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
         <div className="flex items-center gap-4">
-          <div className="flex flex-col items-center leading-[1.1] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
+          <div key="brand-logo" className="flex flex-col items-center leading-[1.2] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
             <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
@@ -156,22 +156,24 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-sm cursor-pointer">Início</span>
           <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
         </nav>
+        <div className="flex items-center gap-4 relative z-[100]">
           <div className="flex items-center gap-3">
-            <a href="/admin" className="text-slate-500 hover:text-[#13315C] font-bold text-[10px] md:text-xs uppercase tracking-wider transition-colors mr-2">
+            <a href="/admin" id="link-login-comissao" className="text-slate-500 hover:text-[#13315C] font-bold text-[10px] md:text-xs uppercase tracking-wider transition-colors mr-2">
               Login Comissão
             </a>
             {session ? (
-              <button onClick={() => onStart()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="btn-painel" onClick={() => onStart()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer pointer-events-auto">
                 Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="btn-login-servidor" onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer pointer-events-auto">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
             )}
           </div>
+        </div>
       </div>
     </header>
 
@@ -188,8 +190,8 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-left md:text-justify">
           O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino profissional e tecnológico. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
-        <div className="flex flex-wrap gap-4 mt-4 w-full md:w-auto">
-          <button onClick={() => onStart()} className="w-full md:w-auto bg-[#0042B1] text-white px-8 py-4 md:py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
+        <div className="flex flex-wrap gap-4 mt-4 w-full md:w-auto relative z-10">
+          <button id="btn-simular-hero" onClick={() => onStart()} className="w-full md:w-auto bg-[#0042B1] text-white px-8 py-4 md:py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer pointer-events-auto">
             Simular Protocolo
             <span className="material-symbols-outlined text-[18px]">calculate</span>
           </button>
