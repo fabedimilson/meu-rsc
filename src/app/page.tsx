@@ -113,22 +113,22 @@ const BannerCarousel = () => {
             className="w-full h-full object-cover" 
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
-          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-5 py-2.5 rounded-tl-3xl flex items-center gap-3 shadow-2xl animate-in fade-in duration-700">
-             <div className="w-6 h-6 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
-                <span className="material-symbols-outlined text-[14px] text-white icon-fill">workspace_premium</span>
+          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-3 py-1.5 md:px-5 md:py-2.5 rounded-tl-2xl md:rounded-tl-3xl flex items-center gap-2 md:gap-3 shadow-2xl animate-in fade-in duration-700">
+             <div className="w-4 h-4 md:w-6 md:h-6 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
+                <span className="material-symbols-outlined text-[10px] md:text-[14px] text-white icon-fill">workspace_premium</span>
              </div>
              <div className="flex flex-col leading-tight">
-                <span className="text-[11px] font-bold tracking-wide">MEU RSC - IFAM</span>
+                <span className="text-[9px] md:text-[11px] font-bold tracking-wide">MEU RSC - IFAM</span>
              </div>
           </div>
         </div>
       ))}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3 z-10">
         {images.map((_, idx) => (
           <button 
             key={idx} 
             onClick={() => setCurrent(idx)}
-            className={`h-1.5 rounded-full transition-all duration-500 ${idx === current ? 'bg-white w-8 shadow-lg' : 'bg-white/40 w-2 hover:bg-white/60'}`}
+            className={`h-1 md:h-1.5 rounded-full transition-all duration-500 ${idx === current ? 'bg-white w-6 md:w-8 shadow-lg' : 'bg-white/40 w-1.5 md:w-2 hover:bg-white/60'}`}
           />
         ))}
       </div>
@@ -178,15 +178,15 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#C5A059'}}>workspace_premium</span>
           Reconhecimento de Saberes e Competências
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight">
+        <h1 className="text-3xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight">
           Sua história construiu a nossa.<br />
           <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
         </h1>
-        <p className="text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-justify">
+        <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-left md:text-justify">
           O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino profissional e tecnológico. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
-        <div className="flex flex-wrap gap-4 mt-4">
-          <button onClick={() => onStart()} className="bg-[#0042B1] text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
+        <div className="flex flex-wrap gap-4 mt-4 w-full md:w-auto">
+          <button onClick={() => onStart()} className="w-full md:w-auto bg-[#0042B1] text-white px-8 py-4 md:py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
             Simular Protocolo
             <span className="material-symbols-outlined text-[18px]">calculate</span>
           </button>
