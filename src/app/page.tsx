@@ -171,12 +171,12 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
               Login Comissão
             </button>
             {session ? (
-              <button id="final-btn-painel" onClick={() => onStart()} className="bg-[#13315C] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#001c40] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-[#13315C] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#001c40] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
                 Meu Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button id="final-btn-login-servidor" onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-xl cursor-pointer">
+              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-xl cursor-pointer">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
@@ -238,7 +238,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         <div className="flex flex-wrap gap-4 mt-6 w-full md:w-auto relative z-[100]">
           <button 
             id="recreated-btn-simular-hero" 
-            onClick={() => onStart()} 
+            onClick={(e) => { e.stopPropagation(); onStart(); }} 
             className="w-full md:w-auto bg-[#0042B1] text-white px-10 py-4 rounded-full font-black text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-3 shadow-[0_10px_20px_-5px_rgba(0,66,177,0.4)] cursor-pointer active:scale-95"
           >
             SIMULAR PROTOCOLO AGORA
@@ -559,7 +559,7 @@ export default function App() {
     } catch(e) { alert("Erro ao enviar."); } finally { setIsSubmitting(false); }
   };
 
-  if (view === 'home') return <HomePage onStart={() => setView('simulador')} onLogin={() => setShowLogin(true)} session={session} />;
+  if (view === 'home') return <HomePage onStart={() => { setShowLogin(false); setView('simulador'); }} onLogin={() => setShowLogin(true)} session={session} />;
 
   const pct = Math.min((validation.totalPoints / validation.rules.minPts) * 100, 100);
   const offset = 282.7 - (282.7 * pct / 100);
