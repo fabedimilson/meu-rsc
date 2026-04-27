@@ -168,7 +168,7 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
             <button 
               id="final-login-comissao"
               onClick={() => window.location.href = '/admin'}
-              className="bg-[#C5A059] text-white px-5 py-2.5 rounded-full font-black text-xs uppercase tracking-widest shadow-lg hover:bg-[#a6864a] transition-all cursor-pointer"
+              className="bg-[#C5A059] text-white px-5 py-2.5 rounded-full font-bold text-xs tracking-widest shadow-lg hover:bg-[#a6864a] transition-all cursor-pointer"
             >
               Login Comissão
             </button>
@@ -203,7 +203,7 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
               <button 
                 id="mobile-login-comissao"
                 onClick={() => window.location.href = '/admin'}
-                className="w-full bg-[#C5A059] text-white py-3.5 rounded-xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 shadow-md"
+                className="w-full bg-[#C5A059] text-white py-3.5 rounded-xl font-bold text-xs tracking-widest flex items-center justify-center gap-3 shadow-md"
               >
                 <span className="material-symbols-outlined">admin_panel_settings</span>
                 Login Comissão
@@ -241,9 +241,9 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
           <button 
             id="recreated-btn-simular-hero" 
             onClick={(e) => { e.stopPropagation(); onStart(); }} 
-            className="w-full md:w-auto bg-[#0042B1] text-white px-10 py-4 rounded-full font-black text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-3 shadow-[0_10px_20px_-5px_rgba(0,66,177,0.4)] cursor-pointer active:scale-95"
+            className="w-full md:w-auto bg-[#0042B1] text-white px-10 py-4 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-3 shadow-[0_10px_20px_-5px_rgba(0,66,177,0.4)] cursor-pointer active:scale-95"
           >
-            SOLICITAR RSC AGORA
+            Solicitar RSC agora
             <span className="material-symbols-outlined text-[20px]">how_to_reg</span>
           </button>
         </div>
