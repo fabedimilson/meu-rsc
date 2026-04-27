@@ -142,7 +142,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
     <header className="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
       <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
         <div className="flex items-center gap-4">
-          <div className="flex flex-col items-center leading-none font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
+          <div className="flex flex-col items-center leading-[1.1] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
             <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
@@ -156,19 +156,22 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-sm cursor-pointer">Início</span>
           <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
         </nav>
-        <div className="flex items-center gap-4">
-          {session ? (
-            <button onClick={onStart} className="relative z-[60] bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
-              Ir para o Painel
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </button>
-          ) : (
-            <button onClick={onLogin} className="relative z-[60] bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)] cursor-pointer">
-              Entrar (Servidor)
-              <span className="material-symbols-outlined text-[18px]">login</span>
-            </button>
-          )}
-        </div>
+          <div className="flex items-center gap-3">
+            <a href="/admin" className="text-slate-500 hover:text-[#13315C] font-bold text-xs uppercase tracking-wider transition-colors mr-2">
+              Entrar Comissão
+            </a>
+            {session ? (
+              <button onClick={() => onStart()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+                Painel
+                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            ) : (
+              <button onClick={() => onLogin()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+                Login Servidor
+                <span className="material-symbols-outlined text-[18px]">login</span>
+              </button>
+            )}
+          </div>
       </div>
     </header>
 
