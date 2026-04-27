@@ -157,8 +157,8 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
         </nav>
           <div className="flex items-center gap-3">
-            <a href="/admin" className="text-slate-500 hover:text-[#13315C] font-bold text-xs uppercase tracking-wider transition-colors mr-2">
-              Entrar Comissão
+            <a href="/admin" className="text-slate-500 hover:text-[#13315C] font-bold text-[10px] md:text-xs uppercase tracking-wider transition-colors mr-2">
+              Login Comissão
             </a>
             {session ? (
               <button onClick={() => onStart()} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
