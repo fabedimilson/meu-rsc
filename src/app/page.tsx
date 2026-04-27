@@ -407,8 +407,8 @@ export default function App() {
       if (result.success) {
         if (authMode === 'register') {
           const res = await getUserSession();
-          if (res && res.success) {
-            setSession(res.session);
+          if (res) {
+            setSession(res);
             setShowLogin(false);
             setView('simulador');
           } else {
@@ -417,8 +417,8 @@ export default function App() {
           }
         } else {
           const res = await getUserSession();
-          if (res && res.success) {
-            setSession(res.session);
+          if (res) {
+            setSession(res);
             setShowLogin(false);
             setView('simulador');
           }
