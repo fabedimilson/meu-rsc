@@ -182,10 +182,10 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </div>
         <h1 className="text-4xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight">
           Sua história construiu a nossa.<br />
-          <span className="text-[#0042B1]">Valorize cada etapa da sua carreira.</span>
+          <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
         </h1>
-        <p className="text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2">
-          O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino federal. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
+        <p className="text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-justify">
+          O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino profissional e tecnológico. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
         <div className="flex flex-wrap gap-4 mt-4">
           <button onClick={onStart} className="bg-[#0042B1] text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-[0_4px_14px_0_rgba(0,66,177,0.39)]">
