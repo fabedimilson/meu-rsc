@@ -112,23 +112,23 @@ const BannerCarousel = () => {
             alt={`Banner ${idx + 1}`} 
             className="w-full h-full object-cover" 
           />
-          {/* Camuflagem: Selo de Identidade Institucional Compacto */}
-          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/40 text-white px-3 py-1.5 rounded-tl-2xl flex items-center gap-2 shadow-2xl animate-in fade-in duration-700">
-             <div className="w-5 h-5 bg-[#13315C] rounded-full flex items-center justify-center">
-                <span className="material-symbols-outlined text-[12px] text-white icon-fill">workspace_premium</span>
+          {/* Camuflagem: Selo de Identidade Institucional Refinado */}
+          <div className="absolute bottom-6 right-6 backdrop-blur-md bg-black/40 text-white px-4 py-2 rounded-2xl flex items-center gap-3 shadow-2xl animate-in fade-in duration-700">
+             <div className="w-6 h-6 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
+                <span className="material-symbols-outlined text-[14px] text-white icon-fill">workspace_premium</span>
              </div>
              <div className="flex flex-col leading-tight">
-                <span className="text-[11px] font-bold">MEU RSC - IFAM</span>
+                <span className="text-[11px] font-bold tracking-wide">MEU RSC - IFAM</span>
              </div>
           </div>
         </div>
       ))}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
         {images.map((_, idx) => (
           <button 
             key={idx} 
             onClick={() => setCurrent(idx)}
-            className={`h-1 rounded-full transition-all duration-500 ${idx === current ? 'bg-white w-6 shadow-lg' : 'bg-white/40 w-1.5 hover:bg-white/60'}`}
+            className={`h-1.5 rounded-full transition-all duration-500 ${idx === current ? 'bg-white w-8 shadow-lg' : 'bg-white/40 w-2 hover:bg-white/60'}`}
           />
         ))}
       </div>
