@@ -4,11 +4,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Meu RSC - IFAM",
   description: "Portal de Reconhecimento de Saberes e Competências dos servidores PCCTAE do Instituto Federal do Amazonas.",
-  metadataBase: new URL("https://meu-rsc-ifam.vercel.app"),
+  metadataBase: new URL("https://meu-rsc.vercel.app"),
   openGraph: {
     title: "Meu RSC - IFAM",
     description: "Plataforma oficial para solicitação e acompanhamento do RSC no IFAM.",
-    url: "https://meu-rsc-ifam.vercel.app",
+    url: "https://meu-rsc.vercel.app",
     siteName: "Meu RSC - IFAM",
     locale: "pt_BR",
     type: "website",

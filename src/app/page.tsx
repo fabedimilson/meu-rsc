@@ -1088,7 +1088,7 @@ export default function App() {
           <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end border-t-2 border-slate-100 pt-8">
             <div className="flex items-center gap-4">
               <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://meu-rsc-ifam.vercel.app/validar?protocolo=${protocolNumber}`} 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://meu-rsc.vercel.app/validar?protocolo=${protocolNumber}`} 
                 alt="QR Code Validação"
                 className="w-24 h-24 border p-1 bg-white"
               />
