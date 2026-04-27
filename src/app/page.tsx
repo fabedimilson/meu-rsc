@@ -7,7 +7,7 @@ import {
   History, Heart, Calculator, BookOpen, Sparkles, MessageSquare, X, ChevronDown, ChevronUp, Loader2, Save, FileUp, Printer, FileDown
 } from 'lucide-react';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+// html2canvas removed - PDF now generated programmatically via jsPDF
 import { submitRegistration, getUserApplication } from './actions';
 import { loginUser, logoutUser, getUserSession, updateUserProfile, registerUser } from './user-actions';
 import { upload } from '@vercel/blob/client';
@@ -139,7 +139,7 @@ const BannerCarousel = () => {
   );
 };
 
-const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, onLogin: () => void, onHome: () => void, session: any }) => {
+const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: () => void, onLogin: () => void, onHome: () => void, session: any, visitCount: number }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -291,6 +291,30 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
       </div>
     </section>
 
+    {/* Contador de Acessos */}
+    <section className="w-full py-12 bg-gradient-to-br from-[#0e2647] to-[#13315C]">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-center gap-8">
+        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-6 border border-white/10">
+          <div className="w-14 h-14 rounded-2xl bg-[#C5A059]/20 flex items-center justify-center">
+            <span className="material-symbols-outlined text-3xl text-[#C5A059] icon-fill">visibility</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-3xl font-black text-white tabular-nums">{visitCount.toLocaleString('pt-BR')}</span>
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/60">Acessos ao Portal</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-6 border border-white/10">
+          <div className="w-14 h-14 rounded-2xl bg-[#C5A059]/20 flex items-center justify-center">
+            <span className="material-symbols-outlined text-3xl text-[#C5A059] icon-fill">groups</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-3xl font-black text-white">IFAM</span>
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/60">19 Campi no Amazonas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer className="bg-[#13315C] text-white py-16">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center md:text-left">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-12 mb-12">
@@ -354,10 +378,18 @@ export default function App() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [visitCount, setVisitCount] = useState(0);
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
     getUserSession().then(setSession);
+    // Increment and fetch visit counter
+    fetch('/api/visits', { method: 'POST' })
+      .then(r => r.json())
+      .then(d => setVisitCount(d.count))
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -394,43 +426,150 @@ export default function App() {
   }, [session]);
 
   const handleDownloadPDF = async () => {
-    const element = document.getElementById('pdf-template');
-    if (!element) return;
-    
     setIsSubmitting(true);
     try {
-      // Pequeno delay para garantir que o QR Code renderizou no DOM
-      await new Promise(resolve => setTimeout(resolve, 800));
-
-      const canvas = await html2canvas(element, { 
-        scale: 2, // Reduzido de 3 para 2 para evitar estouro de memória no mobile
-        useCORS: true,
-        allowTaint: true,
-        logging: true, // Habilitado para depuração se necessário
-        backgroundColor: '#ffffff',
-        onclone: (clonedDoc) => {
-          // Garante que o elemento clonado para a foto esteja visível
-          const clonedElement = clonedDoc.getElementById('pdf-template');
-          if (clonedElement) {
-            clonedElement.style.opacity = '1';
-            clonedElement.style.visibility = 'visible';
-            clonedElement.style.display = 'block';
-            clonedElement.style.left = '0';
-          }
-        }
-      });
-
-      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const margin = 15;
+      const contentWidth = pageWidth - margin * 2;
+      let y = margin;
+
+      // Border
+      pdf.setDrawColor(19, 49, 92); // #13315C
+      pdf.setLineWidth(1.5);
+      pdf.rect(10, 10, pageWidth - 20, pdf.internal.pageSize.getHeight() - 20);
+
+      // Header
+      pdf.setFontSize(16);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(19, 49, 92);
+      pdf.text('INSTITUTO FEDERAL DO AMAZONAS', pageWidth / 2, y + 8, { align: 'center' });
+      y += 14;
+      pdf.setFontSize(9);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text('Comissão de Reconhecimento de Saberes e Competências - RSC', pageWidth / 2, y, { align: 'center' });
+      y += 6;
+
+      // Gold line
+      pdf.setDrawColor(203, 167, 47); // #cba72f
+      pdf.setLineWidth(0.8);
+      pdf.line(pageWidth / 2 - 15, y, pageWidth / 2 + 15, y);
+      y += 10;
+
+      // Protocol info
+      pdf.setFontSize(12);
+      pdf.setTextColor(0, 0, 0);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(`Certificado de Protocolo: #${protocolNumber}`, margin, y);
+      y += 7;
+      pdf.setFontSize(10);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(`Servidor: ${userData.nome}`, margin, y); y += 6;
+      pdf.text(`CPF: ${userData.cpf}`, margin, y); y += 6;
+      pdf.text(`Campus: ${userData.campus}`, margin, y); y += 6;
+      pdf.text(`Data de Emissão: ${new Date().toLocaleDateString('pt-BR')}`, margin, y);
+      y += 12;
+
+      // Results box
+      pdf.setFillColor(248, 248, 248);
+      pdf.roundedRect(margin, y, contentWidth, 35, 3, 3, 'F');
+      pdf.setDrawColor(220, 220, 220);
+      pdf.roundedRect(margin, y, contentWidth, 35, 3, 3, 'S');
+
+      pdf.setFontSize(11);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(19, 49, 92);
+      pdf.text('RESULTADO PRELIMINAR', pageWidth / 2, y + 8, { align: 'center' });
+
+      pdf.setFontSize(18);
+      pdf.text(`${validation.totalPoints.toFixed(1)} pts`, pageWidth / 2 - 25, y + 22, { align: 'center' });
+      pdf.text(`RSC ${targetLevel}`, pageWidth / 2 + 25, y + 22, { align: 'center' });
+
+      pdf.setFontSize(8);
+      pdf.setTextColor(120, 120, 120);
+      pdf.text('Pontuação Alcançada', pageWidth / 2 - 25, y + 28, { align: 'center' });
+      pdf.text('Nível Pleiteado', pageWidth / 2 + 25, y + 28, { align: 'center' });
+
+      y += 42;
+
+      // Status
+      pdf.setFontSize(9);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(120, 120, 120);
+      pdf.text('Status do Processo:', margin, y);
+      pdf.setTextColor(appStatus === 'Aprovado' ? 22 : 180, appStatus === 'Aprovado' ? 163 : 130, appStatus === 'Aprovado' ? 74 : 0);
+      pdf.setFontSize(12);
+      pdf.text(appStatus || 'Em Análise', margin + 40, y);
+      y += 12;
+
+      // Table header
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(120, 120, 120);
+      pdf.text('EVIDÊNCIAS APRESENTADAS', margin, y);
+      y += 2;
+      pdf.setDrawColor(200, 200, 200);
+      pdf.line(margin, y, pageWidth - margin, y);
+      y += 5;
+
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(80, 80, 80);
+      pdf.text('Descrição', margin, y);
+      pdf.text('Qtd', pageWidth - margin - 25, y, { align: 'right' });
+      pdf.text('Pontos', pageWidth - margin, y, { align: 'right' });
+      y += 2;
+      pdf.line(margin, y, pageWidth - margin, y);
+      y += 4;
+
+      // Table rows
+      pdf.setFont('helvetica', 'normal');
+      pdf.setTextColor(50, 50, 50);
+      for (const a of activities) {
+        if (y > 260) {
+          pdf.addPage();
+          y = 20;
+        }
+        const descLines = pdf.splitTextToSize(a.desc, contentWidth - 40);
+        pdf.text(descLines, margin, y);
+        pdf.text(String(a.qty), pageWidth - margin - 25, y, { align: 'right' });
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(a.points.toFixed(1), pageWidth - margin, y, { align: 'right' });
+        pdf.setFont('helvetica', 'normal');
+        y += descLines.length * 4 + 3;
+        pdf.setDrawColor(240, 240, 240);
+        pdf.line(margin, y - 1.5, pageWidth - margin, y - 1.5);
+      }
+
+      y += 8;
+
+      // Footer
+      if (y > 240) { pdf.addPage(); y = 20; }
+      pdf.setFontSize(8);
+      pdf.setTextColor(120, 120, 120);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Documento Validado Digitalmente', margin, y);
+      y += 4;
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(7);
+      pdf.text(`Validação: https://meu-rsc.vercel.app/validar?protocolo=${protocolNumber}`, margin, y);
+      y += 4;
+      pdf.text(`ID: ${protocolNumber}-${userData.cpf.replace(/\D/g, '')}`, margin, y);
+
+      // Signature
+      y += 16;
+      pdf.setDrawColor(150, 150, 150);
+      pdf.line(pageWidth - margin - 60, y, pageWidth - margin, y);
+      y += 4;
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(19, 49, 92);
+      pdf.text(userData.nome, pageWidth - margin - 30, y, { align: 'center' });
+
       pdf.save(`Protocolo_RSC_${protocolNumber}.pdf`);
-      
     } catch (e) {
       console.error("Erro PDF:", e);
-      alert("Erro ao gerar PDF. O sistema tentará novamente em instantes.");
+      alert("Erro ao gerar PDF. Tente novamente.");
     } finally {
       setIsSubmitting(false);
     }
@@ -620,7 +759,7 @@ export default function App() {
   };
 
   const renderMain = () => {
-    if (view === 'home') return <HomePage onStart={() => { setShowLogin(false); setView('simulador'); }} onLogin={() => setShowLogin(true)} onHome={() => { setView('home'); window.location.hash = ''; }} session={session} />;
+    if (view === 'home') return <HomePage onStart={() => { setShowLogin(false); setView('simulador'); }} onLogin={() => setShowLogin(true)} onHome={() => { setView('home'); window.location.hash = ''; }} session={session} visitCount={visitCount} />;
 
     const pct = Math.min((validation.totalPoints / validation.rules.minPts) * 100, 100);
     const offset = 282.7 - (282.7 * pct / 100);
@@ -684,8 +823,8 @@ export default function App() {
             </div>
           </header>
 
-          <main className="flex-1 overflow-y-auto">
-            <div className="max-w-[1200px] mx-auto p-6 lg:p-10 flex flex-col gap-8">
+          <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
+            <div className="max-w-[1200px] mx-auto p-4 md:p-6 lg:p-10 flex flex-col gap-8">
               {activeTab === 'acompanhamento' ? (
                 <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm space-y-8 max-w-3xl mx-auto">
                    <div className="text-center">
@@ -795,11 +934,57 @@ export default function App() {
                   </div>
 
                   <div className="lg:col-span-4 space-y-6">
-                    <div className="bg-white rounded-xl border border-[#c4c6d0] p-6 shadow-sm flex flex-col items-center gap-4">
-                      <h3 className="font-bold text-[#001c40]">Termômetro RSC</h3>
-                      <select disabled={isReadOnly} className="w-full p-2 border rounded text-sm text-center font-bold disabled:bg-slate-50" value={targetLevel} onChange={e=>setTargetLevel(e.target.value)}>
-                        {Object.keys(RSC_LEVELS).map(l => <option key={l} value={l}>Meta: RSC {l}</option>)}
-                      </select>
+                    <div className="bg-white rounded-xl border border-[#c4c6d0] p-6 shadow-sm flex flex-col items-center gap-5">
+                      {/* Header com instrução clara */}
+                      <div className="w-full text-center">
+                        <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5 mb-3">
+                          <span className="material-symbols-outlined text-[16px] text-amber-600 icon-fill">arrow_downward</span>
+                          <span className="text-[10px] font-black uppercase tracking-wider text-amber-700">Escolha seu nível</span>
+                        </div>
+                        <h3 className="font-bold text-[#001c40] text-lg">Nível RSC Pretendido</h3>
+                        <p className="text-[11px] text-slate-500 mt-1">Selecione o nível que deseja pleitear para calcular a meta</p>
+                      </div>
+
+                      {/* Seletor visual de nível - cards */}
+                      <div className="w-full grid grid-cols-3 gap-2">
+                        {Object.keys(RSC_LEVELS).map(l => (
+                          <button
+                            key={l}
+                            disabled={isReadOnly}
+                            onClick={() => setTargetLevel(l)}
+                            className={`relative flex flex-col items-center py-3 px-2 rounded-xl border-2 transition-all duration-200 font-bold text-sm cursor-pointer disabled:cursor-not-allowed ${
+                              targetLevel === l
+                                ? 'border-[#2757c5] bg-[#e5ecf6] text-[#2757c5] shadow-md scale-[1.02]'
+                                : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50'
+                            }`}
+                          >
+                            {targetLevel === l && (
+                              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#2757c5] rounded-full flex items-center justify-center">
+                                <span className="material-symbols-outlined text-[12px] text-white icon-fill">check</span>
+                              </span>
+                            )}
+                            <span className="text-base">RSC {l}</span>
+                            <span className="text-[9px] font-medium text-slate-400 mt-0.5">{RSC_LEVELS[l].minPts} pts</span>
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Regras do nível selecionado */}
+                      <div className="w-full bg-slate-50 rounded-lg p-3 border border-slate-100">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="material-symbols-outlined text-[16px] text-[#13315C]">info</span>
+                          <span className="text-[10px] font-black uppercase tracking-wider text-[#13315C]">Requisitos RSC {targetLevel}</span>
+                        </div>
+                        <div className="flex flex-col gap-1 text-[11px] text-slate-600">
+                          <span>• Mínimo de <strong>{validation.rules.minPts} pontos</strong></span>
+                          <span>• Mínimo de <strong>{validation.rules.minCrit} critérios</strong> diferentes</span>
+                          {validation.rules.reqRules.length > 0 && (
+                            <span>• {validation.rules.ruleMsg}</span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Termômetro circular */}
                       <div className="relative w-32 h-32 flex items-center justify-center">
                         <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                           <circle cx="50" cy="50" r="45" fill="none" stroke="#f0eded" strokeWidth="8"/>
@@ -807,7 +992,7 @@ export default function App() {
                         </svg>
                         <div className="absolute flex flex-col items-center">
                           <span className="text-3xl font-bold">{validation.totalPoints.toFixed(0)}</span>
-                          <span className="text-[10px] uppercase font-bold text-slate-400">Pts</span>
+                          <span className="text-[10px] uppercase font-bold text-slate-400">de {validation.rules.minPts} pts</span>
                         </div>
                       </div>
 
@@ -833,8 +1018,8 @@ export default function App() {
                   </div>
                 </div>
               ) : activeTab === 'memorial' ? (
-                <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm flex flex-col h-full min-h-[600px]">
-                  <div className="flex justify-between items-center mb-6">
+                <div className="bg-white rounded-xl border border-[#c4c6d0] p-4 md:p-8 shadow-sm flex flex-col h-full min-h-[400px] md:min-h-[600px]">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-6">
                     <div>
                       <h2 className="text-2xl font-bold text-[#001c40]">Memorial Descritivo</h2>
                       <p className="text-sm text-slate-500">O documento final que será lido pela comissão avaliadora.</p>
@@ -856,7 +1041,7 @@ export default function App() {
                   </div>
                 </div>
               ) : (
-                <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm space-y-6 max-w-2xl">
+                <div className="bg-white rounded-xl border border-[#c4c6d0] p-4 md:p-8 shadow-sm space-y-6 max-w-2xl">
                   <div>
                     <h2 className="text-2xl font-bold text-[#001c40]">Meu Perfil</h2>
                     <p className="text-sm text-slate-500">Mantenha seus dados atualizados. Eles são obrigatórios para a submissão.</p>
@@ -872,7 +1057,7 @@ export default function App() {
                         <label className="text-xs font-bold text-slate-500 uppercase">Nome Completo</label>
                         <input type="text" value={userData.nome} onChange={e=>setUserData({...userData, nome:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="text-xs font-bold text-slate-500 uppercase">CPF</label>
                           <input type="text" value={userData.cpf} onChange={e=>setUserData({...userData, cpf:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
@@ -910,6 +1095,32 @@ export default function App() {
               )}
             </div>
           </main>
+
+          {/* Mobile Bottom Navigation */}
+          <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-[200] flex items-center justify-around px-2 py-1.5 safe-area-bottom">
+            {appStatus && (
+              <button onClick={() => setActiveTab('acompanhamento')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'acompanhamento' ? 'text-[#2757c5] bg-blue-50' : 'text-slate-400'}`}>
+                <span className="material-symbols-outlined text-[22px]">query_stats</span>
+                <span className="text-[9px] font-bold">Protocolo</span>
+              </button>
+            )}
+            <button onClick={() => setActiveTab('jornada')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'jornada' ? 'text-[#13315C] bg-slate-100' : 'text-slate-400'}`}>
+              <span className="material-symbols-outlined text-[22px]">timeline</span>
+              <span className="text-[9px] font-bold">Jornada</span>
+            </button>
+            <button onClick={() => setActiveTab('memorial')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'memorial' ? 'text-[#13315C] bg-slate-100' : 'text-slate-400'}`}>
+              <span className="material-symbols-outlined text-[22px]">auto_awesome</span>
+              <span className="text-[9px] font-bold">Memorial</span>
+            </button>
+            <button onClick={() => setActiveTab('perfil')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'perfil' ? 'text-[#13315C] bg-slate-100' : 'text-slate-400'}`}>
+              <span className="material-symbols-outlined text-[22px]">account_circle</span>
+              <span className="text-[9px] font-bold">Perfil</span>
+            </button>
+            <button onClick={() => setView('home')} className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] text-slate-400">
+              <span className="material-symbols-outlined text-[22px]">home</span>
+              <span className="text-[9px] font-bold">Início</span>
+            </button>
+          </nav>
         </div>
       </div>
     );
@@ -1022,90 +1233,7 @@ export default function App() {
           </div>
         </div>
       )}
-      {/* PDF Template - Persistent in DOM but invisible to user for reliable capture */}
-      <div id="pdf-template" className="opacity-0 pointer-events-none fixed -left-[9999px] top-0 w-[210mm] bg-white p-12 text-black font-serif">
-        <div className="border-4 border-[#13315C] p-8 h-full relative">
-          <div className="text-center mb-10">
-            <h1 className="text-2xl font-bold uppercase tracking-widest text-[#13315C] mb-1">Instituto Federal do Amazonas</h1>
-            <p className="text-sm font-bold uppercase text-slate-600 mb-4">Comissão de Reconhecimento de Saberes e Competências - RSC</p>
-            <div className="h-1 w-20 bg-[#cba72f] mx-auto"></div>
-          </div>
 
-          <div className="mb-10 flex justify-between items-start">
-            <div className="space-y-2">
-              <p className="text-lg"><strong>Certificado de Protocolo:</strong> #{protocolNumber}</p>
-              <p><strong>Servidor:</strong> {userData.nome}</p>
-              <p><strong>CPF:</strong> {userData.cpf}</p>
-              <p><strong>Campus:</strong> {userData.campus}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-xs font-bold uppercase text-slate-400">Data de Emissão</p>
-              <p className="font-bold">{mounted ? new Date().toLocaleDateString('pt-BR') : ''}</p>
-            </div>
-          </div>
-
-          <div className="bg-slate-50 p-8 rounded-xl border border-slate-200 mb-10 text-center">
-            <h2 className="text-xl font-bold mb-4 uppercase text-[#13315C]">Resultado Preliminar</h2>
-            <div className="flex justify-around items-center">
-              <div>
-                <p className="text-xs font-bold text-slate-500 uppercase">Pontuação Alcançada</p>
-                <p className="text-4xl font-black text-[#13315C]">{validation.totalPoints.toFixed(1)} pts</p>
-              </div>
-              <div className="h-12 w-px bg-slate-300"></div>
-              <div>
-                <p className="text-xs font-bold text-slate-500 uppercase">Nível Pleiteado</p>
-                <p className="text-4xl font-black text-[#13315C]">RSC {targetLevel}</p>
-              </div>
-            </div>
-            <div className="mt-6 pt-6 border-t border-slate-200">
-              <p className="text-sm font-bold uppercase text-slate-500 mb-1">Status do Processo</p>
-              <p className={`text-2xl font-black uppercase ${appStatus === 'Aprovado' ? 'text-green-600' : 'text-amber-600'}`}>{appStatus}</p>
-            </div>
-          </div>
-
-          <div className="mb-10">
-            <h3 className="font-bold uppercase text-xs text-slate-400 mb-4 border-b pb-2">Evidências Apresentadas</h3>
-            <table className="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr className="border-b text-slate-500">
-                  <th className="py-2">Descrição</th>
-                  <th className="py-2 text-right">Qtd</th>
-                  <th className="py-2 text-right">Pontos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {activities.map(a => (
-                  <tr key={a.uid} className="border-b border-slate-100">
-                    <td className="py-2 pr-4">{a.desc}</td>
-                    <td className="py-2 text-right">{a.qty}</td>
-                    <td className="py-2 text-right font-bold">{a.points.toFixed(1)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end border-t-2 border-slate-100 pt-8">
-            <div className="flex items-center gap-4">
-              <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://meu-rsc.vercel.app/validar?protocolo=${protocolNumber}`} 
-                alt="QR Code Validação"
-                className="w-24 h-24 border p-1 bg-white"
-              />
-              <div className="max-w-[200px]">
-                <p className="text-[10px] font-bold text-slate-400 uppercase leading-tight mb-1">Documento Validado Digitalmente</p>
-                <p className="text-[8px] text-slate-400 leading-tight">Aponte a câmera para validar a autenticidade deste documento no portal oficial do IFAM.</p>
-                <p className="text-[9px] font-mono mt-1 break-all">ID: {protocolNumber}-{userData.cpf.replace(/\D/g,'')}</p>
-              </div>
-            </div>
-            <div className="text-right">
-                <p className="text-[10px] font-bold uppercase text-slate-500 mb-10">Assinatura Digital do Servidor</p>
-                <div className="h-px w-48 bg-slate-400 ml-auto mb-1"></div>
-                <p className="text-[10px] font-bold text-[#13315C] uppercase">{userData.nome}</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 }
