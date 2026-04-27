@@ -142,9 +142,9 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
     <header className="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
       <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
         <div className="flex items-center gap-4">
-          <div className="flex flex-col leading-none font-black text-[#13315C] text-xl uppercase tracking-tight">
-            <span>MEU</span>
-            <span>RSC</span>
+          <div className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C]">
+            <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+            <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
           <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
           <div className="hidden md:flex flex-col text-xs text-slate-500 font-medium">
@@ -541,8 +541,11 @@ export default function App() {
       </nav>
 
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="bg-[#F0F0F0] border-b border-[#E0E0E0] flex justify-between items-center px-6 h-16 shrink-0">
-          <span className="text-xl font-bold text-[#13315C]">MEU RSC</span>
+        <header className="bg-[#F0F0F0] border-b border-[#E0E0E0] flex justify-between items-center px-6 h-20 shrink-0">
+          <div className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C] scale-75 origin-left">
+            <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+            <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+          </div>
           <div className="flex items-center gap-4">
             {isReadOnly && <span className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">lock</span> Somente Leitura</span>}
             {appStatus === 'Rascunho' && <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full border border-blue-200">Rascunho Ativo</span>}
