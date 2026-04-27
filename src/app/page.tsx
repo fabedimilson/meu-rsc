@@ -96,7 +96,7 @@ const REQUISITOS = [
 
 const BannerCarousel = () => {
   const [current, setCurrent] = useState(0);
-  const images = ["/banners/Banner1.png", "/banners/Banner2.png", "/banners/Banner3.png"];
+  const images = ["/banners/Banner1.png", "/banners/Banner2.png", "/banners/Banner3.png", "/banners/Banner4.png"];
 
   useEffect(() => {
     const timer = setInterval(() => setCurrent(prev => (prev + 1) % images.length), 5000);
@@ -112,28 +112,27 @@ const BannerCarousel = () => {
             alt={`Banner ${idx + 1}`} 
             className="w-full h-full object-cover" 
           />
-          {/* Camuflagem: Selo de Identidade Institucional */}
-          <div className="absolute bottom-6 right-6 backdrop-blur-md bg-white/20 border border-white/30 text-white px-4 py-2 rounded-2xl flex items-center gap-3 shadow-2xl animate-in fade-in slide-in-from-right-4 duration-1000">
-             <div className="w-8 h-8 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
-                <span className="material-symbols-outlined text-[18px] text-white icon-fill">workspace_premium</span>
+          {/* Camuflagem: Selo de Identidade Institucional Compacto */}
+          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/40 text-white px-3 py-1.5 rounded-tl-2xl flex items-center gap-2 shadow-2xl animate-in fade-in duration-700">
+             <div className="w-5 h-5 bg-[#13315C] rounded-full flex items-center justify-center">
+                <span className="material-symbols-outlined text-[12px] text-white icon-fill">workspace_premium</span>
              </div>
              <div className="flex flex-col leading-tight">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/70">Plataforma Oficial</span>
-                <span className="text-sm font-bold">MEU RSC - IFAM</span>
+                <span className="text-[11px] font-bold">MEU RSC - IFAM</span>
              </div>
           </div>
         </div>
       ))}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, idx) => (
           <button 
             key={idx} 
             onClick={() => setCurrent(idx)}
-            className={`h-1.5 rounded-full transition-all duration-500 ${idx === current ? 'bg-white w-8 shadow-lg' : 'bg-white/40 w-2 hover:bg-white/60'}`}
+            className={`h-1 rounded-full transition-all duration-500 ${idx === current ? 'bg-white w-6 shadow-lg' : 'bg-white/40 w-1.5 hover:bg-white/60'}`}
           />
         ))}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
     </div>
   );
 };
