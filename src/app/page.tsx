@@ -137,7 +137,7 @@ const BannerCarousel = () => {
   );
 };
 
-const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin: () => void, session: any }) => {
+const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, onLogin: () => void, onHome: () => void, session: any }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -145,10 +145,10 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
       <header className="bg-white sticky top-0 z-[100] border-b border-slate-200 shadow-sm">
         <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
           <div className="flex items-center gap-4">
-            <div key="brand-logo" className="flex flex-col items-center leading-[1.2] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-default">
-              <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
-              <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
-            </div>
+          <div key="brand-logo" onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-pointer hover:opacity-80 transition-opacity">
+            <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+            <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+          </div>
             <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
             <div className="hidden md:flex flex-col text-xs text-slate-500 font-medium">
               <span className="font-bold text-[#13315C]">Governo Federal</span>
@@ -559,290 +559,296 @@ export default function App() {
     } catch(e) { alert("Erro ao enviar."); } finally { setIsSubmitting(false); }
   };
 
-  if (view === 'home') return <HomePage onStart={() => { setShowLogin(false); setView('simulador'); }} onLogin={() => setShowLogin(true)} session={session} />;
+  const renderMain = () => {
+    if (view === 'home') return <HomePage onStart={() => { setShowLogin(false); setView('simulador'); }} onLogin={() => setShowLogin(true)} onHome={() => { setView('home'); window.location.hash = ''; }} session={session} />;
 
-  const pct = Math.min((validation.totalPoints / validation.rules.minPts) * 100, 100);
-  const offset = 282.7 - (282.7 * pct / 100);
-  const isReadOnly = appStatus !== null && appStatus !== 'Rascunho' && appStatus !== 'Pendente';
+    const pct = Math.min((validation.totalPoints / validation.rules.minPts) * 100, 100);
+    const offset = 282.7 - (282.7 * pct / 100);
+    const isReadOnly = appStatus !== null && appStatus !== 'Rascunho' && appStatus !== 'Pendente';
 
-  return (
-    <div className="flex h-screen w-full overflow-hidden bg-[#fbf9f8]">
-      <nav className="hidden md:flex bg-white w-64 shrink-0 border-r border-[#E0E0E0] shadow-sm flex-col py-6 h-screen">
-        <div className="px-6 pb-6 mb-2 border-b border-[#e4e2e1]">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#13315c] flex items-center justify-center text-white font-bold">S</div>
-            <div>
-              <p className="text-[#13315C] font-bold text-sm leading-tight truncate">{session ? session.nome.split(' ')[0] : 'Modo Simulador'}</p>
-              <p className="text-slate-400 text-[10px]">{session ? `SIAPE: ${session.siape}` : 'Apenas visualização'}</p>
+    return (
+      <div className="flex h-screen w-full overflow-hidden bg-[#fbf9f8]">
+        <nav className="hidden md:flex bg-white w-64 shrink-0 border-r border-[#E0E0E0] shadow-sm flex-col py-6 h-screen">
+          <div className="px-6 pb-6 mb-2 border-b border-[#e4e2e1]">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-[#13315c] flex items-center justify-center text-white font-bold">S</div>
+              <div>
+                <p className="text-[#13315C] font-bold text-sm leading-tight truncate">{session ? session.nome.split(' ')[0] : 'Modo Simulador'}</p>
+                <p className="text-slate-400 text-[10px]">{session ? `SIAPE: ${session.siape}` : 'Apenas visualização'}</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex-1 px-4 space-y-1 mt-2">
-          {appStatus && (
-            <div onClick={() => setActiveTab('acompanhamento')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'acompanhamento' ? 'bg-[#e5ecf6] text-[#2757c5] border-r-4 border-[#2757c5]' : 'text-slate-500 hover:bg-slate-50'}`}>
-              <span className="material-symbols-outlined text-xl">query_stats</span>
-              <span className="font-semibold text-sm">Meu Protocolo</span>
+          <div className="flex-1 px-4 space-y-1 mt-2">
+            {appStatus && (
+              <div onClick={() => setActiveTab('acompanhamento')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'acompanhamento' ? 'bg-[#e5ecf6] text-[#2757c5] border-r-4 border-[#2757c5]' : 'text-slate-500 hover:bg-slate-50'}`}>
+                <span className="material-symbols-outlined text-xl">query_stats</span>
+                <span className="font-semibold text-sm">Meu Protocolo</span>
+              </div>
+            )}
+            <div onClick={() => setActiveTab('jornada')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'jornada' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
+              <span className="material-symbols-outlined text-xl">timeline</span>
+              <span className="font-semibold text-sm">Minha Jornada</span>
             </div>
-          )}
-          <div onClick={() => setActiveTab('jornada')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'jornada' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
-            <span className="material-symbols-outlined text-xl">timeline</span>
-            <span className="font-semibold text-sm">Minha Jornada</span>
+            <div onClick={() => setActiveTab('memorial')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'memorial' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
+              <span className="material-symbols-outlined text-xl">auto_awesome</span>
+              <span className="font-semibold text-sm">Memorial RSC</span>
+            </div>
+            <div onClick={() => setActiveTab('perfil')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'perfil' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
+              <span className="material-symbols-outlined text-xl">account_circle</span>
+              <span className="font-semibold text-sm">Meu Perfil</span>
+            </div>
           </div>
-          <div onClick={() => setActiveTab('memorial')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'memorial' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
-            <span className="material-symbols-outlined text-xl">auto_awesome</span>
-            <span className="font-semibold text-sm">Memorial RSC</span>
-          </div>
-          <div onClick={() => setActiveTab('perfil')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'perfil' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
-            <span className="material-symbols-outlined text-xl">account_circle</span>
-            <span className="font-semibold text-sm">Meu Perfil</span>
-          </div>
-        </div>
-        <div className="px-6 mt-4">
-          {session ? (
-            <button onClick={handleLogout} className="w-full py-2.5 px-4 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-semibold hover:bg-red-100">Sair da Conta</button>
-          ) : (
-            <button onClick={() => setView('home')} className="w-full py-2.5 px-4 bg-[#001c40] text-white rounded text-sm font-semibold hover:bg-[#13315c]">Voltar ao Início</button>
-          )}
-        </div>
-      </nav>
-
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="bg-[#F0F0F0] border-b border-[#E0E0E0] flex justify-between items-center px-6 h-20 shrink-0">
-          <div className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C] scale-75 origin-left">
-            <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
-            <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
-          </div>
-          <div className="flex items-center gap-4">
-            {isReadOnly && <span className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">lock</span> Somente Leitura</span>}
-            {appStatus === 'Rascunho' && <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full border border-blue-200">Rascunho Ativo</span>}
+          <div className="px-6 mt-4">
             {session ? (
-              <button onClick={handleLogout} className="text-xs font-bold text-slate-400 hover:text-red-500 uppercase">Sair</button>
+              <button onClick={handleLogout} className="w-full py-2.5 px-4 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-semibold hover:bg-red-100">Sair da Conta</button>
             ) : (
-              <button onClick={() => setShowLogin(true)} className="text-xs font-bold text-[#2757c5] hover:text-[#001c40] uppercase">Fazer Login</button>
+              <button onClick={() => setView('home')} className="w-full py-2.5 px-4 bg-[#001c40] text-white rounded text-sm font-semibold hover:bg-[#13315c]">Voltar ao Início</button>
             )}
           </div>
-        </header>
+        </nav>
 
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-[1200px] mx-auto p-6 lg:p-10 flex flex-col gap-8">
-            {activeTab === 'acompanhamento' ? (
-              <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm space-y-8 max-w-3xl mx-auto">
-                 <div className="text-center">
-                   <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-50 border-4 border-slate-100 mb-4">
-                      <span className="material-symbols-outlined text-4xl text-[#13315C]">{appStatus === 'Aprovado' ? 'verified' : appStatus === 'Reprovado' ? 'cancel' : 'hourglass_empty'}</span>
+        <div className="flex-1 flex flex-col h-screen overflow-hidden">
+          <header className="bg-[#F0F0F0] border-b border-[#E0E0E0] flex justify-between items-center px-6 h-20 shrink-0">
+            <div onClick={() => setView('home')} className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C] scale-75 origin-left cursor-pointer hover:opacity-80">
+              <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+              <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+            </div>
+            <div className="flex items-center gap-4">
+              {isReadOnly && <span className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">lock</span> Somente Leitura</span>}
+              {appStatus === 'Rascunho' && <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full border border-blue-200">Rascunho Ativo</span>}
+              {session ? (
+                <button onClick={handleLogout} className="text-xs font-bold text-slate-400 hover:text-red-500 uppercase">Sair</button>
+              ) : (
+                <button onClick={() => setShowLogin(true)} className="text-xs font-bold text-[#2757c5] hover:text-[#001c40] uppercase">Fazer Login</button>
+              )}
+            </div>
+          </header>
+
+          <main className="flex-1 overflow-y-auto">
+            <div className="max-w-[1200px] mx-auto p-6 lg:p-10 flex flex-col gap-8">
+              {activeTab === 'acompanhamento' ? (
+                <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm space-y-8 max-w-3xl mx-auto">
+                   <div className="text-center">
+                     <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-50 border-4 border-slate-100 mb-4">
+                        <span className="material-symbols-outlined text-4xl text-[#13315C]">{appStatus === 'Aprovado' ? 'verified' : appStatus === 'Reprovado' ? 'cancel' : 'hourglass_empty'}</span>
+                     </div>
+                     <h2 className="text-3xl font-bold text-[#001c40]">Protocolo #{protocolNumber}</h2>
+                     <p className="text-slate-500 mt-2">Nível Pleiteado: RSC {targetLevel}</p>
                    </div>
-                   <h2 className="text-3xl font-bold text-[#001c40]">Protocolo #{protocolNumber}</h2>
-                   <p className="text-slate-500 mt-2">Nível Pleiteado: RSC {targetLevel}</p>
-                 </div>
-                 
-                 <div className="p-6 rounded-xl border bg-slate-50 flex justify-between items-center">
-                   <div>
-                     <p className="text-xs uppercase font-bold text-slate-400">Status Atual</p>
-                     <p className={`text-xl font-bold ${appStatus === 'Aprovado' ? 'text-green-600' : appStatus === 'Reprovado' ? 'text-red-600' : 'text-amber-600'}`}>{appStatus}</p>
+                   
+                   <div className="p-6 rounded-xl border bg-slate-50 flex justify-between items-center">
+                     <div>
+                       <p className="text-xs uppercase font-bold text-slate-400">Status Atual</p>
+                       <p className={`text-xl font-bold ${appStatus === 'Aprovado' ? 'text-green-600' : appStatus === 'Reprovado' ? 'text-red-600' : 'text-amber-600'}`}>{appStatus}</p>
+                     </div>
+                     <div className="text-right">
+                       <p className="text-xs uppercase font-bold text-slate-400">Pontuação Mínima</p>
+                       <p className="text-xl font-bold text-[#13315C]">{validation.rules.minPts} pts</p>
+                     </div>
                    </div>
-                   <div className="text-right">
-                     <p className="text-xs uppercase font-bold text-slate-400">Pontuação Mínima</p>
-                     <p className="text-xl font-bold text-[#13315C]">{validation.rules.minPts} pts</p>
-                   </div>
-                 </div>
 
-                 {adminFeedback && (
-                   <div className="p-6 border-l-4 border-[#cba72f] bg-amber-50 rounded-r-xl">
-                      <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-[20px]">gavel</span> Parecer da Comissão</h3>
-                      <p className="text-amber-800 whitespace-pre-wrap text-sm">{adminFeedback}</p>
-                   </div>
-                 )}
-              </div>
-            ) : activeTab === 'jornada' ? (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-white rounded-xl border border-[#c4c6d0] p-6 shadow-sm space-y-4">
-                    <div className="flex justify-between items-center">
-                      <h2 className="text-xl font-semibold text-[#001c40]">Módulo de Evidências</h2>
-                      {!session && <span className="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full">Apenas Simulação</span>}
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <select disabled={isReadOnly} className="p-2 border rounded text-sm disabled:bg-slate-50" value={selectedReq} onChange={e=>{setSelectedReq(e.target.value); setSelectedItem('')}}>
-                        {REQUISITOS.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
-                      </select>
-                      <select disabled={isReadOnly} className="p-2 border rounded text-sm disabled:bg-slate-50" value={selectedItem} onChange={e=>setSelectedItem(e.target.value)}>
-                        <option value="">Selecione...</option>
-                        {REQUISITOS.find(r=>r.id===selectedReq)?.items.map(i => <option key={i.id} value={i.id}>{i.desc} ({i.points} pts / {i.unit})</option>)}
-                      </select>
-                    </div>
-                    <div className="flex gap-4">
-                      <input type="number" disabled={isReadOnly} value={quantity} onChange={e=>setQuantity(parseInt(e.target.value)||1)} className="w-20 p-2 border rounded text-center disabled:bg-slate-50" />
-                      <textarea disabled={isReadOnly} placeholder="Relato de experiência (Opcional)..." value={currentComment} onChange={e=>setCurrentComment(e.target.value)} className="flex-1 p-2 border rounded text-sm disabled:bg-slate-50" rows={2} />
-                    </div>
-                    
-                    {/* Real Upload UI */}
-                    <div className={`relative border-2 border-dashed rounded-lg p-4 text-center transition-colors ${isReadOnly ? 'border-slate-200 bg-slate-50' : 'border-[#c4c6d0] hover:border-[#13315c]'}`}>
-                       <input 
-                         type="file" 
-                         disabled={isReadOnly || isUploading}
-                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-                         onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-                       />
-                       <span className="material-symbols-outlined text-[#747780] mb-1">upload_file</span>
-                       <p className="text-xs text-[#747780] font-medium">
-                          {selectedFile ? <span className="text-[#13315c] font-bold">{selectedFile.name}</span> : 'Clique para anexar comprovantes PDF (Máx 5MB)'}
-                       </p>
-                    </div>
-
-                    {!isReadOnly && (
-                      <button onClick={handleAddActivity} disabled={!selectedItem || isUploading} className="w-full py-3 bg-[#cba72f] text-white rounded font-bold hover:opacity-90 flex justify-center items-center gap-2">
-                        {isUploading ? <Loader2 className="animate-spin" size={18}/> : <FileUp size={18}/>}
-                        {isUploading ? 'Anexando arquivo...' : 'Adicionar à Jornada'}
-                      </button>
-                    )}
-                    
-                    <div className="space-y-2 mt-6">
-                      <h3 className="font-bold text-[#13315C] text-sm uppercase tracking-wider border-b pb-2">Itens Adicionados ({activities.length})</h3>
-                      {activities.map(a => (
-                        <div key={a.uid} className="p-4 border rounded-lg flex justify-between items-center bg-slate-50">
-                          <div className="text-sm flex-1 mr-4">
-                            <p className="font-bold text-[#1b1c1c]">{a.desc}</p>
-                            <div className="flex items-center gap-3 mt-1">
-                               <p className="text-xs text-slate-500">{a.qty}x | {a.points.toFixed(1)} pts</p>
-                               {a.comprovanteUrls && a.comprovanteUrls.length > 0 && (
-                                 <div className="flex gap-1">
-                                   {a.comprovanteUrls.map((url: string, idx: number) => (
-                                     <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#2757c5] hover:underline bg-blue-50 px-2 py-0.5 rounded">
-                                       <span className="material-symbols-outlined text-[12px]">description</span>
-                                       Doc {a.comprovanteUrls.length > 1 ? idx + 1 : ''}
-                                     </a>
-                                   ))}
-                                 </div>
-                               )}
-                            </div>
-                            {a.userComment && <p className="text-xs italic text-slate-400 mt-1 line-clamp-1">"{a.userComment}"</p>}
-                          </div>
-                          {!isReadOnly && <button onClick={()=>setActivities(activities.filter(x=>x.uid!==a.uid))} className="text-red-400 hover:text-red-600 shrink-0"><Trash2 size={18}/></button>}
-                        </div>
-                      ))}
-                      {activities.length === 0 && <p className="text-sm text-slate-500 text-center py-4">Nenhuma evidência adicionada ainda.</p>}
-                    </div>
-                  </div>
+                   {adminFeedback && (
+                     <div className="p-6 border-l-4 border-[#cba72f] bg-amber-50 rounded-r-xl">
+                        <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-[20px]">gavel</span> Parecer da Comissão</h3>
+                        <p className="text-amber-800 whitespace-pre-wrap text-sm">{adminFeedback}</p>
+                     </div>
+                   )}
                 </div>
-
-                <div className="lg:col-span-4 space-y-6">
-                  <div className="bg-white rounded-xl border border-[#c4c6d0] p-6 shadow-sm flex flex-col items-center gap-4">
-                    <h3 className="font-bold text-[#001c40]">Termômetro RSC</h3>
-                    <select disabled={isReadOnly} className="w-full p-2 border rounded text-sm text-center font-bold disabled:bg-slate-50" value={targetLevel} onChange={e=>setTargetLevel(e.target.value)}>
-                      {Object.keys(RSC_LEVELS).map(l => <option key={l} value={l}>Meta: RSC {l}</option>)}
-                    </select>
-                    <div className="relative w-32 h-32 flex items-center justify-center">
-                      <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="#f0eded" strokeWidth="8"/>
-                        <circle cx="50" cy="50" r="45" fill="none" stroke={validation.isApproved ? '#16a34a' : '#2757c5'} strokeWidth="8" strokeDasharray="282.7" strokeDashoffset={offset} className="transition-all" />
-                      </svg>
-                      <div className="absolute flex flex-col items-center">
-                        <span className="text-3xl font-bold">{validation.totalPoints.toFixed(0)}</span>
-                        <span className="text-[10px] uppercase font-bold text-slate-400">Pts</span>
+              ) : activeTab === 'jornada' ? (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                  <div className="lg:col-span-8 space-y-6">
+                    <div className="bg-white rounded-xl border border-[#c4c6d0] p-6 shadow-sm space-y-4">
+                      <div className="flex justify-between items-center">
+                        <h2 className="text-xl font-semibold text-[#001c40]">Módulo de Evidências</h2>
+                        {!session && <span className="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full">Apenas Simulação</span>}
                       </div>
-                    </div>
-
-                    {!isReadOnly ? (
-                      <div className="w-full flex flex-col gap-2">
-                        <button onClick={() => handleSubmit(true)} disabled={isSubmitting} className="w-full py-3 rounded-lg font-bold text-[#13315c] border-2 border-[#13315c] bg-white hover:bg-slate-50 transition-all flex justify-center items-center gap-2">
-                          {isSubmitting ? <Loader2 className="animate-spin" size={18}/> : <Save size={18}/>}
-                          Salvar Rascunho
-                        </button>
-                        <button onClick={() => handleSubmit(false)} disabled={!validation.isApproved || isSubmitting} className={`w-full py-3 rounded-lg font-bold text-white transition-all flex justify-center items-center gap-2 ${validation.isApproved ? 'bg-[#001c40] hover:bg-[#13315c] shadow-md' : 'bg-slate-300 cursor-not-allowed'}`}>
-                          {isSubmitting ? <Loader2 className="animate-spin" size={18}/> : <CheckCircle2 size={18}/>}
-                          {validation.isApproved ? 'Submeter p/ Avaliação' : `Faltam ${(validation.rules.minPts - validation.totalPoints).toFixed(1)} pts`}
-                        </button>
-                        {!session && <p className="text-[10px] text-amber-600 text-center uppercase font-bold mt-2">Faça login para salvar</p>}
-                      </div>
-                    ) : (
-                      <button disabled className="w-full py-3 rounded-lg font-bold text-white bg-slate-400 flex justify-center items-center gap-2">
-                         <span className="material-symbols-outlined text-[18px]">lock</span>
-                         Enviado p/ Comissão
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ) : activeTab === 'memorial' ? (
-              <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm flex flex-col h-full min-h-[600px]">
-                <div className="flex justify-between items-center mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-[#001c40]">Memorial Descritivo</h2>
-                    <p className="text-sm text-slate-500">O documento final que será lido pela comissão avaliadora.</p>
-                  </div>
-                  <div className="flex gap-2">
-                    {!isReadOnly && <button onClick={generateMemorial} className="px-4 py-2 bg-slate-100 text-[#13315C] rounded font-bold text-sm border border-slate-200 hover:bg-slate-200">Gerar Estrutura Automática</button>}
-                  </div>
-                </div>
-                
-                <div className="flex-1 flex flex-col relative">
-                  <textarea 
-                    value={memorial} 
-                    onChange={e => setMemorial(e.target.value)} 
-                    disabled={isReadOnly}
-                    placeholder="Escreva ou gere seu memorial descritivo aqui..."
-                    className="flex-1 w-full h-full p-6 border-2 border-slate-200 rounded-xl resize-none font-mono text-sm leading-relaxed focus:border-[#2757c5] focus:ring-0 disabled:bg-slate-50 disabled:text-slate-700 transition-colors"
-                  />
-                  {!isReadOnly && <p className="absolute bottom-4 right-4 text-xs font-bold text-slate-400 bg-white px-2 py-1 rounded shadow-sm">Você pode editar este texto livremente.</p>}
-                </div>
-              </div>
-            ) : (
-              <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm space-y-6 max-w-2xl">
-                <div>
-                  <h2 className="text-2xl font-bold text-[#001c40]">Meu Perfil</h2>
-                  <p className="text-sm text-slate-500">Mantenha seus dados atualizados. Eles são obrigatórios para a submissão.</p>
-                </div>
-                {!session ? (
-                  <div className="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
-                    <p className="text-amber-800 font-bold mb-4">Você precisa estar logado para editar seu perfil.</p>
-                    <button onClick={() => setShowLogin(true)} className="px-6 py-2 bg-[#0042B1] text-white rounded font-bold text-sm">Fazer Login</button>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div>
-                      <label className="text-xs font-bold text-slate-500 uppercase">Nome Completo</label>
-                      <input type="text" value={userData.nome} onChange={e=>setUserData({...userData, nome:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase">CPF</label>
-                        <input type="text" value={userData.cpf} onChange={e=>setUserData({...userData, cpf:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase">SIAPE</label>
-                        <input type="text" value={userData.siape} onChange={e=>setUserData({...userData, siape:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase">Data de Nascimento</label>
-                        <input type="date" value={userData.dataNascimento} onChange={e=>setUserData({...userData, dataNascimento:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm text-slate-700 disabled:bg-slate-50" />
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase">Campus de Lotação</label>
-                        <select value={userData.campus} onChange={e=>setUserData({...userData, campus:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <select disabled={isReadOnly} className="p-2 border rounded text-sm disabled:bg-slate-50" value={selectedReq} onChange={e=>{setSelectedReq(e.target.value); setSelectedItem('')}}>
+                          {REQUISITOS.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
+                        </select>
+                        <select disabled={isReadOnly} className="p-2 border rounded text-sm disabled:bg-slate-50" value={selectedItem} onChange={e=>setSelectedItem(e.target.value)}>
                           <option value="">Selecione...</option>
-                          {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
+                          {REQUISITOS.find(r=>r.id===selectedReq)?.items.map(i => <option key={i.id} value={i.id}>{i.desc} ({i.points} pts / {i.unit})</option>)}
                         </select>
                       </div>
-                    </div>
-                    <div>
-                      <label className="text-xs font-bold text-slate-500 uppercase">E-mail Institucional</label>
-                      <input type="email" value={userData.email} disabled className="w-full p-3 border rounded text-sm bg-slate-100 text-slate-500" />
-                    </div>
-                    {!isReadOnly && (
-                      <button onClick={handleUpdateProfile} disabled={isSubmitting} className="w-full py-3 bg-[#2757c5] hover:bg-[#001c40] text-white rounded font-bold transition-all">
-                        {isSubmitting ? 'Salvando...' : 'Salvar Perfil'}
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </main>
-      </div>
+                      <div className="flex gap-4">
+                        <input type="number" disabled={isReadOnly} value={quantity} onChange={e=>setQuantity(parseInt(e.target.value)||1)} className="w-20 p-2 border rounded text-center disabled:bg-slate-50" />
+                        <textarea disabled={isReadOnly} placeholder="Relato de experiência (Opcional)..." value={currentComment} onChange={e=>setCurrentComment(e.target.value)} className="flex-1 p-2 border rounded text-sm disabled:bg-slate-50" rows={2} />
+                      </div>
+                      
+                      <div className={`relative border-2 border-dashed rounded-lg p-4 text-center transition-colors ${isReadOnly ? 'border-slate-200 bg-slate-50' : 'border-[#c4c6d0] hover:border-[#13315c]'}`}>
+                         <input 
+                           type="file" 
+                           disabled={isReadOnly || isUploading}
+                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                           onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                         />
+                         <span className="material-symbols-outlined text-[#747780] mb-1">upload_file</span>
+                         <p className="text-xs text-[#747780] font-medium">
+                            {selectedFile ? <span className="text-[#13315c] font-bold">{selectedFile.name}</span> : 'Clique para anexar comprovantes PDF (Máx 5MB)'}
+                         </p>
+                      </div>
 
+                      {!isReadOnly && (
+                        <button onClick={handleAddActivity} disabled={!selectedItem || isUploading} className="w-full py-3 bg-[#cba72f] text-white rounded font-bold hover:opacity-90 flex justify-center items-center gap-2">
+                          {isUploading ? <Loader2 className="animate-spin" size={18}/> : <FileUp size={18}/>}
+                          {isUploading ? 'Anexando arquivo...' : 'Adicionar à Jornada'}
+                        </button>
+                      )}
+                      
+                      <div className="space-y-2 mt-6">
+                        <h3 className="font-bold text-[#13315C] text-sm uppercase tracking-wider border-b pb-2">Itens Adicionados ({activities.length})</h3>
+                        {activities.map(a => (
+                          <div key={a.uid} className="p-4 border rounded-lg flex justify-between items-center bg-slate-50">
+                            <div className="text-sm flex-1 mr-4">
+                              <p className="font-bold text-[#1b1c1c]">{a.desc}</p>
+                              <div className="flex items-center gap-3 mt-1">
+                                 <p className="text-xs text-slate-500">{a.qty}x | {a.points.toFixed(1)} pts</p>
+                                 {a.comprovanteUrls && a.comprovanteUrls.length > 0 && (
+                                   <div className="flex gap-1">
+                                     {a.comprovanteUrls.map((url: string, idx: number) => (
+                                       <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#2757c5] hover:underline bg-blue-50 px-2 py-0.5 rounded">
+                                         <span className="material-symbols-outlined text-[12px]">description</span>
+                                         Doc {a.comprovanteUrls.length > 1 ? idx + 1 : ''}
+                                       </a>
+                                     ))}
+                                   </div>
+                                 )}
+                              </div>
+                              {a.userComment && <p className="text-xs italic text-slate-400 mt-1 line-clamp-1">"{a.userComment}"</p>}
+                            </div>
+                            {!isReadOnly && <button onClick={()=>setActivities(activities.filter(x=>x.uid!==a.uid))} className="text-red-400 hover:text-red-600 shrink-0"><Trash2 size={18}/></button>}
+                          </div>
+                        ))}
+                        {activities.length === 0 && <p className="text-sm text-slate-500 text-center py-4">Nenhuma evidência adicionada ainda.</p>}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-4 space-y-6">
+                    <div className="bg-white rounded-xl border border-[#c4c6d0] p-6 shadow-sm flex flex-col items-center gap-4">
+                      <h3 className="font-bold text-[#001c40]">Termômetro RSC</h3>
+                      <select disabled={isReadOnly} className="w-full p-2 border rounded text-sm text-center font-bold disabled:bg-slate-50" value={targetLevel} onChange={e=>setTargetLevel(e.target.value)}>
+                        {Object.keys(RSC_LEVELS).map(l => <option key={l} value={l}>Meta: RSC {l}</option>)}
+                      </select>
+                      <div className="relative w-32 h-32 flex items-center justify-center">
+                        <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="45" fill="none" stroke="#f0eded" strokeWidth="8"/>
+                          <circle cx="50" cy="50" r="45" fill="none" stroke={validation.isApproved ? '#16a34a' : '#2757c5'} strokeWidth="8" strokeDasharray="282.7" strokeDashoffset={offset} className="transition-all" />
+                        </svg>
+                        <div className="absolute flex flex-col items-center">
+                          <span className="text-3xl font-bold">{validation.totalPoints.toFixed(0)}</span>
+                          <span className="text-[10px] uppercase font-bold text-slate-400">Pts</span>
+                        </div>
+                      </div>
+
+                      {!isReadOnly ? (
+                        <div className="w-full flex flex-col gap-2">
+                          <button onClick={() => handleSubmit(true)} disabled={isSubmitting} className="w-full py-3 rounded-lg font-bold text-[#13315c] border-2 border-[#13315c] bg-white hover:bg-slate-50 transition-all flex justify-center items-center gap-2">
+                            {isSubmitting ? <Loader2 className="animate-spin" size={18}/> : <Save size={18}/>}
+                            Salvar Rascunho
+                          </button>
+                          <button onClick={() => handleSubmit(false)} disabled={!validation.isApproved || isSubmitting} className={`w-full py-3 rounded-lg font-bold text-white transition-all flex justify-center items-center gap-2 ${validation.isApproved ? 'bg-[#001c40] hover:bg-[#13315c] shadow-md' : 'bg-slate-300 cursor-not-allowed'}`}>
+                            {isSubmitting ? <Loader2 className="animate-spin" size={18}/> : <CheckCircle2 size={18}/>}
+                            {validation.isApproved ? 'Submeter p/ Avaliação' : `Faltam ${(validation.rules.minPts - validation.totalPoints).toFixed(1)} pts`}
+                          </button>
+                          {!session && <p className="text-[10px] text-amber-600 text-center uppercase font-bold mt-2">Faça login para salvar</p>}
+                        </div>
+                      ) : (
+                        <button disabled className="w-full py-3 rounded-lg font-bold text-white bg-slate-400 flex justify-center items-center gap-2">
+                           <span className="material-symbols-outlined text-[18px]">lock</span>
+                           Enviado p/ Comissão
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : activeTab === 'memorial' ? (
+                <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm flex flex-col h-full min-h-[600px]">
+                  <div className="flex justify-between items-center mb-6">
+                    <div>
+                      <h2 className="text-2xl font-bold text-[#001c40]">Memorial Descritivo</h2>
+                      <p className="text-sm text-slate-500">O documento final que será lido pela comissão avaliadora.</p>
+                    </div>
+                    <div className="flex gap-2">
+                      {!isReadOnly && <button onClick={generateMemorial} className="px-4 py-2 bg-slate-100 text-[#13315C] rounded font-bold text-sm border border-slate-200 hover:bg-slate-200">Gerar Estrutura Automática</button>}
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 flex flex-col relative">
+                    <textarea 
+                      value={memorial} 
+                      onChange={e => setMemorial(e.target.value)} 
+                      disabled={isReadOnly}
+                      placeholder="Escreva ou gere seu memorial descritivo aqui..."
+                      className="flex-1 w-full h-full p-6 border-2 border-slate-200 rounded-xl resize-none font-mono text-sm leading-relaxed focus:border-[#2757c5] focus:ring-0 disabled:bg-slate-50 disabled:text-slate-700 transition-colors"
+                    />
+                    {!isReadOnly && <p className="absolute bottom-4 right-4 text-xs font-bold text-slate-400 bg-white px-2 py-1 rounded shadow-sm">Você pode editar este texto livremente.</p>}
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm space-y-6 max-w-2xl">
+                  <div>
+                    <h2 className="text-2xl font-bold text-[#001c40]">Meu Perfil</h2>
+                    <p className="text-sm text-slate-500">Mantenha seus dados atualizados. Eles são obrigatórios para a submissão.</p>
+                  </div>
+                  {!session ? (
+                    <div className="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
+                      <p className="text-amber-800 font-bold mb-4">Você precisa estar logado para editar seu perfil.</p>
+                      <button onClick={() => setShowLogin(true)} className="px-6 py-2 bg-[#0042B1] text-white rounded font-bold text-sm">Fazer Login</button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Nome Completo</label>
+                        <input type="text" value={userData.nome} onChange={e=>setUserData({...userData, nome:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-xs font-bold text-slate-500 uppercase">CPF</label>
+                          <input type="text" value={userData.cpf} onChange={e=>setUserData({...userData, cpf:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-slate-500 uppercase">SIAPE</label>
+                          <input type="text" value={userData.siape} onChange={e=>setUserData({...userData, siape:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-xs font-bold text-slate-500 uppercase">Data de Nascimento</label>
+                          <input type="date" value={userData.dataNascimento} onChange={e=>setUserData({...userData, dataNascimento:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm text-slate-700 disabled:bg-slate-50" />
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-slate-500 uppercase">Campus de Lotação</label>
+                          <select value={userData.campus} onChange={e=>setUserData({...userData, campus:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50">
+                            <option value="">Selecione...</option>
+                            {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
+                          </select>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">E-mail Institucional</label>
+                        <input type="email" value={userData.email} disabled className="w-full p-3 border rounded text-sm bg-slate-100 text-slate-500" />
+                      </div>
+                      {!isReadOnly && (
+                        <button onClick={handleUpdateProfile} disabled={isSubmitting} className="w-full py-3 bg-[#2757c5] hover:bg-[#001c40] text-white rounded font-bold transition-all">
+                          {isSubmitting ? 'Salvando...' : 'Salvar Perfil'}
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </main>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <>
+      {renderMain()}
       {showLogin && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-300">
@@ -861,105 +867,92 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-                <button 
-                  onClick={() => setShowLogin(false)}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                  <span className="material-symbols-outlined text-gray-400">close</span>
+                <button onClick={() => setShowLogin(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                  <X size={24} />
                 </button>
               </div>
+
+              {authError && (
+                <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm flex items-start gap-3">
+                  <AlertCircle className="shrink-0" size={18} />
+                  {authError}
+                </div>
+              )}
 
               <form onSubmit={handleAuth} className="space-y-4">
                 {authMode === 'register' && (
                   <>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1">Nome Completo</label>
+                      <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5 ml-1">Nome Completo</label>
                       <input 
-                        type="text"
-                        required
-                        value={authName}
-                        onChange={(e) => setAuthName(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
-                        placeholder="Seu nome completo"
+                        type="text" 
+                        required 
+                        value={authName} 
+                        onChange={e => setAuthName(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none" 
+                        placeholder="Ex: João Silva"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1">Campus de Lotação</label>
+                      <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5 ml-1">Campus</label>
                       <select 
-                        required
-                        value={authCampus}
-                        onChange={(e) => setAuthCampus(e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
+                        required 
+                        value={authCampus} 
+                        onChange={e => setAuthCampus(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none bg-white"
                       >
-                        <option value="">Selecione o seu campus...</option>
+                        <option value="">Selecione seu campus</option>
                         {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
                       </select>
                     </div>
                   </>
                 )}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail Institucional</label>
+                  <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5 ml-1">E-mail @ifam.edu.br</label>
                   <input 
-                    type="email"
-                    required
-                    value={authEmail}
-                    onChange={(e) => setAuthEmail(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
-                    placeholder="exemplo@ifam.edu.br"
+                    type="email" 
+                    required 
+                    value={authEmail} 
+                    onChange={e => setAuthEmail(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none" 
+                    placeholder="usuario@ifam.edu.br"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
+                  <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5 ml-1">Senha</label>
                   <input 
-                    type="password"
-                    required
-                    value={authPassword}
-                    onChange={(e) => setAuthPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#13315c] focus:border-[#13315c] transition-all outline-none"
+                    type="password" 
+                    required 
+                    value={authPassword} 
+                    onChange={e => setAuthPassword(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none" 
                     placeholder="••••••••"
                   />
                 </div>
-
-                {authError && (
-                  <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm font-medium flex items-center gap-2">
-                    <span className="material-symbols-outlined">error</span>
-                    {authError}
-                  </div>
-                )}
-
                 <button 
-                  type="submit"
+                  type="submit" 
                   disabled={authLoading}
-                  className="w-full bg-[#13315c] text-white py-3.5 rounded-xl font-bold text-lg hover:bg-[#001c40] transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-[#13315c] text-white rounded-xl font-bold hover:bg-[#001c40] shadow-lg shadow-blue-900/20 transition-all disabled:opacity-50 flex justify-center items-center gap-2"
                 >
-                  {authLoading ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      {authMode === 'login' ? 'Entrando...' : 'Cadastrando...'}
-                    </>
-                  ) : (
-                    authMode === 'login' ? 'Entrar' : 'Criar Conta'
-                  )}
+                  {authLoading ? <Loader2 className="animate-spin" size={20} /> : (authMode === 'login' ? 'Entrar Agora' : 'Finalizar Cadastro')}
                 </button>
               </form>
 
               <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-                <button 
-                  onClick={() => {
-                    setAuthMode(authMode === 'login' ? 'register' : 'login');
-                    setAuthError(null);
-                  }}
-                  className="text-[#13315c] font-semibold hover:underline"
-                >
-                  {authMode === 'login' 
-                    ? 'Não tem conta? Cadastre-se aqui' 
-                    : 'Já tem conta? Faça login aqui'}
-                </button>
+                <p className="text-sm text-gray-600">
+                  {authMode === 'login' ? 'Ainda não tem acesso?' : 'Já possui cadastro?'}
+                  <button 
+                    onClick={() => setAuthMode(authMode === 'login' ? 'register' : 'login')}
+                    className="ml-2 font-bold text-[#13315c] hover:underline"
+                  >
+                    {authMode === 'login' ? 'Cadastre-se aqui' : 'Faça login'}
+                  </button>
+                </p>
               </div>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
