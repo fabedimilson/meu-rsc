@@ -154,7 +154,6 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
         </div>
         <nav className="hidden md:flex items-center gap-8">
           <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-sm cursor-pointer">Início</span>
-          <a href="#niveis" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Níveis e Critérios</a>
           <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
         </nav>
         <div className="flex items-center gap-4">
