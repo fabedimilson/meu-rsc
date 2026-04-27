@@ -245,21 +245,32 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           <h2 className="text-4xl font-bold text-[#13315C] mb-4">Fluxo do Processo</h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg italic">Um caminho transparente do protocolo ao benefício financeiro.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16 gap-x-10 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
           {[
-            { i: 'person_add', t: '1. Cadastro Institucional', d: 'Acesse com seu e-mail @ifam.edu.br, complete seu perfil e leia atentamente o regulamento do RSC.' },
-            { i: 'account_tree', t: '2. Envio de Evidências', d: 'Inicie o levantamento de documentos e anexe as evidências em PDF para validar sua pontuação.' },
-            { i: 'history_edu', t: '3. Elaboração do Memorial', d: 'Utilize nossa ferramenta gratuita para estruturar sua trajetória profissional de forma automática.' },
-            { i: 'verified', t: '4. Avaliação pela Comissão', d: 'Membros avaliadores revisam seu protocolo e emitem o parecer técnico.' },
-            { i: 'description', t: '5. Emissão de Portaria', d: 'Após a aprovação, o IFAM emite a Portaria oficial do reconhecimento.' },
-            { i: 'payments', t: '6. Atualização de Pagamento', d: 'Inclusão automática do benefício em folha e progressão na carreira.' },
+            { i: 'person_add', t: 'Cadastro Institucional', d: 'Acesse com seu e-mail @ifam.edu.br, complete seu perfil e leia atentamente o regulamento do RSC.' },
+            { i: 'account_tree', t: 'Envio de Evidências', d: 'Inicie o levantamento de documentos e anexe as evidências em PDF para validar sua pontuação.' },
+            { i: 'history_edu', t: 'Elaboração do Memorial', d: 'Utilize nossa ferramenta gratuita para estruturar sua trajetória profissional de forma automática.' },
+            { i: 'verified', t: 'Avaliação pela Comissão', d: 'Membros avaliadores revisam seu protocolo e emitem o parecer técnico.' },
+            { i: 'description', t: 'Emissão de Portaria', d: 'Após a aprovação, o IFAM emite a Portaria oficial do reconhecimento.' },
+            { i: 'payments', t: 'Atualização de Pagamento', d: 'Inclusão automática do benefício em folha e progressão na carreira.' },
           ].map((step, idx) => (
-            <div key={idx} className="relative flex flex-col items-start group">
-              <div className="w-16 h-16 rounded-2xl bg-white shadow-xl border border-slate-100 flex items-center justify-center mb-6 text-[#0042B1] group-hover:bg-[#0042B1] group-hover:text-white transition-all transform group-hover:-translate-y-2">
-                <span className="material-symbols-outlined text-[32px]">{step.i}</span>
+            <div key={idx} className="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(0,66,177,0.15)] transition-all duration-500 group overflow-hidden hover:-translate-y-2">
+              <div className="absolute -right-4 -top-4 text-8xl font-black text-slate-50 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity cursor-default uppercase italic">
+                {idx + 1}
               </div>
-              <h3 className="font-bold text-lg text-[#13315C] mb-3">{step.t}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{step.d}</p>
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#13315C] to-[#0042B1] flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform duration-500">
+                <span className="material-symbols-outlined text-[28px] icon-fill">{step.i}</span>
+              </div>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-2">
+                   <span className="text-[10px] font-black text-[#C5A059] uppercase tracking-[0.2em]">Passo 0{idx + 1}</span>
+                </div>
+                <h3 className="font-bold text-xl text-[#13315C] leading-tight">{step.t}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed text-justify">{step.d}</p>
+              </div>
+              <div className="mt-6 w-full h-1 bg-slate-50 rounded-full overflow-hidden">
+                <div className="h-full bg-[#C5A059] w-0 group-hover:w-full transition-all duration-700 delay-100"></div>
+              </div>
             </div>
           ))}
         </div>
