@@ -224,7 +224,7 @@ const HomePage = ({ onStart, onLogin, session }: { onStart: () => void, onLogin:
           Sua história construiu a nossa.<br />
           <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
         </h1>
-        <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-left md:text-justify">
+        <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-justify">
           O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino profissional e tecnológico. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
         <div className="flex flex-wrap gap-4 mt-4 w-full md:w-auto relative z-10">
