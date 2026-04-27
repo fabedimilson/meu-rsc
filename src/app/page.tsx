@@ -106,13 +106,23 @@ const BannerCarousel = () => {
   return (
     <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-[#eae8e7] border border-[#dcd9d9] group">
       {images.map((src, idx) => (
-        <img 
-          key={src} 
-          src={src} 
-          alt={`Banner ${idx + 1}`} 
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100 scale-105' : 'opacity-0 scale-100'}`} 
-          style={{ transitionProperty: 'opacity, transform' }}
-        />
+        <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100 scale-105' : 'opacity-0 scale-100'}`} style={{ transitionProperty: 'opacity, transform' }}>
+          <img 
+            src={src} 
+            alt={`Banner ${idx + 1}`} 
+            className="w-full h-full object-cover" 
+          />
+          {/* Camuflagem: Selo de Identidade Institucional */}
+          <div className="absolute bottom-6 right-6 backdrop-blur-md bg-white/20 border border-white/30 text-white px-4 py-2 rounded-2xl flex items-center gap-3 shadow-2xl animate-in fade-in slide-in-from-right-4 duration-1000">
+             <div className="w-8 h-8 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
+                <span className="material-symbols-outlined text-[18px] text-white icon-fill">workspace_premium</span>
+             </div>
+             <div className="flex flex-col leading-tight">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white/70">Plataforma Oficial</span>
+                <span className="text-sm font-bold">MEU RSC - IFAM</span>
+             </div>
+          </div>
+        </div>
       ))}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
         {images.map((_, idx) => (
@@ -123,7 +133,7 @@ const BannerCarousel = () => {
           />
         ))}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"></div>
     </div>
   );
 };
