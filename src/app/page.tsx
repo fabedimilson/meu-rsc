@@ -4,8 +4,10 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { 
   CheckCircle2, XCircle, FileText, Upload, Trash2, 
   AlertCircle, Users, Award, ShieldCheck, ArrowRight,
-  History, Heart, Calculator, BookOpen, Sparkles, MessageSquare, X, ChevronDown, ChevronUp, Loader2, Save, FileUp
+  History, Heart, Calculator, BookOpen, Sparkles, MessageSquare, X, ChevronDown, ChevronUp, Loader2, Save, FileUp, Printer, FileDown
 } from 'lucide-react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { submitRegistration, getUserApplication } from './actions';
 import { loginUser, logoutUser, getUserSession, updateUserProfile, registerUser } from './user-actions';
 import { upload } from '@vercel/blob/client';
@@ -386,6 +388,28 @@ export default function App() {
     }
   }, [session]);
 
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById('pdf-template');
+    if (!element) return;
+    
+    setIsSubmitting(true);
+    try {
+      element.style.display = 'block';
+      const canvas = await html2canvas(element, { scale: 3, useCORS: true });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`Protocolo_RSC_${protocolNumber}.pdf`);
+      element.style.display = 'none';
+    } catch (e) {
+      alert("Erro ao gerar PDF.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthLoading(true);
@@ -656,6 +680,15 @@ export default function App() {
                        <p className="text-xl font-bold text-[#13315C]">{validation.rules.minPts} pts</p>
                      </div>
                    </div>
+
+                   <button 
+                     onClick={handleDownloadPDF}
+                     disabled={isSubmitting}
+                     className="w-full py-4 bg-[#13315C] text-white rounded-xl font-bold hover:bg-[#001c40] transition-all flex justify-center items-center gap-3 shadow-lg mb-8"
+                   >
+                     <Printer size={20} />
+                     Baixar Certificado de Pontuação (PDF)
+                   </button>
 
                    {adminFeedback && (
                      <div className="p-6 border-l-4 border-[#cba72f] bg-amber-50 rounded-r-xl">
@@ -963,6 +996,90 @@ export default function App() {
           </div>
         </div>
       )}
+      {/* Hidden PDF Template */}
+      <div id="pdf-template" className="hidden fixed -left-[9999px] top-0 w-[210mm] bg-white p-12 text-black font-serif">
+        <div className="border-4 border-[#13315C] p-8 h-full relative">
+          <div className="text-center mb-10">
+            <h1 className="text-2xl font-bold uppercase tracking-widest text-[#13315C] mb-1">Instituto Federal do Amazonas</h1>
+            <p className="text-sm font-bold uppercase text-slate-600 mb-4">Comissão de Reconhecimento de Saberes e Competências - RSC</p>
+            <div className="h-1 w-20 bg-[#cba72f] mx-auto"></div>
+          </div>
+
+          <div className="mb-10 flex justify-between items-start">
+            <div className="space-y-2">
+              <p className="text-lg"><strong>Certificado de Protocolo:</strong> #{protocolNumber}</p>
+              <p><strong>Servidor:</strong> {userData.nome}</p>
+              <p><strong>CPF:</strong> {userData.cpf}</p>
+              <p><strong>Campus:</strong> {userData.campus}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs font-bold uppercase text-slate-400">Data de Emissão</p>
+              <p className="font-bold">{new Date().toLocaleDateString('pt-BR')}</p>
+            </div>
+          </div>
+
+          <div className="bg-slate-50 p-8 rounded-xl border border-slate-200 mb-10 text-center">
+            <h2 className="text-xl font-bold mb-4 uppercase text-[#13315C]">Resultado Preliminar</h2>
+            <div className="flex justify-around items-center">
+              <div>
+                <p className="text-xs font-bold text-slate-500 uppercase">Pontuação Alcançada</p>
+                <p className="text-4xl font-black text-[#13315C]">{validation.totalPoints.toFixed(1)} pts</p>
+              </div>
+              <div className="h-12 w-px bg-slate-300"></div>
+              <div>
+                <p className="text-xs font-bold text-slate-500 uppercase">Nível Pleiteado</p>
+                <p className="text-4xl font-black text-[#13315C]">RSC {targetLevel}</p>
+              </div>
+            </div>
+            <div className="mt-6 pt-6 border-t border-slate-200">
+              <p className="text-sm font-bold uppercase text-slate-500 mb-1">Status do Processo</p>
+              <p className={`text-2xl font-black uppercase ${appStatus === 'Aprovado' ? 'text-green-600' : 'text-amber-600'}`}>{appStatus}</p>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h3 className="font-bold uppercase text-xs text-slate-400 mb-4 border-b pb-2">Evidências Apresentadas</h3>
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b text-slate-500">
+                  <th className="py-2">Descrição</th>
+                  <th className="py-2 text-right">Qtd</th>
+                  <th className="py-2 text-right">Pontos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activities.map(a => (
+                  <tr key={a.uid} className="border-b border-slate-100">
+                    <td className="py-2 pr-4">{a.desc}</td>
+                    <td className="py-2 text-right">{a.qty}</td>
+                    <td className="py-2 text-right font-bold">{a.points.toFixed(1)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end border-t-2 border-slate-100 pt-8">
+            <div className="flex items-center gap-4">
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://meu-rsc.vercel.app/validar?protocolo=${protocolNumber}`} 
+                alt="QR Code Validação"
+                className="w-24 h-24 border p-1 bg-white"
+              />
+              <div className="max-w-[200px]">
+                <p className="text-[10px] font-bold text-slate-400 uppercase leading-tight mb-1">Documento Validado Digitalmente</p>
+                <p className="text-[8px] text-slate-400 leading-tight">Aponte a câmera para validar a autenticidade deste documento no portal oficial do IFAM.</p>
+                <p className="text-[9px] font-mono mt-1 break-all">ID: {protocolNumber}-{userData.cpf.replace(/\D/g,'')}</p>
+              </div>
+            </div>
+            <div className="text-right">
+                <p className="text-[10px] font-bold uppercase text-slate-500 mb-10">Assinatura Digital do Servidor</p>
+                <div className="h-px w-48 bg-slate-400 ml-auto mb-1"></div>
+                <p className="text-[10px] font-bold text-[#13315C] uppercase">{userData.nome}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
