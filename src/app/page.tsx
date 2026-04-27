@@ -407,7 +407,7 @@ export default function App() {
       if (result.success) {
         if (authMode === 'register') {
           const res = await getUserSession();
-          if (res.success) {
+          if (res && res.success) {
             setSession(res.session);
             setShowLogin(false);
             setView('simulador');
@@ -417,7 +417,7 @@ export default function App() {
           }
         } else {
           const res = await getUserSession();
-          if (res.success) {
+          if (res && res.success) {
             setSession(res.session);
             setShowLogin(false);
             setView('simulador');
