@@ -430,7 +430,6 @@ export default function App() {
   };
 
   const handleAddActivity = async () => {
-    if (!session) { setShowLogin(true); return; }
     if (!selectedItem) return;
     
     const reqGroup = REQUISITOS.find(r => r.id === selectedReq);
@@ -438,7 +437,7 @@ export default function App() {
     if (!itemData) return;
 
     let comprovanteUrls: string[] = [];
-    if (selectedFile) {
+    if (selectedFile && session) {
       setIsUploading(true);
       try {
         const newBlob = await upload(selectedFile.name, selectedFile, {
