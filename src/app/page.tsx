@@ -152,15 +152,15 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
             <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
-            <div className="hidden md:flex flex-col text-xs text-slate-500 font-medium">
+            <div className="hidden md:flex flex-col text-sm text-slate-500 font-medium">
               <span className="font-bold text-[#13315C]">Governo Federal</span>
               <span>Instituto Federal do Amazonas</span>
             </div>
           </div>
 
           <nav className="hidden md:flex items-center gap-8">
-            <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-sm cursor-pointer">Início</span>
-            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-sm">Como Funciona</a>
+            <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-base cursor-pointer">Início</span>
+            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-base">Como Funciona</a>
           </nav>
 
           {/* Desktop Login Options - RECONSTRUÍDOS */}
@@ -188,9 +188,9 @@ const HomePage = ({ onStart, onLogin, onHome, session }: { onStart: () => void, 
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center text-[#13315C]"
+            className="md:hidden w-12 h-12 flex items-center justify-center text-[#13315C] hover:bg-slate-50 rounded-full transition-colors"
           >
-            <span className="material-symbols-outlined text-3xl">
+            <span className="material-symbols-outlined text-4xl">
               {menuOpen ? 'close' : 'menu'}
             </span>
           </button>
@@ -399,17 +399,33 @@ export default function App() {
     
     setIsSubmitting(true);
     try {
+      // Garantir que esteja visível para o html2canvas, mas fora da tela
       element.style.display = 'block';
-      const canvas = await html2canvas(element, { scale: 3, useCORS: true });
+      element.style.visibility = 'visible';
+      
+      // Pequeno delay para garantir que o QR Code e fontes renderizaram
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const canvas = await html2canvas(element, { 
+        scale: 3, 
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`Protocolo_RSC_${protocolNumber}.pdf`);
+      
       element.style.display = 'none';
+      element.style.visibility = 'hidden';
     } catch (e) {
-      alert("Erro ao gerar PDF.");
+      console.error("Erro PDF:", e);
+      alert("Erro ao gerar PDF. Por favor, tente novamente.");
     } finally {
       setIsSubmitting(false);
     }
@@ -1001,8 +1017,8 @@ export default function App() {
           </div>
         </div>
       )}
-      {/* Hidden PDF Template */}
-      <div id="pdf-template" className="hidden fixed -left-[9999px] top-0 w-[210mm] bg-white p-12 text-black font-serif">
+      {/* PDF Template - Persistent in DOM but invisible to user for reliable capture */}
+      <div id="pdf-template" className="opacity-0 pointer-events-none fixed -left-[9999px] top-0 w-[210mm] bg-white p-12 text-black font-serif">
         <div className="border-4 border-[#13315C] p-8 h-full relative">
           <div className="text-center mb-10">
             <h1 className="text-2xl font-bold uppercase tracking-widest text-[#13315C] mb-1">Instituto Federal do Amazonas</h1>
@@ -1067,7 +1083,7 @@ export default function App() {
           <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end border-t-2 border-slate-100 pt-8">
             <div className="flex items-center gap-4">
               <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://meu-rsc.vercel.app/validar?protocolo=${protocolNumber}`} 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://meu-rsc-ifam.vercel.app/validar?protocolo=${protocolNumber}`} 
                 alt="QR Code Validação"
                 className="w-24 h-24 border p-1 bg-white"
               />
