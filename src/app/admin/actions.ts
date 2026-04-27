@@ -77,7 +77,7 @@ export async function getDashboardStats() {
     emAnalise: emAnalise.count,
     aprovadas: aprovadas.count,
     reprovadas: reprovadas.count,
-    totalPets: 0, // RSC doesn't have pets
+    totalInscritos: 0,
     pontuacaoMedia: Math.round((pontuacaoMedia[0]?.avg ?? 0) * 10) / 10,
   };
 }

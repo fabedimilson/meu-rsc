@@ -96,7 +96,7 @@ export default function AdminManagement({ session }: { session: any }) {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter">Equipe de Gestão</h2>
-          <p className="text-xs text-slate-400 font-bold">Gerencie os operadores do sistema Ração do Meu Pet</p>
+          <p className="text-xs text-slate-400 font-bold">Gerencie os avaliadores e administradores do sistema Meu RSC</p>
         </div>
         <button 
           onClick={() => setShowAdd(true)}
