@@ -107,15 +107,15 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-[#eae8e7] border border-[#dcd9d9] group">
+    <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-white border border-[#dcd9d9] group">
       {images.map((src, idx) => (
-        <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100 scale-105' : 'opacity-0 scale-100'}`} style={{ transitionProperty: 'opacity, transform' }}>
+        <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100 scale-100' : 'opacity-0 scale-100'}`} style={{ transitionProperty: 'opacity, transform' }}>
           <Image 
             src={src} 
             alt={`Banner ${idx + 1}`} 
             fill
             priority={idx === 0}
-            className="object-cover" 
+            className="object-contain" 
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
           <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-3 py-1.5 md:px-5 md:py-2.5 rounded-tl-2xl md:rounded-tl-3xl flex items-center gap-2 md:gap-3 shadow-2xl animate-in fade-in duration-700">
