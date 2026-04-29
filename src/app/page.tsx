@@ -107,15 +107,15 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-video md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-white border border-[#dcd9d9] group">
+    <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-3xl overflow-hidden shadow-xl bg-[#fbf9f8] border border-[#dcd9d9] group">
       {images.map((src, idx) => (
-        <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100 scale-105' : 'opacity-0 scale-100'}`} style={{ transitionProperty: 'opacity, transform' }}>
+        <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100' : 'opacity-0'}`} style={{ transitionProperty: 'opacity' }}>
           <Image 
             src={src} 
             alt={`Banner ${idx + 1}`} 
             fill
             priority={idx === 0}
-            className="object-cover" 
+            className="object-cover object-center" 
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
           <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-3 py-1.5 md:px-5 md:py-2.5 rounded-tl-2xl md:rounded-tl-3xl flex items-center gap-2 md:gap-3 shadow-2xl animate-in fade-in duration-700">
@@ -227,16 +227,16 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
         )}
       </header>
 
-    <section className="w-full max-w-[1200px] mx-auto px-6 md:px-10 pt-8 pb-16 md:py-24 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
-      <div className="flex-1 flex flex-col items-start gap-3 md:gap-5">
+    <section className="w-full max-w-[1200px] mx-auto px-8 md:px-10 pt-6 pb-16 md:py-24 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
+      <div className="flex-1 flex flex-col items-center md:items-start gap-4 md:gap-5 w-full">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#C5A059]/10 text-[#422e00] rounded-full text-xs font-bold">
           <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#C5A059'}}>workspace_premium</span>
           Reconhecimento de Saberes e Competências
         </div>
-        <h1 className="text-3xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight text-justify [text-wrap:balance]">
+        <h1 className="text-[32px] md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight text-center md:text-left [text-wrap:balance]">
           Sua história construiu a nossa. <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
         </h1>
-        <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-1 md:mt-2 text-justify">
+        <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-1 md:text-left text-center">
           Sistema inteligente para gestão, simulação e solicitação do Reconhecimento de Saberes e Competências. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
         <div className="flex flex-wrap gap-4 mt-4 md:mt-6 w-full md:w-auto relative z-[100]">
