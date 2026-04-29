@@ -191,9 +191,9 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors"
+            className="md:hidden w-16 h-16 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors"
           >
-            <span className="material-symbols-outlined text-4xl">
+            <span className="material-symbols-outlined text-5xl">
               {menuOpen ? 'close' : 'menu'}
             </span>
           </button>
