@@ -99,7 +99,7 @@ const REQUISITOS = [
 
 const BannerCarousel = () => {
   const [current, setCurrent] = useState(0);
-  const images = ["/banners/banner_rsc.png", "/banners/Banner1.png", "/banners/Banner2.png", "/banners/Banner3.png", "/banners/Banner4.png"];
+  const images = ["/banners/banner0.png", "/banners/Banner1.png", "/banners/Banner2.png", "/banners/Banner3.png", "/banners/Banner4.png"];
 
   useEffect(() => {
     const timer = setInterval(() => setCurrent(prev => (prev + 1) % images.length), 5000);
