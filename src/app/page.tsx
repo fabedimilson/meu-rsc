@@ -147,23 +147,23 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
-      <header className="bg-white sticky top-0 z-[100] border-b border-slate-200 shadow-sm">
+      <header className="bg-[#13315C] sticky top-0 z-[100] border-b border-white/10 shadow-lg">
         <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
           <div className="flex items-center gap-4">
-          <div key="brand-logo" onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-[#13315C] uppercase py-2 border-y-2 border-[#13315C] cursor-pointer hover:opacity-80 transition-opacity">
+          <div key="brand-logo" onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-white uppercase py-2 border-y-2 border-white cursor-pointer hover:opacity-80 transition-opacity">
             <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
-            <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
-            <div className="hidden md:flex flex-col text-base text-slate-500 font-medium">
-              <span className="font-bold text-[#13315C]">Governo Federal</span>
-              <span className="text-sm">Instituto Federal do Amazonas</span>
+            <div className="h-8 w-px bg-white/20 mx-2 hidden md:block"></div>
+            <div className="hidden md:flex flex-col text-base text-white/80 font-medium">
+              <span className="font-bold text-white">Governo Federal</span>
+              <span className="text-sm opacity-80">Instituto Federal do Amazonas</span>
             </div>
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
-            <span className="text-[#1351B4] font-bold border-b-2 border-[#1351B4] pb-1 text-lg cursor-pointer">Início</span>
-            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#1351B4] transition-colors text-lg">Como Funciona</a>
+            <span className="text-white font-bold border-b-2 border-[#C5A059] pb-1 text-lg cursor-pointer">Início</span>
+            <a href="#como-funciona" className="text-white/70 font-medium hover:text-white transition-colors text-lg">Como Funciona</a>
           </nav>
 
           {/* Desktop Login Options - RECONSTRUÍDOS */}
@@ -176,12 +176,12 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
               Login Comissão
             </button>
             {session ? (
-              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-[#13315C] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#001c40] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-white text-[#13315C] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 transition-all flex items-center gap-2 shadow-lg cursor-pointer">
                 Meu Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex items-center gap-2 shadow-xl cursor-pointer">
+              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#0b5ed7] border border-white/20 transition-all flex items-center gap-2 shadow-xl cursor-pointer">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
@@ -191,7 +191,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-12 h-12 flex items-center justify-center text-[#13315C] hover:bg-slate-50 rounded-full transition-colors"
+            className="md:hidden w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors"
           >
             <span className="material-symbols-outlined text-4xl">
               {menuOpen ? 'close' : 'menu'}
@@ -227,18 +227,17 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
         )}
       </header>
 
-    <section className="w-full max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+    <section className="w-full max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-24 flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
       <div className="flex-1 flex flex-col items-start gap-5">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#C5A059]/10 text-[#422e00] rounded-full text-xs font-bold">
           <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#C5A059'}}>workspace_premium</span>
           Reconhecimento de Saberes e Competências
         </div>
         <h1 className="text-3xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight">
-          Sua história construiu a nossa.<br />
-          <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
+          Sua história construiu a nossa. <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
         </h1>
         <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-2 text-justify">
-          O RSC certifica os conhecimentos acumulados pela experiência e dedicação ao ensino profissional e tecnológico. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
+          Sistema inteligente para gestão, simulação e solicitação do Reconhecimento de Saberes e Competências. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
         <div className="flex flex-wrap gap-4 mt-6 w-full md:w-auto relative z-[100]">
           <button 
