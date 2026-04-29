@@ -233,7 +233,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#C5A059'}}>workspace_premium</span>
           Reconhecimento de Saberes e Competências
         </div>
-        <h1 className="text-3xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight">
+        <h1 className="text-3xl md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight text-justify [text-wrap:balance]">
           Sua história construiu a nossa. <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
         </h1>
         <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-1 md:mt-2 text-justify">
