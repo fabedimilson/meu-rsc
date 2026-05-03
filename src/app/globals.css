@@ -1,33 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #fbf9f8;
   --foreground: #1b1c1c;
   --if-verde: #2f9e41;
+  --if-verde-escuro: #248a35;
   --if-vermelho: #cd191e;
+  --if-vermelho-escuro: #b2161a;
   --if-preto: #000000;
-  --if-azul-nav: #13315C;
-  --if-dourado: #C5A059;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Open Sans', 'Public Sans', system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'Outfit', system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Open Sans', 'Public Sans', system-ui, sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Barra verde institucional do Governo Federal no topo */
 .if-topbar {
-  background: linear-gradient(90deg, var(--if-verde) 0%, #248a35 100%);
+  background: linear-gradient(90deg, var(--if-verde) 0%, var(--if-verde-escuro) 100%);
   height: 4px;
   width: 100%;
 }

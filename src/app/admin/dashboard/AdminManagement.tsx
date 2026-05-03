@@ -100,7 +100,7 @@ export default function AdminManagement({ session }: { session: any }) {
         </div>
         <button 
           onClick={() => setShowAdd(true)}
-          className="bg-blue-600 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
+          className="bg-green-600 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-green-700 transition-all shadow-lg shadow-green-600/20"
         >
           <UserPlus size={20} /> Novo Operador
         </button>
@@ -115,14 +115,14 @@ export default function AdminManagement({ session }: { session: any }) {
         ) : admins.map((admin) => (
           <div key={admin.id} className={`bg-white p-6 rounded-[32px] border-2 shadow-sm relative group overflow-hidden transition-all ${admin.isActive ? 'border-slate-100' : 'border-red-100 opacity-75'}`}>
             <div className="flex items-center gap-4 relative z-10">
-              <div className={`p-4 rounded-[20px] ${!admin.isActive ? 'bg-slate-100 text-slate-400' : admin.role === 'admin' ? 'bg-orange-100 text-orange-600' : 'bg-blue-100 text-blue-600'}`}>
+              <div className={`p-4 rounded-[20px] ${!admin.isActive ? 'bg-slate-100 text-slate-400' : admin.role === 'admin' ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}>
                 {admin.role === 'admin' ? <ShieldCheck size={28} /> : <ShieldAlert size={28} />}
               </div>
               <div className="overflow-hidden">
                 <p className={`font-black uppercase tracking-tight truncate ${admin.isActive ? 'text-slate-800' : 'text-slate-400'}`}>{admin.nome}</p>
                 <p className="text-sm text-slate-500 font-bold italic">@{admin.username}</p>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black uppercase ${admin.role === 'admin' ? 'bg-orange-50 text-orange-600' : 'bg-blue-50 text-blue-600'}`}>
+                  <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black uppercase ${admin.role === 'admin' ? 'bg-orange-50 text-orange-600' : 'bg-green-50 text-green-600'}`}>
                     {admin.role === 'admin' ? 'Admin Master' : 'Avaliador / SEMMAS'}
                   </span>
                   {!admin.isActive && (
@@ -144,7 +144,7 @@ export default function AdminManagement({ session }: { session: any }) {
               )}
               <button 
                 onClick={(e) => { e.stopPropagation(); setSelectedAdmin(admin); setShowEdit(true); }}
-                className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 flex items-center justify-center shadow-sm transition-all"
+                className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-green-600 hover:border-green-100 hover:bg-green-50 flex items-center justify-center shadow-sm transition-all"
                 title="Configurações do Perfil"
               >
                 <Settings size={20} />
@@ -152,7 +152,7 @@ export default function AdminManagement({ session }: { session: any }) {
             </div>
 
             {/* Background Decor */}
-            <div className={`absolute -right-4 -bottom-4 w-24 h-24 opacity-[0.03] rotate-12 ${admin.role === 'admin' ? 'text-orange-600' : 'text-blue-600'}`}>
+            <div className={`absolute -right-4 -bottom-4 w-24 h-24 opacity-[0.03] rotate-12 ${admin.role === 'admin' ? 'text-orange-600' : 'text-green-600'}`}>
                {admin.role === 'admin' ? <ShieldCheck size={100} /> : <ShieldAlert size={100} />}
             </div>
           </div>
@@ -172,19 +172,19 @@ export default function AdminManagement({ session }: { session: any }) {
             <form onSubmit={handleAdd} className="space-y-4">
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Nome Completo</label>
-                <input name="nome" required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input name="nome" required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none" />
               </div>
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Matrícula ou E-mail (Username)</label>
-                <input name="username" required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Ex: 12345-6 ou nome@manaus.am.gov.br" />
+                <input name="username" required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none" placeholder="Ex: 12345-6 ou nome@manaus.am.gov.br" />
               </div>
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Senha Inicial (Mín. 6 chars)</label>
-                <input name="password" required type="password" minLength={6} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none" />
+                <input name="password" required type="password" minLength={6} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none" />
               </div>
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Nível de Acesso</label>
-                <select name="role" required className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
+                <select name="role" required className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-green-500 outline-none font-bold text-slate-700">
                   <option value="editor">Avaliador (Visualiza e avalia inscrições)</option>
                   <option value="admin">Admin Master (Gestão de equipe e recursos)</option>
                 </select>
@@ -192,7 +192,7 @@ export default function AdminManagement({ session }: { session: any }) {
               
               <div className="flex gap-4 pt-4">
                 <button type="button" onClick={() => setShowAdd(false)} className="flex-1 py-4 font-bold text-slate-400 hover:text-slate-600 transition-colors">Cancelar</button>
-                <button disabled={submitting} className="flex-1 bg-blue-600 text-white rounded-2xl font-black shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition-all h-14 flex items-center justify-center">
+                <button disabled={submitting} className="flex-1 bg-green-600 text-white rounded-2xl font-black shadow-lg shadow-green-600/20 hover:bg-green-700 transition-all h-14 flex items-center justify-center">
                   {submitting ? <Loader2 className="animate-spin" /> : 'CADASTRAR'}
                 </button>
               </div>
@@ -217,7 +217,7 @@ export default function AdminManagement({ session }: { session: any }) {
             <form onSubmit={handleUpdate} className="space-y-4">
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Nome Completo</label>
-                <input name="nome" defaultValue={selectedAdmin.nome} required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700" />
+                <input name="nome" defaultValue={selectedAdmin.nome} required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none font-bold text-slate-700" />
               </div>
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Matrícula ou E-mail (Imutável)</label>
@@ -225,14 +225,14 @@ export default function AdminManagement({ session }: { session: any }) {
               </div>
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Nível de Acesso</label>
-                <select name="role" defaultValue={selectedAdmin.role} required className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
+                <select name="role" defaultValue={selectedAdmin.role} required className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-green-500 outline-none font-bold text-slate-700">
                   <option value="editor">Avaliador (Visualiza e avalia inscrições)</option>
                   <option value="admin">Admin Master (Gestão de equipe e recursos)</option>
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase mb-1">Status da Conta</label>
-                <select name="isActive" defaultValue={selectedAdmin.isActive ? 'true' : 'false'} required className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
+                <select name="isActive" defaultValue={selectedAdmin.isActive ? 'true' : 'false'} required className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-green-500 outline-none font-bold text-slate-700">
                   <option value="true">Ativo (Acesso Permitido)</option>
                   <option value="false">Inativo (Acesso Bloqueado)</option>
                 </select>

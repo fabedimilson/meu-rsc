@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { loginAdmin } from './actions';
-import { Lock, User, Loader2, Dog } from 'lucide-react';
+import { Lock, User, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -28,8 +29,13 @@ export default function LoginPage() {
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
-          <div className="inline-flex p-4 rounded-3xl bg-green-700 mb-4 shadow-xl shadow-green-700/20">
-            <Lock size={40} className="text-white" />
+          <div className="inline-flex p-6 rounded-3xl bg-white mb-6 shadow-xl relative w-full h-[100px]">
+            <Image 
+              src="/logos/500px-Instituto_Federal_do_Amazonas_transparente.png" 
+              alt="Instituto Federal do Amazonas" 
+              fill 
+              className="object-contain p-4" 
+            />
           </div>
           <h1 className="text-3xl font-black text-white uppercase tracking-tighter">Área Administrativa</h1>
           <p className="text-slate-400 font-medium">Acesso restrito à equipe IFAM / RSC</p>
@@ -45,7 +51,7 @@ export default function LoginPage() {
                   name="username"
                   required
                   type="text"
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none transition-all"
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-green-600 outline-none transition-all"
                   placeholder="Seu usuário"
                 />
               </div>
@@ -59,7 +65,7 @@ export default function LoginPage() {
                   name="password"
                   required
                   type="password"
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none transition-all"
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-green-600 outline-none transition-all"
                   placeholder="••••••••"
                 />
               </div>

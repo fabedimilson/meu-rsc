@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
-import { IFAMLogo } from './IFAMLogo';
 import { 
   CheckCircle2, XCircle, FileText, Upload, Trash2, 
   AlertCircle, Users, Award, ShieldCheck, ArrowRight,
@@ -120,7 +119,7 @@ const BannerCarousel = () => {
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
           <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-3 py-1.5 md:px-5 md:py-2.5 rounded-tl-2xl md:rounded-tl-3xl flex items-center gap-2 md:gap-3 shadow-2xl animate-in fade-in duration-700">
-             <div className="w-4 h-4 md:w-6 md:h-6 bg-[#13315C] rounded-full flex items-center justify-center shadow-lg">
+             <div className="w-4 h-4 md:w-6 md:h-6 bg-[#2f9e41] rounded-full flex items-center justify-center shadow-lg">
                 <span className="material-symbols-outlined text-[10px] md:text-[14px] text-white icon-fill">workspace_premium</span>
              </div>
              <div className="flex flex-col leading-tight">
@@ -148,9 +147,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
-      {/* Barra verde institucional do Governo Federal no topo */}
-      <div className="w-full h-[4px] bg-[#2f9e41]" />
-      <header className="bg-[#13315C] sticky top-0 z-[100] border-b border-white/10 shadow-lg">
+      <header className="bg-[#2f9e41] sticky top-0 z-[100] border-b border-white/10 shadow-lg">
         <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
           <div className="flex items-center gap-4">
           <div key="brand-logo" onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-white uppercase py-2 border-y-2 border-white cursor-pointer hover:opacity-80 transition-opacity">
@@ -159,12 +156,20 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           </div>
             <div className="h-8 w-px bg-white/20 mx-2 hidden md:block"></div>
             <div className="hidden md:flex items-center gap-3">
-              <IFAMLogo variant="cmc" layout="horizontal" inverted={true} width={220} />
+              <div className="relative w-[280px] h-[80px]">
+                <Image 
+                  src="/logos/500px-Instituto_Federal_do_Amazonas_transparente.png" 
+                  alt="Instituto Federal do Amazonas" 
+                  fill 
+                  className="object-contain invert brightness-0" 
+                  priority
+                />
+              </div>
             </div>
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
-            <span className="text-white font-bold border-b-2 border-[#C5A059] pb-1 text-lg cursor-pointer">Início</span>
+            <span className="text-white font-bold border-b-2 border-white pb-1 text-lg cursor-pointer">Início</span>
             <a href="#como-funciona" className="text-white/70 font-medium hover:text-white transition-colors text-lg">Como Funciona</a>
           </nav>
 
@@ -173,17 +178,17 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             <button 
               id="final-login-comissao"
               onClick={() => window.location.href = '/admin'}
-              className="bg-[#C5A059] text-white px-5 py-2.5 rounded-full font-bold text-xs tracking-widest shadow-lg hover:bg-[#a6864a] transition-all cursor-pointer"
+              className="bg-[#2f9e41] text-white px-5 py-2.5 rounded-full font-bold text-xs tracking-widest shadow-lg hover:bg-[#248a35] transition-all cursor-pointer"
             >
               Login Comissão
             </button>
             {session ? (
-              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-white text-[#13315C] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-white text-[#2f9e41] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 transition-all flex items-center gap-2 shadow-lg cursor-pointer">
                 Meu Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#0042B1] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#0b5ed7] border border-white/20 transition-all flex items-center gap-2 shadow-xl cursor-pointer">
+              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#cd191e] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#b2161a] border border-white/20 transition-all flex items-center gap-2 shadow-xl cursor-pointer">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
@@ -208,18 +213,18 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
               <button 
                 id="mobile-login-comissao"
                 onClick={() => window.location.href = '/admin'}
-                className="w-full bg-[#C5A059] text-white py-3.5 rounded-xl font-bold text-xs tracking-widest flex items-center justify-center gap-3 shadow-md"
+                className="w-full bg-[#2f9e41] text-white py-3.5 rounded-xl font-bold text-xs tracking-widest flex items-center justify-center gap-3 shadow-md"
               >
                 <span className="material-symbols-outlined">admin_panel_settings</span>
                 Login Comissão
               </button>
               {session ? (
-                <button onClick={() => { onStart(); setMenuOpen(false); }} className="w-full bg-[#13315C] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md">
+                <button onClick={() => { onStart(); setMenuOpen(false); }} className="w-full bg-[#2f9e41] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md">
                   Acessar Meu Painel
                   <span className="material-symbols-outlined">arrow_forward</span>
                 </button>
               ) : (
-                <button onClick={() => { onLogin(); setMenuOpen(false); }} className="w-full bg-[#0042B1] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md">
+                <button onClick={() => { onLogin(); setMenuOpen(false); }} className="w-full bg-[#cd191e] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md">
                   Login Servidor
                   <span className="material-symbols-outlined">login</span>
                 </button>
@@ -231,12 +236,12 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
     <section className="w-full max-w-[1200px] mx-auto px-8 md:px-10 pt-6 pb-16 md:py-24 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
       <div className="flex-1 flex flex-col items-center md:items-start gap-4 md:gap-5 w-full">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#C5A059]/10 text-[#422e00] rounded-full text-xs font-bold">
-          <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#C5A059'}}>workspace_premium</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#2f9e41]/10 text-[#15461c] rounded-full text-xs font-bold">
+          <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#2f9e41'}}>workspace_premium</span>
           Reconhecimento de Saberes e Competências
         </div>
-        <h1 className="text-[32px] md:text-5xl lg:text-[48px] font-bold text-[#13315C] leading-tight tracking-tight text-center md:text-left [text-wrap:balance]">
-          Sua história construiu a nossa. <span className="text-[#0042B1]">Chegou a hora de valorizar sua carreira.</span>
+        <h1 className="text-[32px] md:text-5xl lg:text-[48px] font-bold text-[#2f9e41] leading-tight tracking-tight text-center md:text-left [text-wrap:balance]">
+          Sua história construiu a nossa. <span className="text-[#cd191e]">Chegou a hora de valorizar sua carreira.</span>
         </h1>
         <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-1 md:text-left text-center">
           Sistema inteligente para gestão, simulação e solicitação do Reconhecimento de Saberes e Competências. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
@@ -245,7 +250,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           <button 
             id="recreated-btn-simular-hero" 
             onClick={(e) => { e.stopPropagation(); onStart(); }} 
-            className="w-full md:w-auto bg-[#0042B1] text-white px-10 py-4 rounded-full font-bold text-sm hover:bg-[#13315C] transition-all flex justify-center items-center gap-3 shadow-[0_10px_20px_-5px_rgba(0,66,177,0.4)] cursor-pointer active:scale-95"
+            className="w-full md:w-auto bg-[#2f9e41] text-white px-10 py-4 rounded-full font-bold text-sm hover:bg-[#248a35] transition-all flex justify-center items-center gap-3 shadow-[0_10px_20px_-5px_rgba(47,158,65,0.3)] cursor-pointer active:scale-95"
           >
             Solicitar RSC agora
             <span className="material-symbols-outlined text-[20px]">how_to_reg</span>
@@ -260,7 +265,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
     <section id="como-funciona" className="w-full py-24 bg-[#fbf9f8]">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-[#13315C] mb-4">Fluxo do Processo</h2>
+          <h2 className="text-4xl font-bold text-[#2f9e41] mb-4">Fluxo do Processo</h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg italic">Um caminho transparente do protocolo ao benefício financeiro.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
@@ -272,22 +277,22 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             { i: 'description', t: 'Emissão de Portaria', d: 'Após a aprovação, o IFAM emite a Portaria oficial do reconhecimento.' },
             { i: 'payments', t: 'Atualização de Pagamento', d: 'Inclusão automática do benefício em folha e progressão na carreira.' },
           ].map((step, idx) => (
-            <div key={idx} className="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(0,66,177,0.15)] transition-all duration-500 group overflow-hidden hover:-translate-y-2">
+            <div key={idx} className="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(47,158,65,0.15)] transition-all duration-500 group overflow-hidden hover:-translate-y-2">
               <div className="absolute -right-4 -top-4 text-8xl font-black text-slate-50 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity cursor-default uppercase italic">
                 {idx + 1}
               </div>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#13315C] to-[#0042B1] flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform duration-500">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2f9e41] to-[#248a35] flex items-center justify-center mb-6 text-white shadow-lg shadow-green-900/20 group-hover:scale-110 transition-transform duration-500">
                 <span className="material-symbols-outlined text-[28px] icon-fill">{step.i}</span>
               </div>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-2">
-                   <span className="text-[10px] font-black text-[#C5A059] uppercase tracking-[0.2em]">Passo 0{idx + 1}</span>
+                   <span className="text-[10px] font-black text-[#2f9e41] uppercase tracking-[0.2em]">Passo 0{idx + 1}</span>
                 </div>
-                <h3 className="font-bold text-xl text-[#13315C] leading-tight">{step.t}</h3>
+                <h3 className="font-bold text-xl text-[#2f9e41] leading-tight">{step.t}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed text-justify">{step.d}</p>
               </div>
               <div className="mt-6 w-full h-1 bg-slate-50 rounded-full overflow-hidden">
-                <div className="h-full bg-[#C5A059] w-0 group-hover:w-full transition-all duration-700 delay-100"></div>
+                <div className="h-full bg-[#2f9e41] w-0 group-hover:w-full transition-all duration-700 delay-100"></div>
               </div>
             </div>
           ))}
@@ -296,13 +301,11 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
     </section>
 
     {/* Contador de Acessos */}
-    <section className="w-full py-12 bg-gradient-to-br from-[#0e2647] to-[#13315C] relative overflow-hidden">
-      {/* Acento verde IF sutil */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2f9e41] via-[#2f9e41]/60 to-transparent" />
+    <section className="w-full py-12 bg-gradient-to-br from-[#2f9e41] to-[#248a35] relative overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-center gap-8">
         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-6 border border-white/10">
-          <div className="w-14 h-14 rounded-2xl bg-[#C5A059]/20 flex items-center justify-center">
-            <span className="material-symbols-outlined text-3xl text-[#C5A059] icon-fill">visibility</span>
+          <div className="w-14 h-14 rounded-2xl bg-[#2f9e41]/20 flex items-center justify-center">
+            <span className="material-symbols-outlined text-3xl text-[#2f9e41] icon-fill">visibility</span>
           </div>
           <div className="flex flex-col">
             <span className="text-3xl font-black text-white tabular-nums">{visitCount.toLocaleString('pt-BR')}</span>
@@ -310,36 +313,36 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           </div>
         </div>
         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-6 border border-white/10">
-          <div className="w-14 h-14 rounded-2xl bg-[#C5A059]/20 flex items-center justify-center">
-            <span className="material-symbols-outlined text-3xl text-[#C5A059] icon-fill">groups</span>
+          <div className="w-14 h-14 rounded-2xl bg-[#2f9e41]/20 flex items-center justify-center">
+            <span className="material-symbols-outlined text-3xl text-[#2f9e41] icon-fill">groups</span>
           </div>
           <div className="flex flex-col">
             <span className="text-3xl font-black text-white">IFAM</span>
-            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/60">19 Campi no Amazonas</span>
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/60">17 Campi no Amazonas</span>
           </div>
         </div>
       </div>
     </section>
 
-    <footer className="bg-[#13315C] text-white py-16">
+    <footer className="bg-white text-slate-900 py-16 border-t border-slate-200">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center md:text-left">
         {/* Logos Institucionais */}
-        <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 md:gap-12 mb-12 pb-10 border-b border-white/10">
+        <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 md:gap-12 mb-12 pb-10 border-b border-slate-100">
           <div className="flex flex-col items-center gap-3">
-            <div className="bg-white rounded-xl px-8 py-5 shadow-sm hover:shadow-md transition-shadow">
-              <IFAMLogo variant="reitoria" layout="horizontal" inverted={false} width={200} />
+            <div className="bg-white rounded-xl px-8 py-5 shadow-sm hover:shadow-md transition-shadow relative w-[200px] h-[60px]">
+              <Image src="/logos/500px-Instituto_Federal_do_Amazonas_transparente.png" alt="IFAM Reitoria" fill className="object-contain p-2" />
             </div>
-            <span className="text-[9px] uppercase tracking-[0.15em] text-white/50 font-semibold font-if">Reitoria</span>
+            <span className="text-[9px] uppercase tracking-[0.15em] text-slate-400 font-semibold font-if">Reitoria</span>
           </div>
           <div className="h-12 w-px bg-white/10 hidden md:block"></div>
           <div className="flex flex-col items-center gap-3">
-            <div className="bg-white rounded-xl px-8 py-5 shadow-sm hover:shadow-md transition-shadow">
-              <IFAMLogo variant="cmc" layout="horizontal" inverted={false} width={240} />
+            <div className="bg-white rounded-xl px-10 py-6 shadow-sm hover:shadow-md transition-shadow relative w-[300px] h-[80px]">
+              <Image src="/logos/cmc-horiz-cor.png" alt="IFAM CMC" fill className="object-contain" />
             </div>
-            <span className="text-[9px] uppercase tracking-[0.15em] text-white/50 font-semibold font-if">Campus Desenvolvedor</span>
+            <span className="text-[9px] uppercase tracking-[0.15em] text-slate-400 font-semibold font-if">Campus Desenvolvedor</span>
           </div>
           <div className="h-10 w-px bg-white/10 hidden md:block"></div>
-          <div onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-white uppercase py-2 border-y-2 border-white cursor-pointer hover:opacity-80 transition-opacity">
+          <div onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-[#2f9e41] uppercase py-2 border-y-2 border-[#2f9e41] cursor-pointer hover:opacity-80 transition-opacity">
             <span className="text-[16px] tracking-[0.15em] ml-[0.15em]">MEU</span>
             <span className="text-[16px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
@@ -347,22 +350,22 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-12 mb-12">
           <div className="flex flex-col items-center md:items-start gap-4">
-            <p className="text-white/70 text-sm max-w-md text-center md:text-left font-if leading-relaxed">
+            <p className="text-slate-500 text-sm max-w-md text-center md:text-left font-if leading-relaxed">
               Plataforma oficial para valorização da carreira técnica e reconhecimento de saberes do Instituto Federal do Amazonas — desenvolvida pelo Campus Manaus Centro.
             </p>
           </div>
           <div className="flex gap-8">
              <div className="flex flex-col gap-2">
-               <span className="font-bold text-[10px] uppercase tracking-[0.2em] text-[#C5A059]">Suporte Técnico</span>
-               <span className="text-sm text-white/80 font-if">suporte.rsc@ifam.edu.br</span>
+               <span className="font-bold text-[10px] uppercase tracking-[0.2em] text-[#2f9e41]">Suporte Técnico</span>
+               <span className="text-sm text-slate-600 font-if">suporte.rsc@ifam.edu.br</span>
              </div>
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">
+          <p className="text-slate-500 text-[10px] uppercase font-bold tracking-[0.3em]">
             © {new Date().getFullYear()} Governo Federal | Instituto Federal do Amazonas
           </p>
-          <p className="text-white/30 text-[9px] uppercase tracking-[0.2em] font-if">
+          <p className="text-slate-400 text-[9px] uppercase tracking-[0.2em] font-if">
             IFAM — Campus Manaus Centro (CMC)
           </p>
         </div>
@@ -466,7 +469,7 @@ export default function App() {
       let y = margin;
 
       // Border
-      pdf.setDrawColor(19, 49, 92); // #13315C
+      pdf.setDrawColor(19, 49, 92); // #2f9e41
       pdf.setLineWidth(1.5);
       pdf.rect(10, 10, pageWidth - 20, pdf.internal.pageSize.getHeight() - 20);
 
@@ -802,11 +805,13 @@ export default function App() {
           {/* Logo Institucional no topo da sidebar */}
           <div className="px-6 pb-4 mb-2 border-b border-[#e4e2e1]">
             <div className="flex flex-col items-center gap-3">
-              <IFAMLogo variant="cmc" layout="horizontal" width={210} className="mb-1" />
+              <div className="relative w-full h-[80px]">
+                <Image src="/logos/500px-Instituto_Federal_do_Amazonas_transparente.png" alt="IFAM" fill className="object-contain" />
+              </div>
               <div className="flex items-center gap-2 w-full">
-                <div className="w-8 h-8 rounded-full bg-[#13315c] flex items-center justify-center text-white font-bold text-xs shrink-0">{session ? session.nome.charAt(0).toUpperCase() : 'S'}</div>
+                <div className="w-8 h-8 rounded-full bg-[#2f9e41] flex items-center justify-center text-white font-bold text-xs shrink-0">{session ? session.nome.charAt(0).toUpperCase() : 'S'}</div>
                 <div className="min-w-0">
-                  <p className="text-[#13315C] font-bold text-sm leading-tight truncate">{session ? session.nome.split(' ')[0] : 'Modo Simulador'}</p>
+                  <p className="text-[#2f9e41] font-bold text-sm leading-tight truncate">{session ? session.nome.split(' ')[0] : 'Modo Simulador'}</p>
                   <p className="text-slate-400 text-[10px]">{session ? `SIAPE: ${session.siape}` : 'Apenas visualização'}</p>
                 </div>
               </div>
@@ -814,20 +819,20 @@ export default function App() {
           </div>
           <div className="flex-1 px-4 space-y-1 mt-2">
             {appStatus && (
-              <div onClick={() => setActiveTab('acompanhamento')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'acompanhamento' ? 'bg-[#e5ecf6] text-[#2757c5] border-r-4 border-[#2757c5]' : 'text-slate-500 hover:bg-slate-50'}`}>
+              <div onClick={() => setActiveTab('acompanhamento')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'acompanhamento' ? 'bg-[#e5ecf6] text-[#2f9e41] border-r-4 border-[#2f9e41]' : 'text-slate-500 hover:bg-slate-50'}`}>
                 <span className="material-symbols-outlined text-xl">query_stats</span>
                 <span className="font-semibold text-sm">Meu Protocolo</span>
               </div>
             )}
-            <div onClick={() => setActiveTab('jornada')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'jornada' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
+            <div onClick={() => setActiveTab('jornada')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'jornada' ? 'bg-slate-100 text-[#2f9e41] border-r-4 border-[#2f9e41]' : 'text-slate-500 hover:bg-slate-50'}`}>
               <span className="material-symbols-outlined text-xl">timeline</span>
               <span className="font-semibold text-sm">Minha Jornada</span>
             </div>
-            <div onClick={() => setActiveTab('memorial')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'memorial' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
+            <div onClick={() => setActiveTab('memorial')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'memorial' ? 'bg-slate-100 text-[#2f9e41] border-r-4 border-[#2f9e41]' : 'text-slate-500 hover:bg-slate-50'}`}>
               <span className="material-symbols-outlined text-xl">auto_awesome</span>
               <span className="font-semibold text-sm">Memorial RSC</span>
             </div>
-            <div onClick={() => setActiveTab('perfil')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'perfil' ? 'bg-slate-100 text-[#13315C] border-r-4 border-[#13315C]' : 'text-slate-500 hover:bg-slate-50'}`}>
+            <div onClick={() => setActiveTab('perfil')} className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer ${activeTab === 'perfil' ? 'bg-slate-100 text-[#2f9e41] border-r-4 border-[#2f9e41]' : 'text-slate-500 hover:bg-slate-50'}`}>
               <span className="material-symbols-outlined text-xl">account_circle</span>
               <span className="font-semibold text-sm">Meu Perfil</span>
             </div>
@@ -836,12 +841,10 @@ export default function App() {
             {session ? (
               <button onClick={handleLogout} className="w-full py-2.5 px-4 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-semibold hover:bg-red-100">Sair da Conta</button>
             ) : (
-              <button onClick={() => setView('home')} className="w-full py-2.5 px-4 bg-[#001c40] text-white rounded text-sm font-semibold hover:bg-[#13315c]">Voltar ao Início</button>
+              <button onClick={() => setView('home')} className="w-full py-2.5 px-4 bg-[#2f9e41] text-white rounded text-sm font-semibold hover:bg-[#248a35]">Voltar ao Início</button>
             )}
-            {/* Selo Institucional IFAM Reitoria */}
+            {/* Selo Institucional Removido conforme solicitação de logo único */}
             <div className="pt-4 border-t border-[#e4e2e1] flex flex-col items-center gap-3">
-              <IFAMLogo variant="reitoria" layout="horizontal" width={180} className="opacity-80 hover:opacity-100 transition-opacity" />
-              <span className="text-[9px] uppercase tracking-[0.15em] text-slate-400 font-semibold font-if">Instituto Federal do Amazonas</span>
             </div>
           </div>
         </nav>
@@ -849,20 +852,20 @@ export default function App() {
         <div className="flex-1 flex flex-col h-screen overflow-hidden">
           <header className="bg-[#F0F0F0] border-b border-[#E0E0E0] flex justify-between items-center px-6 h-20 shrink-0">
             <div className="flex items-center gap-4">
-              <div onClick={() => setView('home')} className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C] scale-75 origin-left cursor-pointer hover:opacity-80">
+              <div onClick={() => setView('home')} className="flex flex-col items-center leading-[0.75] font-black text-[#2f9e41] uppercase py-1 border-y-2 border-[#2f9e41] scale-75 origin-left cursor-pointer hover:opacity-80">
                 <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
                 <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
               </div>
               <div className="h-6 w-px bg-slate-300 hidden md:block"></div>
-              <IFAMLogo variant="reitoria" layout="horizontal" width={160} className="hidden md:block opacity-80 hover:opacity-100 transition-opacity" />
+              {/* Logo removido da barra superior interna conforme solicitação */}
             </div>
             <div className="flex items-center gap-4">
               {isReadOnly && <span className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">lock</span> Somente Leitura</span>}
-              {appStatus === 'Rascunho' && <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full border border-blue-200">Rascunho Ativo</span>}
+              {appStatus === 'Rascunho' && <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full border border-green-200">Rascunho Ativo</span>}
               {session ? (
                 <button onClick={handleLogout} className="text-xs font-bold text-slate-400 hover:text-red-500 uppercase">Sair</button>
               ) : (
-                <button onClick={() => setShowLogin(true)} className="text-xs font-bold text-[#2757c5] hover:text-[#001c40] uppercase">Fazer Login</button>
+                <button onClick={() => setShowLogin(true)} className="text-xs font-bold text-[#2f9e41] hover:text-[#248a35] uppercase">Fazer Login</button>
               )}
             </div>
           </header>
@@ -873,9 +876,9 @@ export default function App() {
                 <div className="bg-white rounded-xl border border-[#c4c6d0] p-8 shadow-sm space-y-8 max-w-3xl mx-auto">
                    <div className="text-center">
                      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-50 border-4 border-slate-100 mb-4">
-                        <span className="material-symbols-outlined text-4xl text-[#13315C]">{appStatus === 'Aprovado' ? 'verified' : appStatus === 'Reprovado' ? 'cancel' : 'hourglass_empty'}</span>
+                        <span className="material-symbols-outlined text-4xl text-[#2f9e41]">{appStatus === 'Aprovado' ? 'verified' : appStatus === 'Reprovado' ? 'cancel' : 'hourglass_empty'}</span>
                      </div>
-                     <h2 className="text-3xl font-bold text-[#001c40]">Protocolo #{protocolNumber}</h2>
+                     <h2 className="text-3xl font-bold text-[#2f9e41]">Protocolo #{protocolNumber}</h2>
                      <p className="text-slate-500 mt-2">Nível Pleiteado: RSC {targetLevel}</p>
                    </div>
                    
@@ -886,23 +889,23 @@ export default function App() {
                      </div>
                      <div className="text-right">
                        <p className="text-xs uppercase font-bold text-slate-400">Pontuação Mínima</p>
-                       <p className="text-xl font-bold text-[#13315C]">{validation.rules.minPts} pts</p>
+                       <p className="text-xl font-bold text-[#2f9e41]">{validation.rules.minPts} pts</p>
                      </div>
                    </div>
 
                    <button 
                      onClick={handleDownloadPDF}
                      disabled={isSubmitting}
-                     className="w-full py-4 bg-[#13315C] text-white rounded-xl font-bold hover:bg-[#001c40] transition-all flex justify-center items-center gap-3 shadow-lg mb-8"
+                     className="w-full py-4 bg-[#2f9e41] text-white rounded-xl font-bold hover:bg-[#248a35] transition-all flex justify-center items-center gap-3 shadow-lg mb-8"
                    >
                      <Printer size={20} />
                      Baixar Certificado de Pontuação (PDF)
                    </button>
 
                    {adminFeedback && (
-                     <div className="p-6 border-l-4 border-[#cba72f] bg-amber-50 rounded-r-xl">
-                        <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-[20px]">gavel</span> Parecer da Comissão</h3>
-                        <p className="text-amber-800 whitespace-pre-wrap text-sm">{adminFeedback}</p>
+                     <div className="p-6 border-l-4 border-[#2f9e41] bg-green-50 rounded-r-xl">
+                        <h3 className="font-bold text-green-900 mb-2 flex items-center gap-2"><span className="material-symbols-outlined text-[20px]">gavel</span> Parecer da Comissão</h3>
+                        <p className="text-green-800 whitespace-pre-wrap text-sm">{adminFeedback}</p>
                      </div>
                    )}
                 </div>
@@ -911,7 +914,7 @@ export default function App() {
                   <div className="lg:col-span-8 space-y-6">
                     <div className="bg-white rounded-xl border border-[#c4c6d0] p-6 shadow-sm space-y-4">
                       <div className="flex justify-between items-center">
-                        <h2 className="text-xl font-semibold text-[#001c40]">Módulo de Evidências</h2>
+                        <h2 className="text-xl font-semibold text-[#248a35]">Módulo de Evidências</h2>
                         {!session && <span className="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full">Apenas Simulação</span>}
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -928,7 +931,7 @@ export default function App() {
                         <textarea disabled={isReadOnly} placeholder="Relato de experiência (Opcional)..." value={currentComment} onChange={e=>setCurrentComment(e.target.value)} className="flex-1 p-2 border rounded text-sm disabled:bg-slate-50" rows={2} />
                       </div>
                       
-                      <div className={`relative border-2 border-dashed rounded-lg p-4 text-center transition-colors ${isReadOnly ? 'border-slate-200 bg-slate-50' : 'border-[#c4c6d0] hover:border-[#13315c]'}`}>
+                      <div className={`relative border-2 border-dashed rounded-lg p-4 text-center transition-colors ${isReadOnly ? 'border-slate-200 bg-slate-50' : 'border-[#c4c6d0] hover:border-[#2f9e41]'}`}>
                          <input 
                            type="file" 
                            disabled={isReadOnly || isUploading}
@@ -937,19 +940,19 @@ export default function App() {
                          />
                          <span className="material-symbols-outlined text-[#747780] mb-1">upload_file</span>
                          <p className="text-xs text-[#747780] font-medium">
-                            {selectedFile ? <span className="text-[#13315c] font-bold">{selectedFile.name}</span> : 'Clique para anexar comprovantes PDF (Máx 5MB)'}
+                            {selectedFile ? <span className="text-[#2f9e41] font-bold">{selectedFile.name}</span> : 'Clique para anexar comprovantes PDF (Máx 5MB)'}
                          </p>
                       </div>
 
                       {!isReadOnly && (
-                        <button onClick={handleAddActivity} disabled={!selectedItem || isUploading} className="w-full py-3 bg-[#cba72f] text-white rounded font-bold hover:opacity-90 flex justify-center items-center gap-2">
+                        <button onClick={handleAddActivity} disabled={!selectedItem || isUploading} className="w-full py-3 bg-[#2f9e41] text-white rounded font-bold hover:bg-[#248a35] flex justify-center items-center gap-2 shadow-md">
                           {isUploading ? <Loader2 className="animate-spin" size={18}/> : <FileUp size={18}/>}
                           {isUploading ? 'Anexando arquivo...' : 'Adicionar à Jornada'}
                         </button>
                       )}
                       
                       <div className="space-y-2 mt-6">
-                        <h3 className="font-bold text-[#13315C] text-sm uppercase tracking-wider border-b pb-2">Itens Adicionados ({activities.length})</h3>
+                        <h3 className="font-bold text-[#2f9e41] text-sm uppercase tracking-wider border-b pb-2">Itens Adicionados ({activities.length})</h3>
                         {activities.map(a => (
                           <div key={a.uid} className="p-4 border rounded-lg flex justify-between items-center bg-slate-50">
                             <div className="text-sm flex-1 mr-4">
@@ -959,7 +962,7 @@ export default function App() {
                                  {a.comprovanteUrls && a.comprovanteUrls.length > 0 && (
                                    <div className="flex gap-1">
                                      {a.comprovanteUrls.map((url: string, idx: number) => (
-                                       <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#2757c5] hover:underline bg-blue-50 px-2 py-0.5 rounded">
+                                       <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#2f9e41] hover:underline bg-green-50 px-2 py-0.5 rounded">
                                          <span className="material-symbols-outlined text-[12px]">description</span>
                                          Doc {a.comprovanteUrls.length > 1 ? idx + 1 : ''}
                                        </a>
@@ -985,7 +988,7 @@ export default function App() {
                           <span className="material-symbols-outlined text-[16px] text-amber-600 icon-fill">arrow_downward</span>
                           <span className="text-[10px] font-black uppercase tracking-wider text-amber-700">Escolha seu nível</span>
                         </div>
-                        <h3 className="font-bold text-[#001c40] text-lg">Nível RSC Pretendido</h3>
+                        <h3 className="font-bold text-[#248a35] text-lg">Nível RSC Pretendido</h3>
                         <p className="text-[11px] text-slate-500 mt-1">Selecione o nível que deseja pleitear para calcular a meta</p>
                       </div>
 
@@ -998,12 +1001,12 @@ export default function App() {
                             onClick={() => setTargetLevel(l)}
                             className={`relative flex flex-col items-center py-3 px-2 rounded-xl border-2 transition-all duration-200 font-bold text-sm cursor-pointer disabled:cursor-not-allowed ${
                               targetLevel === l
-                                ? 'border-[#2757c5] bg-[#e5ecf6] text-[#2757c5] shadow-md scale-[1.02]'
+                                ? 'border-[#2f9e41] bg-green-50 text-[#2f9e41] shadow-md scale-[1.02]'
                                 : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50'
                             }`}
                           >
                             {targetLevel === l && (
-                              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#2757c5] rounded-full flex items-center justify-center">
+                              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#2f9e41] rounded-full flex items-center justify-center">
                                 <span className="material-symbols-outlined text-[12px] text-white icon-fill">check</span>
                               </span>
                             )}
@@ -1016,8 +1019,8 @@ export default function App() {
                       {/* Regras do nível selecionado */}
                       <div className="w-full bg-slate-50 rounded-lg p-3 border border-slate-100">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="material-symbols-outlined text-[16px] text-[#13315C]">info</span>
-                          <span className="text-[10px] font-black uppercase tracking-wider text-[#13315C]">Requisitos RSC {targetLevel}</span>
+                          <span className="material-symbols-outlined text-[16px] text-[#2f9e41]">info</span>
+                          <span className="text-[10px] font-black uppercase tracking-wider text-[#2f9e41]">Requisitos RSC {targetLevel}</span>
                         </div>
                         <div className="flex flex-col gap-1 text-[11px] text-slate-600">
                           <span>• Mínimo de <strong>{validation.rules.minPts} pontos</strong></span>
@@ -1032,7 +1035,7 @@ export default function App() {
                       <div className="relative w-32 h-32 flex items-center justify-center">
                         <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                           <circle cx="50" cy="50" r="45" fill="none" stroke="#f0eded" strokeWidth="8"/>
-                          <circle cx="50" cy="50" r="45" fill="none" stroke={validation.isApproved ? '#16a34a' : '#2757c5'} strokeWidth="8" strokeDasharray="282.7" strokeDashoffset={offset} className="transition-all" />
+                          <circle cx="50" cy="50" r="45" fill="none" stroke={validation.isApproved ? '#16a34a' : '#2f9e41'} strokeWidth="8" strokeDasharray="282.7" strokeDashoffset={offset} className="transition-all" />
                         </svg>
                         <div className="absolute flex flex-col items-center">
                           <span className="text-3xl font-bold">{validation.totalPoints.toFixed(0)}</span>
@@ -1042,11 +1045,11 @@ export default function App() {
 
                       {!isReadOnly ? (
                         <div className="w-full flex flex-col gap-2">
-                          <button onClick={() => handleSubmit(true)} disabled={isSubmitting} className="w-full py-3 rounded-lg font-bold text-[#13315c] border-2 border-[#13315c] bg-white hover:bg-slate-50 transition-all flex justify-center items-center gap-2">
+                          <button onClick={() => handleSubmit(true)} disabled={isSubmitting} className="w-full py-3 rounded-lg font-bold text-[#2f9e41] border-2 border-[#2f9e41] bg-white hover:bg-slate-50 transition-all flex justify-center items-center gap-2">
                             {isSubmitting ? <Loader2 className="animate-spin" size={18}/> : <Save size={18}/>}
                             Salvar Rascunho
                           </button>
-                          <button onClick={() => handleSubmit(false)} disabled={!validation.isApproved || isSubmitting} className={`w-full py-3 rounded-lg font-bold text-white transition-all flex justify-center items-center gap-2 ${validation.isApproved ? 'bg-[#001c40] hover:bg-[#13315c] shadow-md' : 'bg-slate-300 cursor-not-allowed'}`}>
+                          <button onClick={() => handleSubmit(false)} disabled={!validation.isApproved || isSubmitting} className={`w-full py-3 rounded-lg font-bold text-white transition-all flex justify-center items-center gap-2 ${validation.isApproved ? 'bg-[#248a35] hover:bg-[#2f9e41] shadow-md' : 'bg-slate-300 cursor-not-allowed'}`}>
                             {isSubmitting ? <Loader2 className="animate-spin" size={18}/> : <CheckCircle2 size={18}/>}
                             {validation.isApproved ? 'Submeter p/ Avaliação' : `Faltam ${(validation.rules.minPts - validation.totalPoints).toFixed(1)} pts`}
                           </button>
@@ -1065,11 +1068,11 @@ export default function App() {
                 <div className="bg-white rounded-xl border border-[#c4c6d0] p-4 md:p-8 shadow-sm flex flex-col h-full min-h-[400px] md:min-h-[600px]">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-6">
                     <div>
-                      <h2 className="text-2xl font-bold text-[#001c40]">Memorial Descritivo</h2>
+                      <h2 className="text-2xl font-bold text-[#248a35]">Memorial Descritivo</h2>
                       <p className="text-sm text-slate-500">O documento final que será lido pela comissão avaliadora.</p>
                     </div>
                     <div className="flex gap-2">
-                      {!isReadOnly && <button onClick={generateMemorial} className="px-4 py-2 bg-slate-100 text-[#13315C] rounded font-bold text-sm border border-slate-200 hover:bg-slate-200">Gerar Estrutura Automática</button>}
+                      {!isReadOnly && <button onClick={generateMemorial} className="px-4 py-2 bg-slate-100 text-[#2f9e41] rounded font-bold text-sm border border-slate-200 hover:bg-slate-200">Gerar Estrutura Automática</button>}
                     </div>
                   </div>
                   
@@ -1079,7 +1082,7 @@ export default function App() {
                       onChange={e => setMemorial(e.target.value)} 
                       disabled={isReadOnly}
                       placeholder="Escreva ou gere seu memorial descritivo aqui..."
-                      className="flex-1 w-full h-full p-6 border-2 border-slate-200 rounded-xl resize-none font-mono text-sm leading-relaxed focus:border-[#2757c5] focus:ring-0 disabled:bg-slate-50 disabled:text-slate-700 transition-colors"
+                      className="flex-1 w-full h-full p-6 border-2 border-slate-200 rounded-xl resize-none font-mono text-sm leading-relaxed focus:border-[#2f9e41] focus:ring-0 disabled:bg-slate-50 disabled:text-slate-700 transition-colors"
                     />
                     {!isReadOnly && <p className="absolute bottom-4 right-4 text-xs font-bold text-slate-400 bg-white px-2 py-1 rounded shadow-sm">Você pode editar este texto livremente.</p>}
                   </div>
@@ -1087,13 +1090,13 @@ export default function App() {
               ) : (
                 <div className="bg-white rounded-xl border border-[#c4c6d0] p-4 md:p-8 shadow-sm space-y-6 max-w-2xl">
                   <div>
-                    <h2 className="text-2xl font-bold text-[#001c40]">Meu Perfil</h2>
+                    <h2 className="text-2xl font-bold text-[#248a35]">Meu Perfil</h2>
                     <p className="text-sm text-slate-500">Mantenha seus dados atualizados. Eles são obrigatórios para a submissão.</p>
                   </div>
                   {!session ? (
                     <div className="p-6 bg-amber-50 rounded-xl border border-amber-200 text-center">
                       <p className="text-amber-800 font-bold mb-4">Você precisa estar logado para editar seu perfil.</p>
-                      <button onClick={() => setShowLogin(true)} className="px-6 py-2 bg-[#0042B1] text-white rounded font-bold text-sm">Fazer Login</button>
+                      <button onClick={() => setShowLogin(true)} className="px-6 py-2 bg-[#2f9e41] text-white rounded font-bold text-sm">Fazer Login</button>
                     </div>
                   ) : (
                     <div className="space-y-4">
@@ -1129,7 +1132,7 @@ export default function App() {
                         <input type="email" value={userData.email} disabled className="w-full p-3 border rounded text-sm bg-slate-100 text-slate-500" />
                       </div>
                       {!isReadOnly && (
-                        <button onClick={handleUpdateProfile} disabled={isSubmitting} className="w-full py-3 bg-[#2757c5] hover:bg-[#001c40] text-white rounded font-bold transition-all">
+                        <button onClick={handleUpdateProfile} disabled={isSubmitting} className="w-full py-3 bg-[#2f9e41] hover:bg-[#248a35] text-white rounded font-bold transition-all">
                           {isSubmitting ? 'Salvando...' : 'Salvar Perfil'}
                         </button>
                       )}
@@ -1141,22 +1144,22 @@ export default function App() {
           </main>
 
           {/* Mobile Bottom Navigation */}
-          <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-[200] flex items-center justify-around px-2 py-1.5 safe-area-bottom">
+          <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-[200] flex items-center justify-around px-2 py-1.5 safe-area-bottom">
             {appStatus && (
-              <button onClick={() => setActiveTab('acompanhamento')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'acompanhamento' ? 'text-[#2757c5] bg-blue-50' : 'text-slate-400'}`}>
+              <button onClick={() => setActiveTab('acompanhamento')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'acompanhamento' ? 'text-[#2f9e41] bg-green-50' : 'text-slate-400'}`}>
                 <span className="material-symbols-outlined text-[22px]">query_stats</span>
                 <span className="text-[9px] font-bold">Protocolo</span>
               </button>
             )}
-            <button onClick={() => setActiveTab('jornada')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'jornada' ? 'text-[#13315C] bg-slate-100' : 'text-slate-400'}`}>
+            <button onClick={() => setActiveTab('jornada')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'jornada' ? 'text-[#2f9e41] bg-slate-100' : 'text-slate-400'}`}>
               <span className="material-symbols-outlined text-[22px]">timeline</span>
               <span className="text-[9px] font-bold">Jornada</span>
             </button>
-            <button onClick={() => setActiveTab('memorial')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'memorial' ? 'text-[#13315C] bg-slate-100' : 'text-slate-400'}`}>
+            <button onClick={() => setActiveTab('memorial')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'memorial' ? 'text-[#2f9e41] bg-slate-100' : 'text-slate-400'}`}>
               <span className="material-symbols-outlined text-[22px]">auto_awesome</span>
               <span className="text-[9px] font-bold">Memorial</span>
             </button>
-            <button onClick={() => setActiveTab('perfil')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'perfil' ? 'text-[#13315C] bg-slate-100' : 'text-slate-400'}`}>
+            <button onClick={() => setActiveTab('perfil')} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[56px] ${activeTab === 'perfil' ? 'text-[#2f9e41] bg-slate-100' : 'text-slate-400'}`}>
               <span className="material-symbols-outlined text-[22px]">account_circle</span>
               <span className="text-[9px] font-bold">Perfil</span>
             </button>
@@ -1179,7 +1182,7 @@ export default function App() {
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#13315c] rounded-xl flex items-center justify-center shadow-lg">
+                  <div className="w-12 h-12 bg-[#2f9e41] rounded-xl flex items-center justify-center shadow-lg">
                     <span className="material-symbols-outlined text-white">lock</span>
                   </div>
                   <div>
@@ -1213,7 +1216,7 @@ export default function App() {
                         required 
                         value={authName} 
                         onChange={e => setAuthName(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none" 
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#2f9e41] focus:ring-2 focus:ring-[#2f9e41]/10 transition-all outline-none" 
                         placeholder="Ex: João Silva"
                       />
                     </div>
@@ -1223,7 +1226,7 @@ export default function App() {
                         required 
                         value={authCampus} 
                         onChange={e => setAuthCampus(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none bg-white"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#2f9e41] focus:ring-2 focus:ring-[#2f9e41]/10 transition-all outline-none bg-white"
                       >
                         <option value="">Selecione seu campus</option>
                         {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
@@ -1238,7 +1241,7 @@ export default function App() {
                     required 
                     value={authEmail} 
                     onChange={e => setAuthEmail(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none" 
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#2f9e41] focus:ring-2 focus:ring-[#2f9e41]/10 transition-all outline-none" 
                     placeholder="usuario@ifam.edu.br"
                   />
                 </div>
@@ -1249,14 +1252,14 @@ export default function App() {
                     required 
                     value={authPassword} 
                     onChange={e => setAuthPassword(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#13315c] focus:ring-2 focus:ring-[#13315c]/10 transition-all outline-none" 
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#2f9e41] focus:ring-2 focus:ring-[#2f9e41]/10 transition-all outline-none" 
                     placeholder="••••••••"
                   />
                 </div>
                 <button 
                   type="submit" 
                   disabled={authLoading}
-                  className="w-full py-4 bg-[#13315c] text-white rounded-xl font-bold hover:bg-[#001c40] shadow-lg shadow-blue-900/20 transition-all disabled:opacity-50 flex justify-center items-center gap-2"
+                  className="w-full py-4 bg-[#2f9e41] text-white rounded-xl font-bold hover:bg-[#248a35] shadow-lg shadow-green-900/20 transition-all disabled:opacity-50 flex justify-center items-center gap-2"
                 >
                   {authLoading ? <Loader2 className="animate-spin" size={20} /> : (authMode === 'login' ? 'Entrar Agora' : 'Finalizar Cadastro')}
                 </button>
@@ -1267,7 +1270,7 @@ export default function App() {
                   {authMode === 'login' ? 'Ainda não tem acesso?' : 'Já possui cadastro?'}
                   <button 
                     onClick={() => setAuthMode(authMode === 'login' ? 'register' : 'login')}
-                    className="ml-2 font-bold text-[#13315c] hover:underline"
+                    className="ml-2 font-bold text-[#2f9e41] hover:underline"
                   >
                     {authMode === 'login' ? 'Cadastre-se aqui' : 'Faça login'}
                   </button>
