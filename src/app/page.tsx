@@ -327,49 +327,61 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
     </section>
 
     <footer className="bg-white text-slate-900 py-16 border-t border-slate-200">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center md:text-left">
-        {/* Logos Institucionais */}
-        <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 md:gap-12 mb-12 pb-10 border-b border-slate-100">
-          <div className="flex flex-col items-center gap-3">
-            <div className="bg-white rounded-xl px-8 py-5 shadow-sm hover:shadow-md transition-shadow relative w-[200px] h-[60px]">
-              <Image src="/logos/500px-Instituto_Federal_do_Amazonas_transparente.png" alt="IFAM Reitoria" fill className="object-contain p-2" />
-            </div>
-            <span className="text-[9px] uppercase tracking-[0.15em] text-slate-400 font-semibold font-if">Reitoria</span>
-          </div>
-          <div className="h-12 w-px bg-white/10 hidden md:block"></div>
-          <div className="flex flex-col items-center gap-3">
-            <div className="bg-white rounded-xl px-10 py-6 shadow-sm hover:shadow-md transition-shadow relative w-[300px] h-[80px]">
-              <Image src="/logos/cmc-horiz-cor.png" alt="IFAM CMC" fill className="object-contain" />
-            </div>
-            <span className="text-[9px] uppercase tracking-[0.15em] text-slate-400 font-semibold font-if">Campus Desenvolvedor</span>
-          </div>
-          <div className="h-10 w-px bg-white/10 hidden md:block"></div>
-          <div onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-[#2f9e41] uppercase py-2 border-y-2 border-[#2f9e41] cursor-pointer hover:opacity-80 transition-opacity">
-            <span className="text-[16px] tracking-[0.15em] ml-[0.15em]">MEU</span>
-            <span className="text-[16px] tracking-[0.22em] ml-[0.22em]">RSC</span>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-12 mb-12">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 pb-12 border-b border-slate-100">
+          
+          {/* Coluna 1: Desenvolvimento */}
           <div className="flex flex-col items-center md:items-start gap-4">
-            <p className="text-slate-500 text-sm max-w-md text-center md:text-left font-if leading-relaxed">
-              Plataforma oficial para valorização da carreira técnica e reconhecimento de saberes do Instituto Federal do Amazonas — desenvolvida pelo Campus Manaus Centro.
+            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold">Desenvolvido por:</span>
+            <div className="bg-white rounded-xl px-6 py-4 shadow-sm border border-slate-100 hover:shadow-md transition-all relative w-[240px] h-[70px]">
+              <Image src="/logos/cmc-horiz-cor.png" alt="IFAM CMC" fill className="object-contain p-2" />
+            </div>
+            <p className="text-slate-500 text-xs font-medium max-w-[240px] leading-relaxed mt-2 text-center md:text-left">
+              Campus Manaus Centro — Excelência em Educação Profissional e Tecnológica.
             </p>
           </div>
-          <div className="flex gap-8">
-             <div className="flex flex-col gap-2">
-               <span className="font-bold text-[10px] uppercase tracking-[0.2em] text-[#2f9e41]">Suporte Técnico</span>
-               <span className="text-sm text-slate-600 font-if">suporte.rsc@ifam.edu.br</span>
+
+          {/* Coluna 2: Links Úteis */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-[#2f9e41] font-bold">Links Úteis</span>
+            <nav className="flex flex-col items-center md:items-start gap-3">
+              <button onClick={() => onHome()} className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium text-left">Início do Portal</button>
+              <a href="#como-funciona" className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium">Como Funciona</a>
+              <a href="https://www.ifam.edu.br" target="_blank" rel="noopener noreferrer" className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium">Portal IFAM</a>
+              <a href="#" className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium">Documentos Institucionais</a>
+            </nav>
+          </div>
+
+          {/* Coluna 3: Suporte e Contato */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-[#cd191e] font-bold">Atendimento</span>
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Suporte Técnico</span>
+              <a href="mailto:suporte.rsc@ifam.edu.br" className="text-sm text-slate-800 font-bold hover:text-[#2f9e41] transition-colors">suporte.rsc@ifam.edu.br</a>
+            </div>
+            <div className="mt-4 flex flex-col items-center md:items-start gap-2">
+              <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Localização</span>
+              <span className="text-sm text-slate-600 text-center md:text-left font-medium">Av. Sete de Setembro, 1975 - Centro<br/>Manaus - AM, 69020-120</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col items-center md:items-start gap-1">
+            <p className="text-slate-500 text-[10px] uppercase font-bold tracking-[0.3em]">
+              © {new Date().getFullYear()} Governo Federal | Instituto Federal do Amazonas
+            </p>
+            <p className="text-slate-400 text-[9px] uppercase tracking-[0.2em]">
+              Sistema de Reconhecimento de Saberes e Competências
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+             <div className="flex flex-col items-end leading-tight">
+                <span className="text-[14px] font-black text-[#2f9e41]">MEU RSC</span>
+                <span className="text-[8px] uppercase tracking-[0.2em] text-slate-400">Versão 1.0.0</span>
              </div>
           </div>
-        </div>
-        <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-slate-500 text-[10px] uppercase font-bold tracking-[0.3em]">
-            © {new Date().getFullYear()} Governo Federal | Instituto Federal do Amazonas
-          </p>
-          <p className="text-slate-400 text-[9px] uppercase tracking-[0.2em] font-if">
-            IFAM — Campus Manaus Centro (CMC)
-          </p>
         </div>
       </div>
     </footer>
