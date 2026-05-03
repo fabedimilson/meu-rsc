@@ -303,24 +303,27 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
     </section>
 
     {/* Contador de Acessos */}
-    <section className="w-full py-12 bg-gradient-to-br from-[#2f9e41] to-[#248a35] relative overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-center gap-8">
-        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-6 border border-white/10">
-          <div className="w-14 h-14 rounded-2xl bg-[#2f9e41]/20 flex items-center justify-center">
-            <span className="material-symbols-outlined text-3xl text-[#2f9e41] icon-fill">visibility</span>
+    <section className="w-full py-16 bg-gradient-to-r from-[#1b5e20] to-[#2f9e41] relative overflow-hidden">
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#ffffff_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+      </div>
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-center gap-10">
+        <div className="flex items-center gap-6 bg-white/10 backdrop-blur-md rounded-[2rem] px-10 py-8 border border-white/20 shadow-2xl hover:scale-105 transition-transform duration-500 group">
+          <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center shadow-inner group-hover:bg-[#cd191e] transition-colors duration-500">
+            <span className="material-symbols-outlined text-4xl text-white icon-fill">visibility</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-3xl font-black text-white tabular-nums">{visitCount.toLocaleString('pt-BR')}</span>
-            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/60">Acessos ao Portal</span>
+            <span className="text-4xl font-black text-white tabular-nums drop-shadow-sm">{visitCount.toLocaleString('pt-BR')}</span>
+            <span className="text-[10px] uppercase font-black tracking-[0.3em] text-white/70">Acessos ao Portal</span>
           </div>
         </div>
-        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-6 border border-white/10">
-          <div className="w-14 h-14 rounded-2xl bg-[#2f9e41]/20 flex items-center justify-center">
-            <span className="material-symbols-outlined text-3xl text-[#2f9e41] icon-fill">groups</span>
+        <div className="flex items-center gap-6 bg-white/10 backdrop-blur-md rounded-[2rem] px-10 py-8 border border-white/20 shadow-2xl hover:scale-105 transition-transform duration-500 group">
+          <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center shadow-inner group-hover:bg-[#cd191e] transition-colors duration-500">
+            <span className="material-symbols-outlined text-4xl text-white icon-fill">apartment</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-3xl font-black text-white">IFAM</span>
-            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/60">17 Campi no Amazonas</span>
+            <span className="text-4xl font-black text-white drop-shadow-sm">17 CAMPI</span>
+            <span className="text-[10px] uppercase font-black tracking-[0.3em] text-white/70">IFAM no Amazonas</span>
           </div>
         </div>
       </div>
