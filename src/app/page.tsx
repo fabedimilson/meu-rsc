@@ -171,7 +171,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
           <nav className="hidden md:flex items-center gap-10">
             <span className="text-[#2f9e41] font-bold border-b-2 border-[#2f9e41] pb-1 text-lg cursor-pointer hover:scale-110 transition-transform">Início</span>
-            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#2f9e41] transition-all text-lg hover:scale-110">Como Funciona</a>
+            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#2f9e41] transition-all text-lg hover:scale-110">Fluxograma</a>
           </nav>
 
           {/* Desktop Login Options - RECONSTRUÍDOS */}
@@ -392,7 +392,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#2f9e41] font-bold">Links Úteis</span>
             <nav className="flex flex-col items-center md:items-start gap-3">
               <button onClick={() => onHome()} className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium text-left">Início do Portal</button>
-              <a href="#como-funciona" className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium">Como Funciona</a>
+              <a href="#como-funciona" className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium">Fluxograma</a>
               <a href="https://www.ifam.edu.br" target="_blank" rel="noopener noreferrer" className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium">Portal IFAM</a>
               <a href="#" className="text-sm text-slate-600 hover:text-[#2f9e41] transition-colors font-medium">Documentos Institucionais</a>
             </nav>
