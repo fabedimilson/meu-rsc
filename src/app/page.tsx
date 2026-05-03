@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
+import { IFAMLogo } from './IFAMLogo';
 import { 
   CheckCircle2, XCircle, FileText, Upload, Trash2, 
   AlertCircle, Users, Award, ShieldCheck, ArrowRight,
@@ -147,6 +148,8 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
+      {/* Barra verde institucional do Governo Federal no topo */}
+      <div className="w-full h-[4px] bg-[#2f9e41]" />
       <header className="bg-[#13315C] sticky top-0 z-[100] border-b border-white/10 shadow-lg">
         <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
           <div className="flex items-center gap-4">
@@ -155,9 +158,8 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
             <div className="h-8 w-px bg-white/20 mx-2 hidden md:block"></div>
-            <div className="hidden md:flex flex-col text-base text-white/80 font-medium">
-              <span className="font-bold text-white">Governo Federal</span>
-              <span className="text-sm opacity-80">Instituto Federal do Amazonas</span>
+            <div className="hidden md:flex items-center gap-3">
+              <IFAMLogo variant="cmc" layout="horizontal" inverted={true} width={220} />
             </div>
           </div>
 
@@ -294,7 +296,9 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
     </section>
 
     {/* Contador de Acessos */}
-    <section className="w-full py-12 bg-gradient-to-br from-[#0e2647] to-[#13315C]">
+    <section className="w-full py-12 bg-gradient-to-br from-[#0e2647] to-[#13315C] relative overflow-hidden">
+      {/* Acento verde IF sutil */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2f9e41] via-[#2f9e41]/60 to-transparent" />
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-center gap-8">
         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-6 border border-white/10">
           <div className="w-14 h-14 rounded-2xl bg-[#C5A059]/20 flex items-center justify-center">
@@ -319,24 +323,49 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
     <footer className="bg-[#13315C] text-white py-16">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center md:text-left">
+        {/* Logos Institucionais */}
+        <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 md:gap-12 mb-12 pb-10 border-b border-white/10">
+          <div className="flex flex-col items-center gap-3">
+            <div className="bg-white rounded-xl px-8 py-5 shadow-sm hover:shadow-md transition-shadow">
+              <IFAMLogo variant="reitoria" layout="horizontal" inverted={false} width={200} />
+            </div>
+            <span className="text-[9px] uppercase tracking-[0.15em] text-white/50 font-semibold font-if">Reitoria</span>
+          </div>
+          <div className="h-12 w-px bg-white/10 hidden md:block"></div>
+          <div className="flex flex-col items-center gap-3">
+            <div className="bg-white rounded-xl px-8 py-5 shadow-sm hover:shadow-md transition-shadow">
+              <IFAMLogo variant="cmc" layout="horizontal" inverted={false} width={240} />
+            </div>
+            <span className="text-[9px] uppercase tracking-[0.15em] text-white/50 font-semibold font-if">Campus Desenvolvedor</span>
+          </div>
+          <div className="h-10 w-px bg-white/10 hidden md:block"></div>
+          <div onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-white uppercase py-2 border-y-2 border-white cursor-pointer hover:opacity-80 transition-opacity">
+            <span className="text-[16px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+            <span className="text-[16px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+          </div>
+        </div>
+
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-12 mb-12">
           <div className="flex flex-col items-center md:items-start gap-4">
-            <div onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-white uppercase py-2 border-y-2 border-white cursor-pointer hover:opacity-80 transition-opacity w-fit">
-              <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
-              <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
-            </div>
-            <p className="text-white/60 text-sm max-w-xs text-center md:text-left">Plataforma oficial para valorização da carreira técnica e reconhecimento de saberes do IFAM.</p>
+            <p className="text-white/70 text-sm max-w-md text-center md:text-left font-if leading-relaxed">
+              Plataforma oficial para valorização da carreira técnica e reconhecimento de saberes do Instituto Federal do Amazonas — desenvolvida pelo Campus Manaus Centro.
+            </p>
           </div>
           <div className="flex gap-8">
              <div className="flex flex-col gap-2">
                <span className="font-bold text-[10px] uppercase tracking-[0.2em] text-[#C5A059]">Suporte Técnico</span>
-               <span className="text-sm text-white/80">suporte.rsc@ifam.edu.br</span>
+               <span className="text-sm text-white/80 font-if">suporte.rsc@ifam.edu.br</span>
              </div>
           </div>
         </div>
-        <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">
-          © {new Date().getFullYear()} Governo Federal | Instituto Federal do Amazonas
-        </p>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">
+            © {new Date().getFullYear()} Governo Federal | Instituto Federal do Amazonas
+          </p>
+          <p className="text-white/30 text-[9px] uppercase tracking-[0.2em] font-if">
+            IFAM — Campus Manaus Centro (CMC)
+          </p>
+        </div>
       </div>
     </footer>
   </div>
@@ -770,12 +799,16 @@ export default function App() {
     return (
       <div className="flex h-screen w-full overflow-hidden bg-[#fbf9f8]">
         <nav className="hidden md:flex bg-white w-64 shrink-0 border-r border-[#E0E0E0] shadow-sm flex-col py-6 h-screen">
-          <div className="px-6 pb-6 mb-2 border-b border-[#e4e2e1]">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#13315c] flex items-center justify-center text-white font-bold">S</div>
-              <div>
-                <p className="text-[#13315C] font-bold text-sm leading-tight truncate">{session ? session.nome.split(' ')[0] : 'Modo Simulador'}</p>
-                <p className="text-slate-400 text-[10px]">{session ? `SIAPE: ${session.siape}` : 'Apenas visualização'}</p>
+          {/* Logo Institucional no topo da sidebar */}
+          <div className="px-6 pb-4 mb-2 border-b border-[#e4e2e1]">
+            <div className="flex flex-col items-center gap-3">
+              <IFAMLogo variant="cmc" layout="horizontal" width={210} className="mb-1" />
+              <div className="flex items-center gap-2 w-full">
+                <div className="w-8 h-8 rounded-full bg-[#13315c] flex items-center justify-center text-white font-bold text-xs shrink-0">{session ? session.nome.charAt(0).toUpperCase() : 'S'}</div>
+                <div className="min-w-0">
+                  <p className="text-[#13315C] font-bold text-sm leading-tight truncate">{session ? session.nome.split(' ')[0] : 'Modo Simulador'}</p>
+                  <p className="text-slate-400 text-[10px]">{session ? `SIAPE: ${session.siape}` : 'Apenas visualização'}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -799,20 +832,29 @@ export default function App() {
               <span className="font-semibold text-sm">Meu Perfil</span>
             </div>
           </div>
-          <div className="px-6 mt-4">
+          <div className="px-6 mt-4 space-y-4">
             {session ? (
               <button onClick={handleLogout} className="w-full py-2.5 px-4 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-semibold hover:bg-red-100">Sair da Conta</button>
             ) : (
               <button onClick={() => setView('home')} className="w-full py-2.5 px-4 bg-[#001c40] text-white rounded text-sm font-semibold hover:bg-[#13315c]">Voltar ao Início</button>
             )}
+            {/* Selo Institucional IFAM Reitoria */}
+            <div className="pt-4 border-t border-[#e4e2e1] flex flex-col items-center gap-3">
+              <IFAMLogo variant="reitoria" layout="horizontal" width={180} className="opacity-80 hover:opacity-100 transition-opacity" />
+              <span className="text-[9px] uppercase tracking-[0.15em] text-slate-400 font-semibold font-if">Instituto Federal do Amazonas</span>
+            </div>
           </div>
         </nav>
 
         <div className="flex-1 flex flex-col h-screen overflow-hidden">
           <header className="bg-[#F0F0F0] border-b border-[#E0E0E0] flex justify-between items-center px-6 h-20 shrink-0">
-            <div onClick={() => setView('home')} className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C] scale-75 origin-left cursor-pointer hover:opacity-80">
-              <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
-              <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+            <div className="flex items-center gap-4">
+              <div onClick={() => setView('home')} className="flex flex-col items-center leading-[0.75] font-black text-[#13315C] uppercase py-1 border-y-2 border-[#13315C] scale-75 origin-left cursor-pointer hover:opacity-80">
+                <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+                <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+              </div>
+              <div className="h-6 w-px bg-slate-300 hidden md:block"></div>
+              <IFAMLogo variant="reitoria" layout="horizontal" width={160} className="hidden md:block opacity-80 hover:opacity-100 transition-opacity" />
             </div>
             <div className="flex items-center gap-4">
               {isReadOnly && <span className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">lock</span> Somente Leitura</span>}

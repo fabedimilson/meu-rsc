@@ -39,7 +39,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Public+Sans:wght@400;500;600;700;900&display=swap"
           rel="stylesheet"
         />
         <link
@@ -48,6 +48,11 @@ export default function RootLayout({
         />
         <meta name="google" content="notranslate" />
         <style>{`
+          :root {
+            --if-verde: #2f9e41;
+            --if-vermelho: #cd191e;
+            --if-preto: #000000;
+          }
           .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             user-select: none;
@@ -55,7 +60,8 @@ export default function RootLayout({
           .icon-fill {
             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
           }
-          * { font-family: 'Public Sans', system-ui, sans-serif; }
+          * { font-family: 'Public Sans', 'Open Sans', system-ui, sans-serif; }
+          .font-if { font-family: 'Open Sans', 'Public Sans', system-ui, sans-serif; }
         `}</style>
       </head>
       <body className="antialiased bg-[#fbf9f8] text-[#1b1c1c]">
