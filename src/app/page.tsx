@@ -148,7 +148,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
   return (
     <div className="min-h-screen bg-[#fbf9f8] font-sans selection:bg-[#2f9e41]/20">
       <div className="if-topbar"></div>
-      <header className="bg-white sticky top-0 z-[100] border-b border-slate-200 shadow-sm">
+      <header className="bg-white sticky top-0 z-[100] border-b-2 border-[#2f9e41] shadow-md transition-all duration-300">
         <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
           <div className="flex items-center gap-4">
           <div key="brand-logo" onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-[#2f9e41] uppercase py-2 border-y-2 border-[#2f9e41] cursor-pointer hover:opacity-80 transition-opacity">
@@ -157,7 +157,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           </div>
             <div className="h-8 w-px bg-white/20 mx-2 hidden md:block"></div>
             <div className="hidden md:flex items-center gap-3">
-              <div className="relative w-[280px] h-[80px]">
+              <div className="relative w-[220px] h-[60px] hover:scale-105 transition-transform duration-300 cursor-pointer">
                 <Image 
                   src="/logos/500px-Instituto_Federal_do_Amazonas_transparente.png" 
                   alt="Instituto Federal do Amazonas" 
@@ -170,8 +170,8 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
-            <span className="text-[#2f9e41] font-bold border-b-2 border-[#2f9e41] pb-1 text-lg cursor-pointer">Início</span>
-            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#2f9e41] transition-colors text-lg">Como Funciona</a>
+            <span className="text-[#2f9e41] font-bold border-b-2 border-[#2f9e41] pb-1 text-lg cursor-pointer hover:scale-110 transition-transform">Início</span>
+            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#2f9e41] transition-all text-lg hover:scale-110">Como Funciona</a>
           </nav>
 
           {/* Desktop Login Options - RECONSTRUÍDOS */}
@@ -179,17 +179,17 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             <button 
               id="final-login-comissao"
               onClick={() => window.location.href = '/admin'}
-              className="bg-[#2f9e41] text-white px-5 py-2.5 rounded-full font-bold text-xs tracking-widest shadow-lg hover:bg-[#248a35] transition-all cursor-pointer"
+              className="bg-[#2f9e41] text-white px-5 py-2.5 rounded-full font-bold text-xs tracking-widest shadow-lg hover:bg-[#248a35] hover:scale-105 hover:shadow-xl transition-all cursor-pointer"
             >
               Login Comissão
             </button>
             {session ? (
-              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-[#2f9e41] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#248a35] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-[#2f9e41] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#248a35] hover:scale-105 hover:shadow-xl transition-all flex items-center gap-2 shadow-lg cursor-pointer">
                 Meu Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#cd191e] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#b2161a] border border-white/10 transition-all flex items-center gap-2 shadow-xl cursor-pointer">
+              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#cd191e] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#b2161a] hover:scale-105 hover:shadow-xl border border-white/20 transition-all flex items-center gap-2 shadow-xl cursor-pointer">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
