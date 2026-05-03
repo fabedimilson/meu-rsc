@@ -146,11 +146,12 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f8] text-[#1b1c1c]">
-      <header className="bg-[#2f9e41] sticky top-0 z-[100] border-b border-white/10 shadow-lg">
+    <div className="min-h-screen bg-[#fbf9f8] font-sans selection:bg-[#2f9e41]/20">
+      <div className="if-topbar"></div>
+      <header className="bg-white sticky top-0 z-[100] border-b border-slate-200 shadow-sm">
         <div className="flex justify-between items-center w-full px-6 md:px-10 max-w-[1200px] mx-auto h-20">
           <div className="flex items-center gap-4">
-          <div key="brand-logo" onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-white uppercase py-2 border-y-2 border-white cursor-pointer hover:opacity-80 transition-opacity">
+          <div key="brand-logo" onClick={() => onHome()} className="flex flex-col items-center leading-[1.2] font-black text-[#2f9e41] uppercase py-2 border-y-2 border-[#2f9e41] cursor-pointer hover:opacity-80 transition-opacity">
             <span className="text-[20px] tracking-[0.15em] ml-[0.15em]">MEU</span>
             <span className="text-[20px] tracking-[0.22em] ml-[0.22em]">RSC</span>
           </div>
@@ -161,7 +162,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
                   src="/logos/500px-Instituto_Federal_do_Amazonas_transparente.png" 
                   alt="Instituto Federal do Amazonas" 
                   fill 
-                  className="object-contain invert brightness-0" 
+                  className="object-contain" 
                   priority
                 />
               </div>
@@ -169,8 +170,8 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
-            <span className="text-white font-bold border-b-2 border-white pb-1 text-lg cursor-pointer">Início</span>
-            <a href="#como-funciona" className="text-white/70 font-medium hover:text-white transition-colors text-lg">Como Funciona</a>
+            <span className="text-[#2f9e41] font-bold border-b-2 border-[#2f9e41] pb-1 text-lg cursor-pointer">Início</span>
+            <a href="#como-funciona" className="text-slate-600 font-medium hover:text-[#2f9e41] transition-colors text-lg">Como Funciona</a>
           </nav>
 
           {/* Desktop Login Options - RECONSTRUÍDOS */}
@@ -183,12 +184,12 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
               Login Comissão
             </button>
             {session ? (
-              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-white text-[#2f9e41] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 transition-all flex items-center gap-2 shadow-lg cursor-pointer">
+              <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-[#2f9e41] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#248a35] transition-all flex items-center gap-2 shadow-lg cursor-pointer">
                 Meu Painel
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
             ) : (
-              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#cd191e] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#b2161a] border border-white/20 transition-all flex items-center gap-2 shadow-xl cursor-pointer">
+              <button id="final-btn-login-servidor" onClick={(e) => { e.stopPropagation(); onLogin(); }} className="bg-[#cd191e] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#b2161a] border border-white/10 transition-all flex items-center gap-2 shadow-xl cursor-pointer">
                 Login Servidor
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </button>
@@ -198,7 +199,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-16 h-16 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors"
+            className="md:hidden w-16 h-16 flex items-center justify-center text-[#2f9e41] hover:bg-slate-100 rounded-full transition-colors"
           >
             <span className="material-symbols-outlined text-5xl">
               {menuOpen ? 'close' : 'menu'}
