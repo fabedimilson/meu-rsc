@@ -107,7 +107,7 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-[4/3] md:aspect-[16/10] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-100 border border-[#cd191e] shadow-[#cd191e]/20 group">
+    <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-100 border border-[#cd191e] shadow-[#cd191e]/20 group">
       {images.map((src, idx) => (
         <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100' : 'opacity-0'}`} style={{ transitionProperty: 'opacity' }}>
           <Image 
