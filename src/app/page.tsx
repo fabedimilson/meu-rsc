@@ -99,7 +99,7 @@ const REQUISITOS = [
 
 const BannerCarousel = () => {
   const [current, setCurrent] = useState(0);
-  const images = ["/banners/banner0.png", "/banners/Banner1.png", "/banners/Banner2.png", "/banners/Banner3.png", "/banners/Banner4.png"];
+  const images = ["/banners/banner0.png", "/banners/Banner1.png", "/banners/Banner3.png", "/banners/Banner4.png"];
 
   useEffect(() => {
     const timer = setInterval(() => setCurrent(prev => (prev + 1) % images.length), 5000);
@@ -360,7 +360,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#cd191e] font-bold">Atendimento</span>
             <div className="flex flex-col items-center md:items-start gap-2">
               <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Suporte Técnico</span>
-              <a href="mailto:suporte.rsc@ifam.edu.br" className="text-sm text-slate-800 font-bold hover:text-[#2f9e41] transition-colors">suporte.rsc@ifam.edu.br</a>
+              <a href="mailto:teste@ifam.edu.br" className="text-sm text-slate-800 font-bold hover:text-[#2f9e41] transition-colors">teste@ifam.edu.br</a>
             </div>
           </div>
 
