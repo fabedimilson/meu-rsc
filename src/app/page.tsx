@@ -327,7 +327,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-white shadow-xl shrink-0 group-hover:rotate-6 transition-all duration-500" style={{ background: `linear-gradient(135deg, ${step.c}, ${step.c}cc)` }}>
                   <span className="material-symbols-outlined text-xl md:text-2xl icon-fill">{step.i}</span>
                 </div>
-                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-center md:text-left leading-tight" style={{ color: step.c }}>{step.r}</span>
+                <span className="text-[11px] md:text-[13px] font-black uppercase tracking-[0.2em] text-center md:text-left leading-tight" style={{ color: step.c }}>{step.r}</span>
               </div>
 
               {/* Coluna: Etapa */}
@@ -339,7 +339,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
               {/* Coluna: Descrição */}
               <div className="px-8 md:px-10 py-6 md:py-8 bg-white group-hover:bg-slate-50/50 transition-colors">
-                <p className="text-slate-600 text-base md:text-[16px] font-medium leading-relaxed text-justify md:text-left lg:text-justify hyphens-auto">
+                <p className="text-slate-600 text-base md:text-lg font-medium leading-relaxed text-justify md:text-left lg:text-justify hyphens-auto">
                   {step.d}
                 </p>
               </div>
