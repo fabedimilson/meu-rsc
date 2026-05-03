@@ -266,38 +266,65 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
     <section id="como-funciona" className="w-full py-24 bg-[#fbf9f8]">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold text-[#2f9e41] mb-4">Fluxo do Processo</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto text-lg italic">Um caminho transparente do protocolo ao benefício financeiro.</p>
+        <div className="text-center mb-16">
+          <span className="text-[10px] font-black text-[#2f9e41] uppercase tracking-[0.3em] mb-4 block">Processo Operacional</span>
+          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 uppercase tracking-tight">
+            Fluxograma <span className="text-[#2f9e41]">Tramitação do RSC</span>
+          </h2>
+          <p className="text-slate-600 max-w-3xl mx-auto text-lg font-medium leading-relaxed italic">
+            Integração entre o sistema <span className="text-[#2f9e41] font-bold">Meu RSC</span>, o SIPAC e os setores responsáveis.
+          </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
+
+        <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto relative">
+          {/* Connector Line (Desktop) */}
+          <div className="absolute left-6 top-10 bottom-10 w-0.5 bg-slate-200 hidden md:block"></div>
+
           {[
-            { i: 'person_add', t: 'Cadastro Institucional', d: 'Acesse com seu e-mail @ifam.edu.br, complete seu perfil e leia atentamente o regulamento do RSC.' },
-            { i: 'account_tree', t: 'Envio de Evidências', d: 'Inicie o levantamento de documentos e anexe as evidências em PDF para validar sua pontuação.' },
-            { i: 'history_edu', t: 'Elaboração do Memorial', d: 'Utilize nossa ferramenta gratuita para estruturar sua trajetória profissional de forma automática.' },
-            { i: 'verified', t: 'Avaliação pela Comissão', d: 'Membros avaliadores revisam seu protocolo e emitem o parecer técnico.' },
-            { i: 'description', t: 'Emissão de Portaria', d: 'Após a aprovação, o IFAM emite a Portaria oficial do reconhecimento.' },
-            { i: 'payments', t: 'Atualização de Pagamento', d: 'Inclusão automática do benefício em folha e progressão na carreira.' },
+            { r: 'SERVIDOR', d: "Dá entrada no sistema 'Meu RSC', anexando toda a documentação e recebendo um comprovante (protocolo) de entrada.", i: 'computer', c: '#1a3a5a' },
+            { r: 'SERVIDOR', d: "Dá entrada, via e-mail, no protocolo de seu campus de lotação, solicitando abertura de processo no SIPAC, juntamente com o comprovante (protocolo) de entrada no sistema 'Meu RSC'.", i: 'alternate_email', c: '#1a3a5a' },
+            { r: 'PROTOCOLO DO CAMPUS', d: "Abre o processo no SIPAC, dá o ok no e-mail ao servidor sobre a abertura de seu processo e encaminha o respectivo processo à Comissão de Avaliação do RSC.", i: 'folder_managed', c: '#2f9e41' },
+            { r: 'COMISSÃO DE AVALIAÇÃO DO RSC', d: "Recebe o processo do servidor e procura, no sistema 'Meu RSC', o processo correspondente do servidor, para avaliação no sistema 'Meu RSC' e emissão do parecer.", i: 'person_search', c: '#6f42c1' },
+            { r: 'COMISSÃO DE AVALIAÇÃO DO RSC', d: "Adiciona o parecer retirado do sistema 'Meu RSC', ao processo no SIPAC do servidor, juntamente com a juntada dos documentos anexados pelo servidor, gerada no sistema 'Meu RSC'.", i: 'attach_file', c: '#6f42c1' },
+            { r: 'COMISSÃO DE AVALIAÇÃO DO RSC', d: "Encaminha o processo instruído do SIPAC ao Gabinete da Reitoria, para emissão da Portaria de Concessão do RSC.", i: 'forward', c: '#6f42c1' },
+            { r: 'GABINETE DA REITORIA', d: "Emite a Portaria de Concessão, que é assinada pelo Reitor.", i: 'verified', c: '#e67e22' },
+            { r: 'GABINETE DA REITORIA', d: "Anexa a Portaria assinada ao processo no SIPAC e encaminha o processo à PROGESP.", i: 'attach_file', c: '#e67e22' },
+            { r: 'PROGESP', d: "Realiza o encaminhamento do processo ao campus de origem para lançamento na folha de pagamento do servidor, encaminhando também cópia da Portaria ao servidor e ao DGP do campus de origem.", i: 'calculate', c: '#17a2b8' },
+            { r: 'DGP DO CAMPUS DE ORIGEM', d: "Realiza os lançamentos na folha, dá ciência ao servidor e arquiva o processo.", i: 'inventory_2', c: '#a52a2a' },
           ].map((step, idx) => (
-            <div key={idx} className="relative p-8 bg-white rounded-3xl border border-slate-100 hover:border-[#cd191e]/30 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(205,25,30,0.1)] transition-all duration-500 group overflow-hidden hover:-translate-y-2">
-              <div className="absolute -right-4 -top-4 text-8xl font-black text-slate-50 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity cursor-default uppercase italic">
+            <div key={idx} className="relative flex items-start gap-6 md:gap-10 group">
+              <div className="z-10 flex-shrink-0 w-12 h-12 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center font-black text-slate-400 group-hover:border-[#2f9e41] group-hover:text-[#2f9e41] transition-all duration-300 shadow-sm">
                 {idx + 1}
               </div>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2f9e41] to-[#248a35] flex items-center justify-center mb-6 text-white shadow-lg shadow-green-900/20 group-hover:scale-110 transition-transform duration-500">
-                <span className="material-symbols-outlined text-[28px] icon-fill">{step.i}</span>
-              </div>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2">
-                   <span className="text-[10px] font-black text-[#2f9e41] uppercase tracking-[0.2em]">Passo 0{idx + 1}</span>
+              <div className="flex-1 bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15)] transition-all duration-300 flex flex-col md:flex-row items-center md:items-start gap-6">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg shrink-0 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: step.c }}>
+                  <span className="material-symbols-outlined text-3xl icon-fill">{step.i}</span>
                 </div>
-                <h3 className="font-bold text-xl text-[#2f9e41] leading-tight">{step.t}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed text-justify">{step.d}</p>
-              </div>
-              <div className="mt-6 w-full h-1 bg-slate-50 rounded-full overflow-hidden">
-                <div className="h-full bg-[#cd191e] w-0 group-hover:w-full transition-all duration-700 delay-100"></div>
+                <div className="flex-1 text-center md:text-left">
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] block mb-2" style={{ color: step.c }}>{step.r}</span>
+                  <p className="text-sm md:text-[15px] text-slate-600 font-medium leading-relaxed">{step.d}</p>
+                </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Resultado Final */}
+        <div className="mt-20 max-w-4xl mx-auto bg-gradient-to-br from-slate-900 to-slate-800 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 p-12 opacity-5">
+            <span className="material-symbols-outlined text-[150px] icon-fill">task_alt</span>
+          </div>
+          <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+            <div className="w-24 h-24 rounded-3xl bg-[#2f9e41] flex items-center justify-center shadow-2xl shadow-green-900/40 rotate-3">
+              <span className="material-symbols-outlined text-5xl text-white">check_circle</span>
+            </div>
+            <div className="text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl font-black mb-3 uppercase tracking-wider">Resultado Final</h3>
+              <p className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed">
+                Processo instruído, portaria emitida, lançamento em folha realizado e processo arquivado.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
