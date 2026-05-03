@@ -253,6 +253,7 @@ export async function listAdmins() {
     username: admins.username,
     role: admins.role,
     isActive: admins.isActive,
+    campus: admins.campus,
     created_at: admins.created_at
   }).from(admins);
 }
@@ -267,7 +268,9 @@ export async function createAdmin(data: any) {
     nome: data.nome,
     username: data.username,
     password: hashedPassword,
-    role: data.role
+    role: data.role,
+    campus: data.campus,
+    isActive: true
   });
 
   return { success: true };
@@ -280,8 +283,13 @@ export async function updateAdmin(id: number, data: any) {
   const updateData: any = {
     nome: data.nome,
     role: data.role,
+    campus: data.campus,
     isActive: data.isActive === 'true' || data.isActive === true,
   };
+
+  if (data.password && data.password.trim() !== "") {
+    updateData.password = bcrypt.hashSync(data.password, 10);
+  }
 
   await db.update(admins).set(updateData).where(eq(admins.id, id));
   return { success: true };
