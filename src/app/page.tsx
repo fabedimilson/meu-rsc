@@ -104,7 +104,10 @@ const BannerCarousel = () => {
   useEffect(() => {
     const timer = setInterval(() => setCurrent(prev => (prev + 1) % images.length), 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [images.length]);
+
+  const next = () => setCurrent(prev => (prev + 1) % images.length);
+  const prev = () => setCurrent(prev => (prev - 1 + images.length) % images.length);
 
   return (
     <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-100 border border-[#cd191e] shadow-[#cd191e]/20 group">
@@ -128,6 +131,25 @@ const BannerCarousel = () => {
           </div>
         </div>
       ))}
+
+      {/* Controladores de Passagem (Botões) */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <button 
+          onClick={(e) => { e.stopPropagation(); prev(); }}
+          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/30 hover:bg-[#2f9e41] text-white backdrop-blur-sm flex items-center justify-center transition-all hover:scale-110 shadow-lg"
+          aria-label="Banner anterior"
+        >
+          <span className="material-symbols-outlined text-2xl">chevron_left</span>
+        </button>
+        <button 
+          onClick={(e) => { e.stopPropagation(); next(); }}
+          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/30 hover:bg-[#2f9e41] text-white backdrop-blur-sm flex items-center justify-center transition-all hover:scale-110 shadow-lg"
+          aria-label="Próximo banner"
+        >
+          <span className="material-symbols-outlined text-2xl">chevron_right</span>
+        </button>
+      </div>
+
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3 z-10">
         {images.map((_, idx) => (
           <button 
