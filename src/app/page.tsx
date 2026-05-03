@@ -182,7 +182,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
               className="bg-[#2f9e41] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#248a35] hover:scale-105 hover:shadow-xl transition-all flex items-center gap-2 shadow-lg cursor-pointer"
             >
               Login Comissão
-              <span className="material-symbols-outlined text-[18px]">search</span>
+              <span className="material-symbols-outlined text-[18px]">fact_check</span>
             </button>
             {session ? (
               <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-[#2f9e41] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#248a35] hover:scale-105 hover:shadow-xl transition-all flex items-center gap-2 shadow-lg cursor-pointer">
