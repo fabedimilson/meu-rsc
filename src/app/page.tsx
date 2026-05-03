@@ -107,7 +107,7 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-white border-2 border-[#cd191e] shadow-[#cd191e]/20 group">
+    <div className="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-[#cd191e] shadow-[#cd191e]/20 group">
       {images.map((src, idx) => (
         <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100' : 'opacity-0'}`} style={{ transitionProperty: 'opacity' }}>
           <Image 
@@ -179,9 +179,10 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             <button 
               id="final-login-comissao"
               onClick={() => window.location.href = '/admin'}
-              className="bg-[#2f9e41] text-white px-5 py-2.5 rounded-full font-bold text-xs tracking-widest shadow-lg hover:bg-[#248a35] hover:scale-105 hover:shadow-xl transition-all cursor-pointer"
+              className="bg-[#2f9e41] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#248a35] hover:scale-105 hover:shadow-xl transition-all flex items-center gap-2 shadow-lg cursor-pointer"
             >
               Login Comissão
+              <span className="material-symbols-outlined text-[18px]">search</span>
             </button>
             {session ? (
               <button id="final-btn-painel" onClick={(e) => { e.stopPropagation(); onStart(); }} className="bg-[#2f9e41] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#248a35] hover:scale-105 hover:shadow-xl transition-all flex items-center gap-2 shadow-lg cursor-pointer">
