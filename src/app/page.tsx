@@ -359,10 +359,6 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
               <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Suporte Técnico</span>
               <a href="mailto:suporte.rsc@ifam.edu.br" className="text-sm text-slate-800 font-bold hover:text-[#2f9e41] transition-colors">suporte.rsc@ifam.edu.br</a>
             </div>
-            <div className="mt-4 flex flex-col items-center md:items-start gap-2">
-              <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Localização</span>
-              <span className="text-sm text-slate-600 text-center md:text-left font-medium">Av. Sete de Setembro, 1975 - Centro<br/>Manaus - AM, 69020-120</span>
-            </div>
           </div>
 
         </div>
@@ -377,9 +373,12 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             </p>
           </div>
           <div className="flex items-center gap-4">
-             <div className="flex flex-col items-end leading-tight">
-                <span className="text-[14px] font-black text-[#2f9e41]">MEU RSC</span>
-                <span className="text-[8px] uppercase tracking-[0.2em] text-slate-400">Versão 1.0.0</span>
+             <div className="flex flex-col items-end gap-2">
+                <div key="footer-brand" className="flex flex-col items-center leading-[1.1] font-black text-[#2f9e41] uppercase py-1.5 px-2 border-y-[1.5px] border-[#2f9e41] cursor-default scale-90 origin-right">
+                  <span className="text-[14px] tracking-[0.15em] ml-[0.15em]">MEU</span>
+                  <span className="text-[14px] tracking-[0.22em] ml-[0.22em]">RSC</span>
+                </div>
+                <span className="text-[8px] uppercase tracking-[0.2em] text-slate-400 font-bold">Versão 1.0.0</span>
              </div>
           </div>
         </div>
