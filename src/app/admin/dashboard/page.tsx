@@ -468,8 +468,9 @@ export default function DashboardPage() {
               <div className="h-6 w-px bg-[#dcd9d9] mx-2"></div>
               <span className="text-[#248a35] font-bold">Avaliação #{selectedApp.app.protocolo}</span>
             </div>
-            <div className="text-sm font-semibold text-[#44474f]">
-              Servidor: {selectedApp.user.nome}
+            <div className="text-sm font-semibold text-[#44474f] flex flex-col items-end leading-tight">
+              <span>Servidor: {selectedApp.user.nome}</span>
+              <span className="text-[10px] text-slate-400 uppercase tracking-wider">{selectedApp.user.campus || 'Campus não informado'}</span>
             </div>
           </header>
 

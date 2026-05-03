@@ -110,6 +110,7 @@ export async function getApplications(opts?: {
     userNome: users.nome,
     userCpf: users.cpf,
     userSiape: users.siape,
+    userCampus: users.campus,
   })
   .from(applications)
   .innerJoin(users, eq(applications.userId, users.id))

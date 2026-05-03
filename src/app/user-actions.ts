@@ -84,7 +84,8 @@ export async function loginUser(formData: FormData) {
       nome: user.nome,
       cpf: user.cpf,
       siape: user.siape,
-      dataNascimento: user.data_nascimento // Note: SQL results usually use snake_case
+      campus: user.campus,
+      dataNascimento: user.data_nascimento
     })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
@@ -116,7 +117,7 @@ export async function getUserSession() {
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET);
-    return payload as { id: number; email: string; nome: string; cpf: string; siape: string; dataNascimento: string };
+    return payload as { id: number; email: string; nome: string; cpf: string; siape: string; dataNascimento: string; campus: string };
   } catch {
     return null;
   }
