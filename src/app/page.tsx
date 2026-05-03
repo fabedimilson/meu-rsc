@@ -115,7 +115,7 @@ const BannerCarousel = () => {
             alt={`Banner ${idx + 1}`} 
             fill
             priority={idx === 0}
-            className="object-cover object-center" 
+            className="object-contain object-center" 
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
           <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-3 py-1.5 md:px-5 md:py-2.5 rounded-tl-2xl md:rounded-tl-3xl flex items-center gap-2 md:gap-3 shadow-2xl animate-in fade-in duration-700">
@@ -278,7 +278,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
             { i: 'description', t: 'Emissão de Portaria', d: 'Após a aprovação, o IFAM emite a Portaria oficial do reconhecimento.' },
             { i: 'payments', t: 'Atualização de Pagamento', d: 'Inclusão automática do benefício em folha e progressão na carreira.' },
           ].map((step, idx) => (
-            <div key={idx} className="relative p-8 bg-white rounded-3xl border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(47,158,65,0.15)] transition-all duration-500 group overflow-hidden hover:-translate-y-2">
+            <div key={idx} className="relative p-8 bg-white rounded-3xl border border-slate-100 hover:border-[#cd191e]/30 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(205,25,30,0.1)] transition-all duration-500 group overflow-hidden hover:-translate-y-2">
               <div className="absolute -right-4 -top-4 text-8xl font-black text-slate-50 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity cursor-default uppercase italic">
                 {idx + 1}
               </div>
@@ -293,7 +293,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
                 <p className="text-sm text-slate-500 leading-relaxed text-justify">{step.d}</p>
               </div>
               <div className="mt-6 w-full h-1 bg-slate-50 rounded-full overflow-hidden">
-                <div className="h-full bg-[#2f9e41] w-0 group-hover:w-full transition-all duration-700 delay-100"></div>
+                <div className="h-full bg-[#cd191e] w-0 group-hover:w-full transition-all duration-700 delay-100"></div>
               </div>
             </div>
           ))}
