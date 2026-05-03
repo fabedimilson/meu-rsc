@@ -264,21 +264,21 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
       </div>
     </section>
 
-    <section id="como-funciona" className="w-full py-32 bg-[#f8fafc] relative overflow-hidden">
+    <section id="como-funciona" className="w-full py-20 md:py-32 bg-[#f8fafc] relative overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 relative z-10">
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#2f9e41]/10 text-[#15461c] rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-6">
             Fluxo de Trabalho
           </div>
-          <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 uppercase tracking-tighter">
+          <h2 className="text-3xl md:text-6xl font-black text-slate-900 mb-6 uppercase tracking-tighter leading-tight">
             Tramitação <span className="text-[#2f9e41]">Operacional</span>
           </h2>
-          <p className="text-slate-500 max-w-2xl mx-auto text-lg md:text-xl font-medium italic">
+          <p className="text-slate-500 max-w-2xl mx-auto text-base md:text-xl font-medium italic">
             Passo a passo detalhado do percurso institucional do seu processo RSC.
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto bg-white rounded-[2.5rem] shadow-[0_20px_70px_-20px_rgba(0,0,0,0.1)] border border-slate-100 overflow-hidden">
+        <div className="max-w-5xl mx-auto bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_20px_70px_-20px_rgba(0,0,0,0.1)] border border-slate-100 overflow-hidden">
           {/* Cabeçalho da Tabela (Desktop) */}
           <div className="hidden md:grid grid-cols-[220px_80px_1fr] bg-slate-50/50 border-b border-slate-100 py-6 px-10">
             <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">Responsável</div>
@@ -288,36 +288,36 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
 
           {/* Linhas da Tabela */}
           {[
-            { r: 'SERVIDOR', d: "Inicia o processo no sistema 'Meu RSC', anexando toda a documentação comprobatória e recebendo o comprovante (protocolo) digital de entrada.", i: 'devices', c: '#1e40af' },
-            { r: 'SERVIDOR', d: "Encaminha o protocolo do 'Meu RSC' ao e-mail do Protocolo do seu campus de lotação, solicitando formalmente a abertura do processo no sistema SIPAC.", i: 'forward_to_inbox', c: '#1e40af' },
+            { r: 'SERVIDOR', d: "Inicia o processo no sistema 'Meu RSC', anexando toda a documentação comprobatória e recebendo o comprovante (protocolo) digital de entrada.", i: 'computer', c: '#1e40af' },
+            { r: 'SERVIDOR', d: "Encaminha o protocolo do 'Meu RSC' ao e-mail do Protocolo do seu campus de lotação, solicitando formalmente a abertura do processo no sistema SIPAC.", i: 'mail', c: '#1e40af' },
             { r: 'PROTOCOLO DO CAMPUS', d: "Realiza a abertura do processo no SIPAC, confirma a abertura via e-mail ao servidor e encaminha os autos à Comissão de Avaliação do RSC.", i: 'folder_open', c: '#166534' },
             { r: 'COMISSÃO DE AVALIAÇÃO', d: "Recebe o processo físico/digital e localiza no sistema 'Meu RSC' o protocolo correspondente para análise técnica e emissão do parecer.", i: 'fact_check', c: '#6b21a8' },
-            { r: 'COMISSÃO DE AVALIAÇÃO', d: "Anexa o parecer técnico e a juntada de documentos (gerados pelo 'Meu RSC') ao processo principal no sistema SIPAC do servidor.", i: 'assignment_turned_in', c: '#6b21a8' },
-            { r: 'COMISSÃO DE AVALIAÇÃO', d: "Encaminha o processo devidamente instruído via SIPAC ao Gabinete da Reitoria para a formalização da concessão do benefício.", i: 'auto_sharing', c: '#6b21a8' },
-            { r: 'GABINETE DA REITORIA', d: "Emite a Portaria de Concessão do RSC, que é submetida à assinatura do Reitor para validade institucional.", i: 'verified_user', c: '#c2410c' },
-            { r: 'GABINETE DA REITORIA', d: "Anexa a Portaria assinada ao processo no SIPAC e realiza o encaminhamento imediato do fluxo à PROGESP.", i: 'file_present', c: '#c2410c' },
-            { r: 'PROGESP', d: "Encaminha o processo ao campus de origem para lançamento em folha, enviando cópia da Portaria ao servidor e ao DGP local.", i: 'account_balance_wallet', c: '#0f766e' },
-            { r: 'DGP DO CAMPUS', d: "Efetiva os lançamentos na folha de pagamento, dá ciência formal ao servidor e realiza o arquivamento definitivo do processo.", i: 'inventory', c: '#991b1b' },
+            { r: 'COMISSÃO DE AVALIAÇÃO', d: "Anexa o parecer técnico e a juntada de documentos (gerados pelo 'Meu RSC') ao processo principal no sistema SIPAC do servidor.", i: 'description', c: '#6b21a8' },
+            { r: 'COMISSÃO DE AVALIAÇÃO', d: "Encaminha o processo devidamente instruído via SIPAC ao Gabinete da Reitoria para a formalização da concessão do benefício.", i: 'forward_to_inbox', c: '#6b21a8' },
+            { r: 'GABINETE DA REITORIA', d: "Emite a Portaria de Concessão do RSC, que é submetida à assinatura do Reitor para validade institucional.", i: 'verified', c: '#c2410c' },
+            { r: 'GABINETE DA REITORIA', d: "Anexa a Portaria assinada ao processo no SIPAC e realiza o encaminhamento imediato do fluxo à PROGESP.", i: 'attach_file', c: '#c2410c' },
+            { r: 'PROGESP', d: "Encaminha o processo ao campus de origem para lançamento em folha, enviando cópia da Portaria ao servidor e à Gestão de Pessoas local.", i: 'account_balance_wallet', c: '#0f766e' },
+            { r: 'GESTÃO DE PESSOAS', d: "A Gestão de Pessoas do Campus efetiva os lançamentos na folha de pagamento, dá ciência formal ao servidor e realiza o arquivamento definitivo do processo.", i: 'inventory', c: '#991b1b' },
           ].map((step, idx) => (
             <div key={idx} className="grid grid-cols-1 md:grid-cols-[220px_80px_1fr] items-center border-b border-slate-50 last:border-0 hover:bg-slate-50/30 transition-colors group">
               {/* Coluna: Responsável */}
-              <div className="px-10 py-8 flex flex-col items-center md:items-start gap-4 border-r border-slate-50 h-full justify-center bg-white group-hover:bg-slate-50/50 transition-colors">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-xl shrink-0 group-hover:rotate-6 transition-all duration-500" style={{ background: `linear-gradient(135deg, ${step.c}, ${step.c}cc)` }}>
-                  <span className="material-symbols-outlined text-2xl icon-fill">{step.i}</span>
+              <div className="px-6 md:px-10 py-6 md:py-8 flex flex-col items-center md:items-start gap-3 md:gap-4 border-r border-slate-50 h-full justify-center bg-white group-hover:bg-slate-50/50 transition-colors">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-white shadow-xl shrink-0 group-hover:rotate-6 transition-all duration-500" style={{ background: `linear-gradient(135deg, ${step.c}, ${step.c}cc)` }}>
+                  <span className="material-symbols-outlined text-xl md:text-2xl icon-fill">{step.i}</span>
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-center md:text-left leading-tight" style={{ color: step.c }}>{step.r}</span>
+                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-center md:text-left leading-tight" style={{ color: step.c }}>{step.r}</span>
               </div>
 
               {/* Coluna: Etapa */}
-              <div className="flex justify-center border-r border-slate-50 py-8 bg-white group-hover:bg-slate-50/50 transition-colors h-full items-center">
-                <span className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-xs font-black text-slate-300 group-hover:text-[#2f9e41] group-hover:bg-[#2f9e41]/10 transition-all border border-slate-100">
+              <div className="flex justify-center border-r border-slate-50 py-4 md:py-8 bg-white group-hover:bg-slate-50/50 transition-colors h-full items-center">
+                <span className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-xs font-black text-slate-900 group-hover:text-[#2f9e41] group-hover:bg-[#2f9e41]/10 transition-all border border-slate-200 shadow-sm">
                   {idx + 1}
                 </span>
               </div>
 
               {/* Coluna: Descrição */}
-              <div className="px-10 py-8 bg-white group-hover:bg-slate-50/50 transition-colors">
-                <p className="text-slate-600 text-[15px] md:text-[16px] font-medium leading-relaxed text-justify hyphens-auto">
+              <div className="px-8 md:px-10 py-6 md:py-8 bg-white group-hover:bg-slate-50/50 transition-colors">
+                <p className="text-slate-600 text-sm md:text-[16px] font-medium leading-relaxed text-justify md:text-left lg:text-justify hyphens-auto">
                   {step.d}
                 </p>
               </div>
@@ -326,16 +326,16 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
         </div>
 
         {/* Card de Conclusão */}
-        <div className="mt-24 max-w-4xl mx-auto">
-          <div className="relative p-1 bg-gradient-to-r from-[#2f9e41] via-[#cd191e] to-[#2f9e41] rounded-[3rem] shadow-2xl overflow-hidden group">
+        <div className="mt-20 md:mt-24 max-w-4xl mx-auto">
+          <div className="relative p-1 bg-gradient-to-r from-[#2f9e41] via-[#cd191e] to-[#2f9e41] rounded-[2.5rem] md:rounded-[3rem] shadow-2xl overflow-hidden group">
             <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl animate-pulse"></div>
-            <div className="relative bg-slate-900 rounded-[2.9rem] p-10 md:p-16 flex flex-col md:flex-row items-center gap-12 text-center md:text-left overflow-hidden">
-               <div className="relative z-10 w-24 h-24 shrink-0 rounded-[2rem] bg-gradient-to-br from-[#2f9e41] to-[#248a35] flex items-center justify-center shadow-2xl rotate-6 group-hover:rotate-0 transition-transform duration-700">
-                  <span className="material-symbols-outlined text-5xl text-white icon-fill">task_alt</span>
+            <div className="relative bg-slate-900 rounded-[2.4rem] md:rounded-[2.9rem] p-10 md:p-16 flex flex-col md:flex-row items-center gap-10 md:gap-12 text-center md:text-left overflow-hidden">
+               <div className="relative z-10 w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-[#2f9e41] to-[#248a35] flex items-center justify-center shadow-2xl rotate-6 group-hover:rotate-0 transition-transform duration-700">
+                  <span className="material-symbols-outlined text-4xl md:text-5xl text-white icon-fill">task_alt</span>
                </div>
                <div className="relative z-10">
-                  <h3 className="text-3xl md:text-4xl font-black text-white mb-3 uppercase tracking-tighter">Missão Cumprida</h3>
-                  <p className="text-slate-400 text-lg md:text-xl font-medium leading-relaxed">
+                  <h3 className="text-2xl md:text-4xl font-black text-white mb-3 uppercase tracking-tighter">Missão Cumprida</h3>
+                  <p className="text-slate-400 text-base md:text-xl font-medium leading-relaxed">
                     Processo instruído, portaria emitida e benefício garantido. Sua carreira valorizada com eficiência.
                   </p>
                </div>
