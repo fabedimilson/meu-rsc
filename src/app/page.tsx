@@ -107,7 +107,7 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-[#cd191e] shadow-[#cd191e]/20 group">
+    <div className="relative w-full aspect-[4/3] md:aspect-[16/10] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-100 border border-[#cd191e] shadow-[#cd191e]/20 group">
       {images.map((src, idx) => (
         <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100' : 'opacity-0'}`} style={{ transitionProperty: 'opacity' }}>
           <Image 
@@ -115,7 +115,7 @@ const BannerCarousel = () => {
             alt={`Banner ${idx + 1}`} 
             fill
             priority={idx === 0}
-            className="object-contain object-center" 
+            className="object-cover object-center" 
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
           <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/60 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-tl-2xl flex items-center gap-2 shadow-2xl animate-in fade-in duration-700">
