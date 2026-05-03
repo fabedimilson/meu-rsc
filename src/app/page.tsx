@@ -264,65 +264,102 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
       </div>
     </section>
 
-    <section id="como-funciona" className="w-full py-24 bg-[#fbf9f8]">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-        <div className="text-center mb-16">
-          <span className="text-[10px] font-black text-[#2f9e41] uppercase tracking-[0.3em] mb-4 block">Processo Operacional</span>
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 uppercase tracking-tight">
-            Fluxograma <span className="text-[#2f9e41]">Tramitação do RSC</span>
+    <section id="como-funciona" className="w-full py-32 bg-white relative overflow-hidden">
+      {/* Elementos Decorativos de Fundo */}
+      <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-[#fbf9f8] to-transparent"></div>
+      <div className="absolute -right-24 top-1/4 w-96 h-96 bg-[#2f9e41]/5 rounded-full blur-[100px]"></div>
+      <div className="absolute -left-24 bottom-1/4 w-96 h-96 bg-[#cd191e]/5 rounded-full blur-[100px]"></div>
+
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 relative z-10">
+        <div className="text-center mb-24">
+          <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#2f9e41]/10 text-[#15461c] rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2f9e41] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2f9e41]"></span>
+            </span>
+            Fluxo de Operação
+          </div>
+          <h2 className="text-4xl md:text-7xl font-black text-slate-900 mb-8 uppercase tracking-tighter leading-[0.9] flex flex-col">
+            <span>Tramitação</span>
+            <span className="text-[#2f9e41]">do RSC</span>
           </h2>
-          <p className="text-slate-600 max-w-3xl mx-auto text-lg font-medium leading-relaxed italic">
-            Integração entre o sistema <span className="text-[#2f9e41] font-bold">Meu RSC</span>, o SIPAC e os setores responsáveis.
+          <p className="text-slate-500 max-w-3xl mx-auto text-lg md:text-xl font-medium leading-relaxed italic">
+            Uma integração inteligente entre o <span className="text-[#2f9e41] font-bold">Meu RSC</span>, o SIPAC e os setores administrativos para valorizar sua carreira.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto relative">
-          {/* Connector Line (Desktop) */}
-          <div className="absolute left-6 top-10 bottom-10 w-0.5 bg-slate-200 hidden md:block"></div>
+        <div className="max-w-5xl mx-auto space-y-10 relative">
+          {/* Linha Conectora Central (Desktop) */}
+          <div className="absolute left-6 lg:left-[50%] top-10 bottom-10 w-1 bg-slate-100 -translate-x-1/2 hidden lg:block rounded-full"></div>
 
           {[
-            { r: 'SERVIDOR', d: "Dá entrada no sistema 'Meu RSC', anexando toda a documentação e recebendo um comprovante (protocolo) de entrada.", i: 'computer', c: '#1a3a5a' },
-            { r: 'SERVIDOR', d: "Dá entrada, via e-mail, no protocolo de seu campus de lotação, solicitando abertura de processo no SIPAC, juntamente com o comprovante (protocolo) de entrada no sistema 'Meu RSC'.", i: 'alternate_email', c: '#1a3a5a' },
-            { r: 'PROTOCOLO DO CAMPUS', d: "Abre o processo no SIPAC, dá o ok no e-mail ao servidor sobre a abertura de seu processo e encaminha o respectivo processo à Comissão de Avaliação do RSC.", i: 'folder_managed', c: '#2f9e41' },
-            { r: 'COMISSÃO DE AVALIAÇÃO DO RSC', d: "Recebe o processo do servidor e procura, no sistema 'Meu RSC', o processo correspondente do servidor, para avaliação no sistema 'Meu RSC' e emissão do parecer.", i: 'person_search', c: '#6f42c1' },
-            { r: 'COMISSÃO DE AVALIAÇÃO DO RSC', d: "Adiciona o parecer retirado do sistema 'Meu RSC', ao processo no SIPAC do servidor, juntamente com a juntada dos documentos anexados pelo servidor, gerada no sistema 'Meu RSC'.", i: 'attach_file', c: '#6f42c1' },
-            { r: 'COMISSÃO DE AVALIAÇÃO DO RSC', d: "Encaminha o processo instruído do SIPAC ao Gabinete da Reitoria, para emissão da Portaria de Concessão do RSC.", i: 'forward', c: '#6f42c1' },
-            { r: 'GABINETE DA REITORIA', d: "Emite a Portaria de Concessão, que é assinada pelo Reitor.", i: 'verified', c: '#e67e22' },
-            { r: 'GABINETE DA REITORIA', d: "Anexa a Portaria assinada ao processo no SIPAC e encaminha o processo à PROGESP.", i: 'attach_file', c: '#e67e22' },
-            { r: 'PROGESP', d: "Realiza o encaminhamento do processo ao campus de origem para lançamento na folha de pagamento do servidor, encaminhando também cópia da Portaria ao servidor e ao DGP do campus de origem.", i: 'calculate', c: '#17a2b8' },
-            { r: 'DGP DO CAMPUS DE ORIGEM', d: "Realiza os lançamentos na folha, dá ciência ao servidor e arquiva o processo.", i: 'inventory_2', c: '#a52a2a' },
+            { r: 'SERVIDOR', d: "Inicie sua jornada no sistema 'Meu RSC'. Anexe as evidências documentais e gere seu protocolo digital de entrada para validação oficial.", i: 'devices', c: '#1e40af' },
+            { r: 'SERVIDOR', d: "Encaminhe o comprovante gerado ao Protocolo do seu campus via e-mail corporativo, solicitando a abertura formal do processo no SIPAC.", i: 'forward_to_inbox', c: '#1e40af' },
+            { r: 'PROTOCOLO DO CAMPUS', d: "Abertura do processo no SIPAC, notificação ao servidor interessado e encaminhamento imediato à Comissão de Avaliação do RSC.", i: 'folder_open', c: '#166534' },
+            { r: 'COMISSÃO DE AVALIAÇÃO', d: "Análise técnica rigorosa das evidências no sistema 'Meu RSC' e emissão do parecer fundamentado sobre o nível pleiteado.", i: 'fact_check', c: '#6b21a8' },
+            { r: 'COMISSÃO DE AVALIAÇÃO', d: "Consolidação do parecer e da juntada de documentos no processo SIPAC, integrando as plataformas 'Meu RSC' e sistema institucional.", i: 'assignment_turned_in', c: '#6b21a8' },
+            { r: 'COMISSÃO DE AVALIAÇÃO', d: "Envio do processo devidamente instruído ao Gabinete da Reitoria para a emissão da respectiva Portaria de Concessão.", i: 'auto_sharing', c: '#6b21a8' },
+            { r: 'GABINETE DA REITORIA', d: "Emissão e assinatura da Portaria de Concessão pelo Reitor, formalizando o direito ao Reconhecimento de Saberes e Competências.", i: 'verified_user', c: '#c2410c' },
+            { r: 'GABINETE DA REITORIA', d: "Anexação da Portaria assinada ao processo no SIPAC e encaminhamento célere para a PROGESP para os trâmites finais.", i: 'file_present', c: '#c2410c' },
+            { r: 'PROGESP', d: "Envio do processo ao campus de origem para lançamento financeiro. Cópia da Portaria é remetida ao servidor e ao DGP local.", i: 'account_balance_wallet', c: '#0f766e' },
+            { r: 'DGP DO CAMPUS', d: "Efetivação dos lançamentos na folha de pagamento, ciência formal ao servidor e arquivamento definitivo do processo instruído.", i: 'inventory', c: '#991b1b' },
           ].map((step, idx) => (
-            <div key={idx} className="relative flex items-start gap-6 md:gap-10 group">
-              <div className="z-10 flex-shrink-0 w-12 h-12 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center font-black text-slate-400 group-hover:border-[#2f9e41] group-hover:text-[#2f9e41] transition-all duration-300 shadow-sm">
-                {idx + 1}
+            <div key={idx} className={`relative flex flex-col lg:flex-row items-center gap-12 ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''} group animate-in fade-in slide-in-from-bottom-10 duration-700`} style={{ animationDelay: `${idx * 100}ms` }}>
+              {/* Bolha de Numeração */}
+              <div className="absolute left-6 lg:left-[50%] -translate-x-1/2 z-20 w-12 h-12 rounded-full bg-white border-4 border-slate-50 flex items-center justify-center font-black text-slate-300 group-hover:text-[#2f9e41] group-hover:border-[#2f9e41]/20 transition-all duration-500 shadow-xl hidden lg:flex">
+                 {idx + 1}
               </div>
-              <div className="flex-1 bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15)] transition-all duration-300 flex flex-col md:flex-row items-center md:items-start gap-6">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg shrink-0 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: step.c }}>
-                  <span className="material-symbols-outlined text-3xl icon-fill">{step.i}</span>
-                </div>
-                <div className="flex-1 text-center md:text-left">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] block mb-2" style={{ color: step.c }}>{step.r}</span>
-                  <p className="text-sm md:text-[15px] text-slate-600 font-medium leading-relaxed">{step.d}</p>
+
+              <div className="w-full lg:w-[45%]">
+                <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-[0_15px_50px_-20px_rgba(0,0,0,0.06)] hover:shadow-[0_25px_70px_-25px_rgba(0,0,0,0.12)] transition-all duration-500 group-hover:-translate-y-2 relative overflow-hidden">
+                   <div className="flex items-center justify-between mb-8">
+                      <span className="px-5 py-2 rounded-full text-[9px] font-black tracking-[0.25em] uppercase shadow-sm" style={{ backgroundColor: `${step.c}15`, color: step.c }}>
+                        {step.r}
+                      </span>
+                      <div className="lg:hidden w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-xs font-black text-slate-300">
+                        {idx + 1}
+                      </div>
+                   </div>
+
+                   <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-2xl shrink-0 group-hover:rotate-6 transition-all duration-500" style={{ background: `linear-gradient(135deg, ${step.c}, ${step.c}cc)` }}>
+                        <span className="material-symbols-outlined text-4xl icon-fill">{step.i}</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-slate-600 text-[16px] font-medium leading-relaxed text-justify md:text-left lg:text-justify hyphens-auto">
+                          {step.d}
+                        </p>
+                      </div>
+                   </div>
+
+                   <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-slate-100 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
               </div>
+
+              <div className="hidden lg:block w-[45%]"></div>
             </div>
           ))}
         </div>
 
-        {/* Resultado Final */}
-        <div className="mt-20 max-w-4xl mx-auto bg-gradient-to-br from-slate-900 to-slate-800 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 p-12 opacity-5">
-            <span className="material-symbols-outlined text-[150px] icon-fill">task_alt</span>
-          </div>
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
-            <div className="w-24 h-24 rounded-3xl bg-[#2f9e41] flex items-center justify-center shadow-2xl shadow-green-900/40 rotate-3">
-              <span className="material-symbols-outlined text-5xl text-white">check_circle</span>
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl md:text-3xl font-black mb-3 uppercase tracking-wider">Resultado Final</h3>
-              <p className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed">
-                Processo instruído, portaria emitida, lançamento em folha realizado e processo arquivado.
-              </p>
+        {/* Card de Resultado Final */}
+        <div className="mt-32 max-w-4xl mx-auto">
+          <div className="relative p-1.5 bg-gradient-to-r from-[#2f9e41] via-[#cd191e] to-[#2f9e41] rounded-[3.5rem] shadow-2xl overflow-hidden group">
+            <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl animate-pulse"></div>
+            <div className="relative bg-slate-900 rounded-[3.3rem] p-12 md:p-20 flex flex-col md:flex-row items-center gap-16 text-center md:text-left overflow-hidden">
+               <div className="absolute top-0 right-0 w-80 h-80 bg-[#2f9e41]/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+               
+               <div className="relative z-10 w-32 h-32 shrink-0 rounded-[2.5rem] bg-gradient-to-br from-[#2f9e41] to-[#248a35] flex items-center justify-center shadow-2xl shadow-green-900/60 rotate-6 group-hover:rotate-0 transition-all duration-700">
+                  <span className="material-symbols-outlined text-7xl text-white icon-fill">task_alt</span>
+               </div>
+               
+               <div className="relative z-10">
+                  <h3 className="text-4xl md:text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-none">
+                    Direito <br /> <span className="text-[#2f9e41]">Reconhecido</span>
+                  </h3>
+                  <p className="text-slate-400 text-lg md:text-2xl font-medium leading-relaxed max-w-xl">
+                    Processo instruído, portaria emitida e benefício garantido. Sua trajetória profissional valorizada com transparência e eficiência.
+                  </p>
+               </div>
             </div>
           </div>
         </div>
