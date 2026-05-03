@@ -107,7 +107,7 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-[#eee] group">
+    <div className="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-white border-2 border-[#cd191e] shadow-[#cd191e]/20 group">
       {images.map((src, idx) => (
         <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100' : 'opacity-0'}`} style={{ transitionProperty: 'opacity' }}>
           <Image 
@@ -236,7 +236,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
       </header>
 
     <section className="w-full max-w-[1200px] mx-auto px-8 md:px-10 py-8 md:py-12 flex flex-col-reverse lg:flex-row items-center gap-6 lg:gap-16">
-      <div className="flex-1 flex flex-col items-center md:items-start gap-4 md:gap-5 w-full">
+      <div className="flex-1 flex flex-col items-center md:items-start gap-3 md:gap-4 w-full">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#2f9e41]/10 text-[#15461c] rounded-full text-xs font-bold">
           <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#2f9e41'}}>workspace_premium</span>
           Reconhecimento de Saberes e Competências
@@ -247,7 +247,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
         <p className="text-base md:text-lg text-[#44474f] leading-relaxed max-w-2xl mt-1 md:text-left text-center">
           Sistema inteligente para gestão, simulação e solicitação do Reconhecimento de Saberes e Competências. Um processo transparente, humano e digital para valorizar sua trajetória no IFAM.
         </p>
-        <div className="flex flex-wrap gap-4 mt-4 md:mt-6 w-full md:w-auto relative z-[100]">
+        <div className="flex flex-wrap gap-4 mt-2 md:mt-4 w-full md:w-auto relative z-[100]">
           <button 
             id="recreated-btn-simular-hero" 
             onClick={(e) => { e.stopPropagation(); onStart(); }} 
