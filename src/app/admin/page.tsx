@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { loginAdmin } from './actions';
-import { Lock, User, Loader2 } from 'lucide-react';
+import { Lock, User, Loader2, ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -84,6 +84,12 @@ export default function LoginPage() {
               {loading ? <Loader2 className="animate-spin" /> : 'ENTRAR NO SISTEMA'}
             </button>
           </form>
+        </div>
+        <div className="mt-8 text-center">
+          <a href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-white font-bold text-sm transition-all uppercase tracking-widest group">
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+            Voltar para o Portal
+          </a>
         </div>
       </div>
     </div>
