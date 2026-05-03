@@ -107,7 +107,7 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-3xl overflow-hidden shadow-xl bg-[#fbf9f8] border border-[#dcd9d9] group">
+    <div className="relative w-full aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-white border border-[#eee] group">
       {images.map((src, idx) => (
         <div key={src} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === current ? 'opacity-100' : 'opacity-0'}`} style={{ transitionProperty: 'opacity' }}>
           <Image 
@@ -118,12 +118,12 @@ const BannerCarousel = () => {
             className="object-contain object-center" 
           />
           {/* Camuflagem: Selo de Identidade Institucional Definitivo (COLADO NO CANTO) */}
-          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/70 text-white px-3 py-1.5 md:px-5 md:py-2.5 rounded-tl-2xl md:rounded-tl-3xl flex items-center gap-2 md:gap-3 shadow-2xl animate-in fade-in duration-700">
-             <div className="w-4 h-4 md:w-6 md:h-6 bg-[#2f9e41] rounded-full flex items-center justify-center shadow-lg">
-                <span className="material-symbols-outlined text-[10px] md:text-[14px] text-white icon-fill">workspace_premium</span>
+          <div className="absolute bottom-0 right-0 backdrop-blur-md bg-black/60 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-tl-2xl flex items-center gap-2 shadow-2xl animate-in fade-in duration-700">
+             <div className="w-3.5 h-3.5 md:w-5 md:h-5 bg-[#2f9e41] rounded-full flex items-center justify-center shadow-lg">
+                <span className="material-symbols-outlined text-[10px] md:text-[12px] text-white icon-fill">workspace_premium</span>
              </div>
              <div className="flex flex-col leading-tight">
-                <span className="text-[9px] md:text-[11px] font-bold tracking-wide">MEU RSC - IFAM</span>
+                <span className="text-[8px] md:text-[10px] font-extrabold tracking-wider">MEU RSC - IFAM</span>
              </div>
           </div>
         </div>
