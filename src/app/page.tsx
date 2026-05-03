@@ -235,7 +235,7 @@ const HomePage = ({ onStart, onLogin, onHome, session, visitCount }: { onStart: 
         )}
       </header>
 
-    <section className="w-full max-w-[1200px] mx-auto px-8 md:px-10 pt-6 pb-16 md:py-24 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
+    <section className="w-full max-w-[1200px] mx-auto px-8 md:px-10 py-8 md:py-12 flex flex-col-reverse lg:flex-row items-center gap-6 lg:gap-16">
       <div className="flex-1 flex flex-col items-center md:items-start gap-4 md:gap-5 w-full">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#2f9e41]/10 text-[#15461c] rounded-full text-xs font-bold">
           <span className="material-symbols-outlined text-[16px] icon-fill" style={{color:'#2f9e41'}}>workspace_premium</span>
