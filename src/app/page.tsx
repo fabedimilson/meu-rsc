@@ -1183,26 +1183,26 @@ export default function App() {
                     <div className="space-y-4">
                       <div>
                         <label className="text-xs font-bold text-slate-500 uppercase">Nome Completo</label>
-                        <input type="text" value={userData.nome} onChange={e=>setUserData({...userData, nome:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
+                        <input type="text" value={userData.nome} onChange={e=>setUserData({...userData, nome:e.target.value})} className="w-full p-3 border rounded text-sm focus:border-[#2f9e41] outline-none" />
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="text-xs font-bold text-slate-500 uppercase">CPF</label>
-                          <input type="text" value={userData.cpf} onChange={e=>setUserData({...userData, cpf:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
+                          <input type="text" value={userData.cpf} onChange={e=>setUserData({...userData, cpf:e.target.value})} className="w-full p-3 border rounded text-sm focus:border-[#2f9e41] outline-none" />
                         </div>
                         <div>
                           <label className="text-xs font-bold text-slate-500 uppercase">SIAPE</label>
-                          <input type="text" value={userData.siape} onChange={e=>setUserData({...userData, siape:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50" />
+                          <input type="text" value={userData.siape} onChange={e=>setUserData({...userData, siape:e.target.value})} className="w-full p-3 border rounded text-sm focus:border-[#2f9e41] outline-none" />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="text-xs font-bold text-slate-500 uppercase">Data de Nascimento</label>
-                          <input type="date" value={userData.dataNascimento} onChange={e=>setUserData({...userData, dataNascimento:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm text-slate-700 disabled:bg-slate-50" />
+                          <input type="date" value={userData.dataNascimento} onChange={e=>setUserData({...userData, dataNascimento:e.target.value})} className="w-full p-3 border rounded text-sm text-slate-700 focus:border-[#2f9e41] outline-none" />
                         </div>
                         <div>
                           <label className="text-xs font-bold text-slate-500 uppercase">Campus de Lotação</label>
-                          <select value={userData.campus} onChange={e=>setUserData({...userData, campus:e.target.value})} disabled={isReadOnly} className="w-full p-3 border rounded text-sm disabled:bg-slate-50">
+                          <select value={userData.campus} onChange={e=>setUserData({...userData, campus:e.target.value})} className="w-full p-3 border rounded text-sm focus:border-[#2f9e41] outline-none">
                             <option value="">Selecione...</option>
                             {CAMPUS_LIST.map(c => <option key={c} value={c}>{c}</option>)}
                           </select>
@@ -1212,11 +1212,9 @@ export default function App() {
                         <label className="text-xs font-bold text-slate-500 uppercase">E-mail Institucional</label>
                         <input type="email" value={userData.email} disabled className="w-full p-3 border rounded text-sm bg-slate-100 text-slate-500" />
                       </div>
-                      {!isReadOnly && (
-                        <button onClick={handleUpdateProfile} disabled={isSubmitting} className="w-full py-3 bg-[#2f9e41] hover:bg-[#248a35] text-white rounded font-bold transition-all">
-                          {isSubmitting ? 'Salvando...' : 'Salvar Perfil'}
-                        </button>
-                      )}
+                      <button onClick={handleUpdateProfile} disabled={isSubmitting} className="w-full py-3 bg-[#2f9e41] hover:bg-[#248a35] text-white rounded font-bold transition-all shadow-lg shadow-green-900/20 active:scale-95">
+                        {isSubmitting ? 'Salvando...' : 'Atualizar Dados Pessoais'}
+                      </button>
                     </div>
                   )}
                 </div>

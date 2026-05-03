@@ -299,6 +299,7 @@ export default function DashboardPage() {
                       <tr className="bg-[#248a35] text-white font-bold text-sm uppercase tracking-wider">
                         <th className="p-4">Protocolo</th>
                         <th className="p-4">Servidor</th>
+                        <th className="p-4">Campus</th>
                         <th className="p-4">Status</th>
                         <th className="p-4">Pontuação</th>
                         <th className="p-4 text-right">Ação</th>
@@ -312,6 +313,7 @@ export default function DashboardPage() {
                             <p className="font-semibold text-[#1b1c1c]">{app.userNome}</p>
                             <p className="text-xs text-[#44474f]">{app.userCpf}</p>
                           </td>
+                          <td className="p-4 text-[#44474f] font-medium">{app.userCampus || 'Não inf.'}</td>
                           <td className="p-4">
                             <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold uppercase ${
                               app.status === 'Aprovado' ? 'bg-green-100 text-green-800' :
@@ -330,7 +332,7 @@ export default function DashboardPage() {
                         </tr>
                       ))}
                       {apps.length === 0 && (
-                        <tr><td colSpan={5} className="p-8 text-center text-[#747780]">Nenhum protocolo encontrado.</td></tr>
+                        <tr><td colSpan={6} className="p-8 text-center text-[#747780]">Nenhum protocolo encontrado.</td></tr>
                       )}
                     </tbody>
                   </table>
